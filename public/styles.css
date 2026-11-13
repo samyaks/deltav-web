@@ -98,6 +98,7 @@ input, button { font: inherit; }
 }
 .caps--20 { letter-spacing: 0.2em; }
 .caps--16 { letter-spacing: 0.16em; }
+.caps--18 { letter-spacing: 0.18em; }
 .caps--12 { letter-spacing: 0.12em; }
 .caps--10 { letter-spacing: 0.1em; }
 .caps--12px { font-size: 12px; }
@@ -410,6 +411,13 @@ input, button { font: inherit; }
 }
 .site-footer a { color: var(--ink-2); text-decoration: none; padding: 12px 0; }
 .site-footer a:hover { text-decoration: underline; }
+.footer-industries {
+  flex: 1 1 100%;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 4px 28px;
+  padding-bottom: 16px; margin-bottom: 8px;
+  border-bottom: 1px solid var(--rule);
+}
+.footer-industries a[aria-current="page"] { color: var(--ink); font-weight: 600; }
 
 /* ---------- Small screens ---------- */
 
