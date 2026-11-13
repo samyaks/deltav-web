@@ -3,243 +3,212 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Delta-V · Know what AI saves your firm on every matter</title>
-<meta name="description" content="Delta-V shows law firms what their AI really costs and saves on every matter: idle seats, cost to deliver by matter type, and fees priced from real numbers. Free two-week audit.">
-<meta name="theme-color" content="#ffffff">
+<title>DeltaV · Is your AI spend paying off?</title>
+<meta name="description" content="See what every AI dollar returns. Then move your spend to where it pays off. DeltaV for software and AI companies.">
+<meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Delta-V">
-<meta property="og:title" content="Delta-V for law firms: your lawyers get faster, your bills get smaller">
-<meta property="og:description" content="See what every matter costs now that AI does part of the work. Free two-week audit for firms with 50 to 300 lawyers.">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="preload" href="fonts/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="styles.css">
+<meta property="og:site_name" content="DeltaV">
+<meta property="og:title" content="DeltaV · Is your AI spend paying off?">
+<meta property="og:description" content="See what every AI dollar returns. Then move your spend to where it pays off.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/ibm-plex-mono-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/home.css">
 </head>
-<body>
+<body id="top">
 
 <a class="skip-link" href="#main">Skip to content</a>
 
 <header class="site-header">
-  <div class="container container--1200 site-header-inner">
-    <a class="brand" href="#top" aria-label="Delta-V home">
-      <svg width="24" height="24" viewBox="0 0 96 96" aria-hidden="true"><path d="M48 12 L86 82 L10 82 Z" fill="none" stroke="currentColor" stroke-width="7" stroke-linejoin="round"/><line x1="28" y1="60" x2="68" y2="60" stroke="currentColor" stroke-width="8"/></svg>
-      <span class="brand-name">Delta-V</span>
+  <div class="wrap wrap--1200 site-header-inner">
+    <a class="brand" href="#top" aria-label="DeltaV home">
+      <svg width="24" height="24" viewBox="0 0 96 96" aria-hidden="true"><path d="M48 12 L86 82 L10 82 Z" fill="none" stroke="#ffffff" stroke-width="7" stroke-linejoin="round"/><line x1="28" y1="60" x2="68" y2="60" stroke="#ffffff" stroke-width="8"/></svg>
+      <span class="brand-name">DeltaV</span>
     </a>
-    <a class="btn btn--sm" href="#start">See your numbers</a>
+    <nav class="nav" aria-label="Main">
+      <a href="#guides">Guides</a>
+      <a href="mailto:partners@deltav.info?subject=DeltaV%20design%20partner">Talk to us</a>
+    </nav>
   </div>
 </header>
 
 <main id="main">
 
-  <div id="top" class="hero-wrap">
-    <section class="container container--1040 hero" aria-labelledby="hero-heading">
-      <p class="hero-kicker">With AI</p>
-      <h1 id="hero-heading">Your lawyers get faster.<br><span class="text-statement">Your bills get smaller.</span></h1>
-    </section>
+  <section class="hero" aria-labelledby="hero-heading">
+    <div class="wrap wrap--1040 hero-inner">
+      <p class="kicker kicker--muted">AI spend and ROI</p>
+      <h1 id="hero-heading" class="h1">Is your AI spend paying off?</h1>
+      <p class="lede">See what every AI dollar returns. Then move your spend to where it pays off.</p>
+      <a class="btn" href="mailto:partners@deltav.info?subject=DeltaV%20design%20partner">Book 20 minutes</a>
+    </div>
+  </section>
 
-    <!-- Product preview: a managing partner asks Delta-V a question. Sample data. -->
-    <section class="container container--1080 demo" aria-label="Example: asking Delta-V whether your AI is paying off">
+  <section class="demo" aria-label="Example: asking DeltaV whether AI spend is paying off">
+    <div class="wrap wrap--1080 demo-inner">
       <div class="demo-card">
         <div class="demo-chat">
-          <p class="caps caps--20"><span aria-hidden="true">→ </span>Ask Delta-V</p>
-          <p class="bubble">Is our AI paying off?</p>
-          <p class="demo-answer">On flat-fee work, yes. Lease reviews take 8.6 hours, down from 14.2, and margin is up to <strong>52%</strong>. Two things stand out: <span class="text-statement">41 legal AI seats sat unused</span>, and employment agreement reviews show <span class="text-statement">almost no time saved</span>.</p>
+          <p class="ask-label">→ Ask DeltaV</p>
+          <p class="bubble">Is our AI spend paying off?</p>
+          <p class="demo-answer">Mostly. Model API spend is tracking with shipped work. Two things stand out: <span class="text-statement">34 coding seats sat unused</span>, and one support agent ran <span class="text-statement">3x its usual cost</span> on Tuesday.</p>
           <p class="bubble bubble--ghost">What should we do?</p>
-          <p class="demo-answer">Cut the idle seats before renewal to free <strong>$6,150 a month</strong>. Quote lease reviews at $5,900 flat. That beats your old fee and still keeps a 47% margin.</p>
+          <p class="demo-answer">Reclaim the seats to free <span class="text-accent">$1,360 a month</span>, cap the agent, and put that money behind Platform. It ships a pull request for $37, your best return.</p>
         </div>
 
         <div class="demo-dash">
           <div class="dash-head">
             <div class="dash-total-wrap">
-              <p class="caps caps--16">Total AI spend · this month</p>
-              <p class="dash-total">$48,600</p>
+              <p class="dash-label">Total AI spend · this month</p>
+              <p class="dash-total">$34,100</p>
             </div>
-            <p class="caps caps--12">Sample data</p>
+            <p class="dash-sample">Sample data</p>
           </div>
 
-          <table class="dash-table">
-            <caption class="visually-hidden">Flat-fee matter types: hours before AI, hours with AI, and margin</caption>
-            <colgroup><col style="width: 37.8%"><col style="width: 22.2%"><col style="width: 22.2%"><col style="width: 17.8%"></colgroup>
+          <svg class="spend-chart" role="img" aria-label="Daily AI spend with a spike on Tuesday" viewBox="0 0 600 110" preserveAspectRatio="none">
+            <line x1="0" y1="86" x2="600" y2="86" stroke="#333333" stroke-width="1" stroke-dasharray="4 5"></line>
+            <polyline points="0,80 50,78 100,81 150,76 200,79 250,74" fill="none" stroke="#f2f2f2" stroke-width="2"></polyline>
+            <polyline points="250,74 280,30 310,18 340,36 370,70" fill="none" stroke="#F2968C" stroke-width="2.5"></polyline>
+            <polyline points="370,70 420,76 470,73 520,77 560,72 600,74" fill="none" stroke="#f2f2f2" stroke-width="2"></polyline>
+          </svg>
+
+          <table class="spend-table">
+            <caption class="visually-hidden">AI spend sources this month, with active use where it applies. Sample data.</caption>
+            <colgroup><col style="width: 42.9%"><col style="width: 28.55%"><col style="width: 28.55%"></colgroup>
             <thead>
-              <tr><th scope="col">Flat-fee matter type</th><th scope="col">Hours before</th><th scope="col">With AI</th><th scope="col">Margin</th></tr>
+              <tr><th scope="col">Source</th><th scope="col">Monthly</th><th scope="col">Active use</th></tr>
             </thead>
             <tbody>
-              <tr><th scope="row">Commercial lease review</th><td>14.2</td><td>8.6</td><td class="strong">52%</td></tr>
-              <tr><th scope="row">Trademark filing</th><td>3.4</td><td>2.1</td><td>46%</td></tr>
-              <tr><th scope="row">Employment agreement review</th><td>6.1</td><td class="text-statement">5.8</td><td class="text-statement">27%</td></tr>
+              <tr><th scope="row">Coding assistant seats</th><td>$9,600</td><td class="text-statement">86%</td></tr>
+              <tr><th scope="row">Chat assistant seats</th><td>$6,000</td><td>94%</td></tr>
+              <tr><th scope="row">Model APIs</th><td>$14,200</td><td class="na">n/a</td></tr>
+              <tr><th scope="row">Cloud AI services</th><td>$4,300</td><td class="na">n/a</td></tr>
             </tbody>
           </table>
 
-          <ul class="dash-actions">
-            <li><span>41 legal AI seats went unused this month.</span><span class="text-statement nowrap">Cut · free $6,150/mo</span></li>
-            <li><span>Lease reviews keep a 47% margin at $5,900.</span><span class="strong nowrap">Reprice</span></li>
+          <ul class="actions">
+            <li><span>34 coding seats returned nothing this month.</span><span class="text-statement nowrap">Cut · free $1,360/mo</span></li>
+            <li><span>Platform has your lowest cost per PR.</span><span class="text-accent nowrap">Invest here</span></li>
           </ul>
         </div>
       </div>
-    </section>
-  </div>
-
-  <section class="band band--wash" aria-labelledby="compare-heading">
-    <div class="container container--960 compare-section">
-      <h2 id="compare-heading" class="h2">Take one contract review.</h2>
-      <div class="compare">
-        <div class="compare-col">
-          <p class="caps caps--20 caps--12px">Before AI</p>
-          <p class="compare-num">14.2</p>
-          <p class="compare-unit">hours</p>
-          <div class="bar" aria-hidden="true"></div>
-        </div>
-        <div class="compare-col">
-          <p class="caps caps--20 caps--12px">With AI</p>
-          <p class="compare-num text-accent">8.6</p>
-          <p class="compare-unit">hours</p>
-          <div class="bar bar--split" aria-hidden="true"><span></span><span></span></div>
-        </div>
-      </div>
-      <p class="compare-kicker">Great work. Billed by the hour, that's <span class="text-statement">5.6 hours your firm can't bill.</span></p>
-      <p class="caps caps--16">Example data</p>
     </div>
   </section>
 
-  <section id="how" class="band" aria-labelledby="how-heading">
-    <div class="container container--1040 how">
-      <h2 id="how-heading" class="h2">With Delta-V</h2>
-
-      <ol class="steps">
-        <li class="step">
-          <div class="step-copy">
-            <span class="step-num step-num--filled" aria-hidden="true">1</span>
-            <div class="step-text">
-              <h3>See every seat.</h3>
-              <p>Every AI tool you pay for, in one view. Cut the idle ones before renewal.</p>
-            </div>
-          </div>
-          <div class="panel panel--accent">
-            <p class="bubble bubble--sm">Which seats can we cut?</p>
-            <img class="seats" src="img/seats.svg" width="360" height="72" alt="180 seats, 41 of them idle">
-            <div class="panel-row"><span>139 of 180 seats in use</span><span class="text-statement nowrap">Cut 41 · free $6,150/mo</span></div>
-          </div>
-        </li>
-
-        <li class="step">
-          <div class="step-copy">
-            <span class="step-num step-num--filled" aria-hidden="true">2</span>
-            <div class="step-text">
-              <h3>Tie it to the matter.</h3>
-              <p>AI use is linked to the client-matter numbers you already keep.</p>
-            </div>
-          </div>
-          <div class="panel panel--accent">
-            <p class="bubble bubble--sm">Which matters used AI?</p>
-            <ul class="links">
-              <li><span class="tool">Legal AI</span><span class="sessions">38 sessions</span><span class="link-line" aria-hidden="true"></span><span class="matter">20418-0032</span></li>
-              <li><span class="tool">Drafting</span><span class="sessions">12 sessions</span><span class="link-line" aria-hidden="true"></span><span class="matter">20418-0032</span></li>
-              <li><span class="tool">Legal AI</span><span class="sessions">21 sessions</span><span class="link-line" aria-hidden="true"></span><span class="matter">31177-0009</span></li>
-            </ul>
-          </div>
-        </li>
-
-        <li class="step">
-          <div class="step-copy">
-            <span class="step-num" aria-hidden="true">3</span>
-            <div class="step-text">
-              <h3>Know the real cost.</h3>
-              <p>What each type of matter costs to deliver now, with AI and without.</p>
-            </div>
-          </div>
-          <div class="panel">
-            <p class="bubble bubble--sm">What does a lease review cost us now?</p>
-            <div class="cost-row">
-              <span class="caps caps--10 cost-label">Without AI</span>
-              <span class="cost-track"><span class="cost-bar cost-bar--muted" style="width: 100%"></span></span>
-              <span class="cost-value">$4,940</span>
-            </div>
-            <div class="cost-row">
-              <span class="caps caps--10 cost-label">With AI</span>
-              <span class="cost-track"><span class="cost-bar" style="width: 63.2%"></span></span>
-              <span class="cost-value strong">$3,120</span>
-            </div>
-          </div>
-        </li>
-
-        <li class="step">
-          <div class="step-copy">
-            <span class="step-num" aria-hidden="true">4</span>
-            <div class="step-text">
-              <h3>Price it to win.</h3>
-              <p>Fixed, capped and hybrid fees set from what the work really costs, not guesses padded for risk.</p>
-            </div>
-          </div>
-          <div class="panel">
-            <p class="bubble bubble--sm">What should we quote?</p>
-            <div class="quote">
-              <span class="quote-price">$5,900</span>
-              <span class="strong">47% margin</span>
-              <span class="text-muted">$600 under your old fee</span>
-            </div>
-            <ul class="fee-types">
-              <li class="fee-type fee-type--on">Fixed</li>
-              <li class="fee-type">Capped</li>
-              <li class="fee-type">Hybrid</li>
-            </ul>
-          </div>
-        </li>
-
-        <li class="step">
-          <div class="step-copy">
-            <span class="step-num" aria-hidden="true">5</span>
-            <div class="step-text">
-              <h3>Back every charge.</h3>
-              <p>If a client agrees to cover AI costs, the matter-level records are ready.</p>
-            </div>
-          </div>
-          <div class="panel">
-            <p class="bubble bubble--sm">Can we back the AI charge?</p>
-            <div class="record">
-              <div class="record-row"><span class="record-id">MATTER 20418-0032</span><span class="strong">✓ Record ready</span></div>
-              <div class="record-row"><span>AI sessions</span><span class="nowrap">50</span></div>
-              <div class="record-row record-row--rule"><span>AI cost on this matter</span><span class="nowrap">$84</span></div>
-            </div>
-          </div>
-        </li>
-      </ol>
-
-      <p class="caps caps--16 how-note">Sample data · illustrative, not a client result</p>
-    </div>
-  </section>
-
-  <section id="privacy" class="band band--wash" aria-labelledby="privacy-heading">
-    <div class="container container--820 privacy">
-      <h2 id="privacy-heading" class="h2 h2--md">We never see a prompt, a document or a client name.</h2>
-      <ul class="data-chips">
-        <li class="data-chip data-chip--in">Usage counts</li>
-        <li class="data-chip data-chip--in">Matter numbers</li>
-        <li class="data-chip data-chip--in">Time entries</li>
-        <li class="data-chip data-chip--out"><span class="visually-hidden">Never collected: </span>Prompts</li>
-        <li class="data-chip data-chip--out"><span class="visually-hidden">Never collected: </span>Documents</li>
-        <li class="data-chip data-chip--out"><span class="visually-hidden">Never collected: </span>Client names</li>
+  <section class="band band--raised" aria-labelledby="investment-heading">
+    <div class="wrap wrap--960 band-inner">
+      <p class="kicker">01 · The investment</p>
+      <h2 id="investment-heading" class="h2">See the whole investment.</h2>
+      <p class="section-lede">Everything you spend on AI, in one place. Today that is four bills and four dashboards.</p>
+      <ul class="chips">
+        <li>Coding assistants</li>
+        <li>Chat seats</li>
+        <li>LLM APIs</li>
+        <li>Cloud AI</li>
       </ul>
     </div>
   </section>
 
-  <section id="start" class="band band--cta" aria-labelledby="start-heading">
-    <div class="container container--760 cta">
-      <h2 id="start-heading" class="h2">See your firm's numbers in two weeks. Free.</h2>
-
-      <!-- To collect emails on the page instead, see "Adding an email sign-up form" in README.md. -->
-      <div class="cta-actions">
-        <a class="btn btn--lg" href="mailto:partners@deltav.info?subject=Delta-V%20free%20audit">Get my free audit</a>
-        <span class="cta-alt">or email <a href="mailto:partners@deltav.info">partners@deltav.info</a></span>
+  <section class="band" aria-labelledby="return-heading">
+    <div class="wrap wrap--960 band-inner">
+      <p class="kicker">02 · Return</p>
+      <h2 id="return-heading" class="h2">See what it returns.</h2>
+      <p class="section-lede">Spend next to the work it produced, so you can prove AI ROI with numbers finance accepts.</p>
+      <div class="roi">
+        <table class="roi-table">
+          <caption class="visually-hidden">AI spend, pull requests merged, and cost per pull request by team. Sample data.</caption>
+          <colgroup><col style="width: 28.6%"><col style="width: 23.8%"><col style="width: 23.8%"><col style="width: 23.8%"></colgroup>
+          <thead>
+            <tr><th scope="col">Team</th><th scope="col">AI spend</th><th scope="col">PRs merged</th><th scope="col">Cost per PR</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Platform</th><td>$11,400</td><td>310</td><td class="cost">$37</td></tr>
+            <tr><th scope="row">Growth</th><td>$9,200</td><td>205</td><td class="cost">$45</td></tr>
+            <tr class="alert"><th scope="row">Support</th><td>$13,500</td><td>96</td><td class="cost">$141</td></tr>
+          </tbody>
+        </table>
       </div>
-      <p class="caps caps--20 caps--12px cta-note">For firms with 50 to 300 lawyers · 10 founding spots</p>
+      <p class="note">Sample data · Support costs 3x more per PR than the other teams</p>
+    </div>
+  </section>
+
+  <section class="band band--raised" aria-labelledby="refocus-heading">
+    <div class="wrap wrap--960 band-inner">
+      <p class="kicker">03 · Refocus</p>
+      <h2 id="refocus-heading" class="h2">Put the money where it works.</h2>
+      <p class="section-lede">DeltaV turns the numbers into four kinds of moves. You approve them. The spend follows the return.</p>
+      <ul class="moves">
+        <li class="move">
+          <p class="move-label text-statement">Cut</p>
+          <h3>Cost with no return</h3>
+          <p>Reclaim 34 seats nobody used. Frees $1,360 a month.</p>
+        </li>
+        <li class="move">
+          <p class="move-label text-statement">Cap</p>
+          <h3>Cost outrunning return</h3>
+          <p>Hold the support agent to its normal budget.</p>
+        </li>
+        <li class="move">
+          <p class="move-label">Shift</p>
+          <h3>Same return for less</h3>
+          <p>Move routine work to a cheaper model or plan.</p>
+        </li>
+        <li class="move move--invest">
+          <p class="move-label text-accent">Invest</p>
+          <h3>Return well above cost</h3>
+          <p>Give Platform more seats. Lowest cost per PR in the company.</p>
+        </li>
+      </ul>
+      <p class="note">Sample data · You approve every move</p>
+    </div>
+  </section>
+
+  <section id="guides" class="band band--guides" aria-labelledby="guides-heading">
+    <div class="wrap wrap--1080 band-inner">
+      <p class="kicker">Guides</p>
+      <h2 id="guides-heading" class="h2">Do it yourself first.</h2>
+      <p class="section-lede">Two step-by-step guides to the method behind DeltaV.</p>
+      <div class="guide-grid">
+        <article class="guide-card">
+          <span class="guide-kicker">Guide · AI ROI</span>
+          <h3>How to measure the ROI of AI coding tools</h3>
+          <p>Full cost per engineer, active seats, one outcome metric, and cost per outcome by team.</p>
+          <span class="guide-more">Read the guide →</span>
+        </article>
+        <article class="guide-card">
+          <span class="guide-kicker">Guide · AI cost management</span>
+          <h3>How to track AI spend across seats, APIs, and cloud</h3>
+          <p>Find every place you pay for AI, pull it into one schema, and attribute it to teams.</p>
+          <span class="guide-more">Read the guide →</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="talk" class="band band--cta" aria-labelledby="talk-heading">
+    <div class="wrap wrap--760 band-inner">
+      <h2 id="talk-heading" class="h2">Working on this now?</h2>
+      <p class="section-lede">We've built the cost engine. We're building the rest with three to four engineering and finance teams. Yours could be one.</p>
+      <a class="btn" href="mailto:partners@deltav.info?subject=DeltaV%20design%20partner">Book 20 minutes</a>
+      <p class="cta-email">or email <a href="mailto:partners@deltav.info">partners@deltav.info</a></p>
+      <p class="cta-note">Private beta · Design partners</p>
     </div>
   </section>
 
 </main>
 
 <footer class="site-footer">
-  <div class="container container--1200 site-footer-inner">
-    <span>Delta-V · Private beta</span>
-    <a href="mailto:partners@deltav.info">partners@deltav.info</a>
+  <div class="wrap wrap--1200 site-footer-inner">
+    <div class="industries">
+      <span class="industries-label">One platform · by industry</span>
+      <a href="#top" aria-current="page">Software and AI companies</a>
+      <a href="/law-firms/">Law firms</a>
+    </div>
+    <span>DeltaV · Private beta</span>
+    <nav class="footer-nav" aria-label="Footer">
+      <a href="#guides">Guide: ROI of AI coding tools</a>
+      <a href="#guides">Guide: Track AI spend</a>
+      <a href="https://deltav.info/tour">Early product</a>
+      <a href="mailto:contact@deltav.info">contact@deltav.info</a>
+    </nav>
   </div>
 </footer>
 

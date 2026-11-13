@@ -2,7 +2,7 @@
   "name": "deltav-web",
   "version": "0.1.0",
   "private": true,
-  "description": "Delta-V marketing site: a static landing page, hosted on Cloudflare Pages.",
+  "description": "Delta-V marketing site: a home page for software and AI companies, plus a law-firms page, hosted on Cloudflare Pages.",
   "type": "module",
   "scripts": {
     "dev": "node scripts/dev.mjs",

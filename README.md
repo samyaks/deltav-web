@@ -1,15 +1,17 @@
 # Delta-V website
 
-Marketing page for Delta-V: one static landing page for law firms. It is plain HTML and CSS, with no framework and no build step, and it deploys to Cloudflare Pages.
+Marketing site for Delta-V: a home page for software and AI companies, plus the law-firms page. It is plain HTML and CSS, with no framework and no build step, and it deploys to Cloudflare Pages.
 
 ```
 public/                 everything that gets published
-  index.html            the landing page
-  styles.css            all styles; brand colours are CSS variables at the top
+  index.html            home page (software and AI companies)
+  home.css              home page styles; accent and statement colours are CSS variables
+  law-firms/index.html  law firms page
+  styles.css            law firms page styles; brand colours are CSS variables at the top
   _headers              response headers Cloudflare Pages applies
   favicon.svg
-  fonts/                Inter Tight (latin subset, self-hosted) + its OFL licence
-  img/seats.svg         the 180-seat grid in step 1
+  fonts/                Inter Tight and IBM Plex Mono (latin subsets, self-hosted) + OFL licences
+  img/seats.svg         the 180-seat grid on the law firms page
 scripts/dev.mjs         local preview server (no dependencies)
 wrangler.toml           Pages project name and output directory
 .github/workflows/deploy.yml
@@ -57,10 +59,12 @@ For now the "Get my free audit" button opens an email to partners@deltav.info, a
 
 ## Editing
 
-- **Copy:** all text lives in `public/index.html`.
-- **Colours:** `--accent` (blue) and `--statement` (pink) at the top of `styles.css`. The design also tried these accent options: `#8FB0FF`, `#1C2F6B`, `#1F5C45`.
-- **Sample numbers:** the product preview and steps use illustrative data, labelled "Sample data" on the page. If you change the seat counts, regenerate `img/seats.svg` to match.
+- **Home copy:** `public/index.html`. **Home colours:** `--accent` (`#8CC3F2`) and `--statement` (`#F2968C`) at the top of `home.css`.
+- **Law firms copy:** `public/law-firms/index.html`. **Law firms colours:** `--accent` (blue) and `--statement` (pink) at the top of `styles.css`. That design also tried these accent options: `#8FB0FF`, `#1C2F6B`, `#1F5C45`.
+- **Industry links:** the footer of each page links to the other. Home is `/`. Law firms is `/law-firms/`.
+- **Sample numbers:** both pages use illustrative data, labelled "Sample data". If you change the seat counts on the law firms page, regenerate `img/seats.svg` to match.
+- **Guides:** the home page includes the two guide cards from the design. The guide articles were not in that export, so those cards and the matching footer links stay on the guides section.
 
 ## Source design
 
-Built from the "ROIAI for Law Firms" design export, with the product renamed to Delta-V. Layout, type scale, colours and copy follow the design at 1280px. Spacing is reduced on phones, and the design tool's fixed canvas heights were dropped so the page reflows on small screens.
+The home page follows the "DeltaV home, software and AI companies" design export. The law firms page follows the "ROIAI for Law Firms" export, with the product renamed to Delta-V. Layout, type scale, colours and copy follow each design at 1280px. Spacing is reduced on phones, and the design tool's fixed canvas heights were dropped so the pages reflow on small screens.
