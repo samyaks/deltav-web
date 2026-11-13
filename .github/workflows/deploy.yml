@@ -137,7 +137,8 @@ jobs:
           zid=$(echo "$zone" | jq -r '.result[0].id // empty')
           if [ -z "$zid" ]; then
             echo "This token cannot read the deltav.info zone, so DNS was not changed."
-            exit 1
+            echo "Add a proxied CNAME for deltav.info to ${target} in the Cloudflare DNS dashboard."
+            exit 0
           fi
           recs=$(curl -sS "${auth[@]}" "$api/zones/${zid}/dns_records?per_page=100")
           echo "Current apex and www records:"
