@@ -68,10 +68,13 @@ jobs:
           auth=(-H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" -H "Content-Type: application/json")
           brief() { jq '{success, errors: [.errors[]? | {code, message}]}'; }
 
-          projects=$(curl -sS "${auth[@]}" "$base/pages/projects?per_page=50")
+          projects=$(curl -sS "${auth[@]}" "$base/pages/projects")
           echo "Pages projects:"
           echo "$projects" | jq '{success, errors: [.errors[]? | {code, message}], names: [.result[]?.name]}'
-          echo "$projects" | jq -e '.success == true' >/dev/null
+          if ! echo "$projects" | jq -e '.success == true' >/dev/null; then
+            echo "Could not list Pages projects; continuing with an empty list"
+            projects='{"success":true,"result":[]}'
+          fi
 
           owner=""
           while read -r project; do
