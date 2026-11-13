@@ -163,6 +163,15 @@ input, button { font: inherit; }
   color: var(--ink); text-decoration: none;
 }
 .brand-name { font-size: 21px; font-weight: 600; letter-spacing: -0.01em; }
+.site-nav { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 22px; }
+.site-nav a:not(.btn) {
+  color: var(--ink-2);
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 8px 0;
+}
+.site-nav a:not(.btn):hover { color: var(--ink); }
 
 /* ---------- Hero ---------- */
 
@@ -372,6 +381,44 @@ input, button { font: inherit; }
 
 .how-note { text-align: center; }
 
+/* ---------- Integrations ---------- */
+
+.integrations {
+  padding-top: var(--section-pad); padding-bottom: var(--section-pad);
+  display: flex; flex-direction: column; align-items: center; gap: 28px;
+}
+.integrations .h2,
+.integrations-lede,
+.integrations-note { text-align: center; }
+.integrations-lede {
+  max-width: 640px;
+  font-size: clamp(1.125rem, 2.2vw, 1.375rem);
+  line-height: 1.45;
+  color: var(--text-2);
+}
+.integrations-list { width: 100%; margin-top: 10px; }
+.integrations-group {
+  display: flex; flex-wrap: wrap; align-items: flex-start; gap: 20px 48px;
+  padding: 36px 0;
+  border-top: 1px solid var(--rule);
+}
+.integrations-copy { flex: 1 1 280px; min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+.integrations-copy h3 {
+  font-size: clamp(1.625rem, 3.2vw, 2.25rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+.integrations-copy p { font-size: 17px; line-height: 1.5; color: var(--text-2); max-width: 400px; }
+.integrations-sources { flex: 1 1 420px; min-width: 0; }
+.integrations-sources li {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: 15px; line-height: 1.4;
+}
+.integrations-sources li span:first-child { color: var(--ink); font-weight: 600; }
+.integrations-sources li span:last-child { color: var(--text-2); text-align: right; }
+
 /* ---------- Privacy ---------- */
 
 .privacy {
@@ -438,5 +485,8 @@ input, button { font: inherit; }
   .dash-table thead th { font-size: 10px; letter-spacing: 0.06em; }
   .dash-actions li { flex-wrap: wrap; }
   .step { padding: 28px 0; }
+  .integrations-group { padding: 28px 0; }
+  .integrations-sources li { flex-wrap: wrap; gap: 4px 16px; }
+  .integrations-sources li span:last-child { text-align: left; }
   .cta { padding-top: 96px; padding-bottom: 96px; }
 }
