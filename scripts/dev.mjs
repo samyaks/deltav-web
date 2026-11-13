@@ -1,8 +1,5 @@
-// Local preview server: serves public/ and fakes the form backend.
+// Local preview server: serves public/ at http://localhost:8080.
 // No dependencies. Usage: npm run dev  (or: node scripts/dev.mjs [port])
-//
-// Form POSTs are logged to the console instead of being stored, so you can
-// check the sign-up flow end to end before deploying.
 
 import { createServer } from "node:http";
 import { readFile, stat } from "node:fs/promises";
@@ -38,19 +35,6 @@ async function resolveFile(urlPath) {
 }
 
 const server = createServer(async (req, res) => {
-  if (req.method === "POST") {
-    let body = "";
-    for await (const chunk of req) body += chunk;
-    const fields = Object.fromEntries(new URLSearchParams(body));
-    console.log(`[form] ${fields["form-name"] || "form"}:`, fields.email || fields);
-    if ((req.headers.accept || "").includes("application/json")) {
-      res.writeHead(200, { "Content-Type": "application/json" });
-      return res.end(JSON.stringify({ ok: true }));
-    }
-    res.writeHead(303, { Location: "/thanks/" });
-    return res.end();
-  }
-
   const file = await resolveFile(req.url || "/");
   if (!file) {
     res.writeHead(404, { "Content-Type": "text/plain" });

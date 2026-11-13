@@ -10,10 +10,9 @@
 <meta property="og:site_name" content="Delta-V">
 <meta property="og:title" content="Delta-V for law firms: your lawyers get faster, your bills get smaller">
 <meta property="og:description" content="See what every matter costs now that AI does part of the work. Free two-week audit for firms with 50 to 300 lawyers.">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="preload" href="/fonts/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/styles.css">
-<script src="/main.js" defer></script>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
@@ -116,7 +115,7 @@
           </div>
           <div class="panel panel--accent">
             <p class="bubble bubble--sm">Which seats can we cut?</p>
-            <img class="seats" src="/img/seats.svg" width="360" height="72" alt="180 seats, 41 of them idle">
+            <img class="seats" src="img/seats.svg" width="360" height="72" alt="180 seats, 41 of them idle">
             <div class="panel-row"><span>139 of 180 seats in use</span><span class="text-statement nowrap">Cut 41 · free $6,150/mo</span></div>
           </div>
         </li>
@@ -226,21 +225,11 @@
     <div class="container container--760 cta">
       <h2 id="start-heading" class="h2">See your firm's numbers in two weeks. Free.</h2>
 
-      <!--
-        Email capture. Works with Netlify Forms as-is (data-netlify). To use another
-        form backend (Formspree, Basin, ...), set `action` to its endpoint URL:
-        main.js posts to whatever `action` says. See README.md.
-      -->
-      <form class="signup" name="audit" method="POST" action="/thanks/" data-netlify="true" netlify-honeypot="company" data-signup>
-        <input type="hidden" name="form-name" value="audit">
-        <p class="visually-hidden" aria-hidden="true"><label>Leave this empty <input name="company" tabindex="-1" autocomplete="off"></label></p>
-        <label for="signup-email" class="visually-hidden">Work email</label>
-        <input id="signup-email" class="signup-input" name="email" type="email" required autocomplete="email" placeholder="you@yourfirm.com">
-        <button class="btn btn--lg" type="submit">Get my free audit</button>
-      </form>
-      <p class="signup-status" role="status" data-signup-status></p>
-
-      <p class="cta-alt">or email <a href="mailto:partners@deltav.info?subject=Delta-V%20free%20audit">partners@deltav.info</a></p>
+      <!-- To collect emails on the page instead, see "Adding an email sign-up form" in README.md. -->
+      <div class="cta-actions">
+        <a class="btn btn--lg" href="mailto:partners@deltav.info?subject=Delta-V%20free%20audit">Get my free audit</a>
+        <span class="cta-alt">or email <a href="mailto:partners@deltav.info">partners@deltav.info</a></span>
+      </div>
       <p class="caps caps--20 caps--12px cta-note">For firms with 50 to 300 lawyers · 10 founding spots</p>
     </div>
   </section>
