@@ -1,0 +1,59 @@
+# Publishes public/ to the Cloudflare Pages project "deltav-web".
+# Production is https://deltav-web.pages.dev once the secrets below exist.
+#
+# One-time setup, in the GitHub repo under Settings → Secrets and variables → Actions:
+#   CLOUDFLARE_API_TOKEN   API token with the "Cloudflare Pages — Edit" permission
+#   CLOUDFLARE_ACCOUNT_ID  Account ID from the Workers & Pages overview
+name: Deploy to Cloudflare Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  deployments: write
+
+concurrency:
+  group: cloudflare-pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Check Cloudflare credentials
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
+            echo "This deploy needs two GitHub Actions secrets:"
+            echo "  CLOUDFLARE_API_TOKEN   (permission: Cloudflare Pages — Edit)"
+            echo "  CLOUDFLARE_ACCOUNT_ID  (Workers & Pages overview)"
+            exit 1
+          fi
+
+      - name: Create the Pages project if needed
+        id: create
+        continue-on-error: true
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          wranglerVersion: "4"
+          command: pages project create deltav-web --production-branch main
+
+      - name: Deploy
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          wranglerVersion: "4"
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          command: pages deploy public --project-name=deltav-web --branch=main --commit-hash=${{ github.sha }}

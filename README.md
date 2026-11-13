@@ -1,15 +1,19 @@
 # Delta-V website
 
-Marketing page for Delta-V at [deltav.info](https://deltav.info): one static landing page for law firms. It is plain HTML and CSS, with no framework and no build step, hosted on Cloudflare Pages.
+Marketing page for Delta-V: one static landing page for law firms. It is plain HTML and CSS, with no framework and no build step, and it deploys to Cloudflare Pages.
 
 ```
 public/                 everything that gets published
   index.html            the landing page
   styles.css            all styles; brand colours are CSS variables at the top
+  _headers              response headers Cloudflare Pages applies
   favicon.svg
   fonts/                Inter Tight (latin subset, self-hosted) + its OFL licence
   img/seats.svg         the 180-seat grid in step 1
 scripts/dev.mjs         local preview server (no dependencies)
+wrangler.toml           Pages project name and output directory
+.github/workflows/deploy.yml
+                        deploys public/ to Cloudflare Pages on every push to main
 ```
 
 ## Run it locally
@@ -24,17 +28,25 @@ Or, with Node 18 or later, `npm run dev`. Then open http://localhost:8080. Edit 
 
 ## Hosting on Cloudflare Pages
 
-One-time setup:
+Pushes to `main` upload `public/` as-is to the Pages project `deltav-web`. The production site is [deltav-web.pages.dev](https://deltav-web.pages.dev).
 
-1. In the Cloudflare dashboard, go to **Workers & Pages → Create → Pages → Connect to Git** and pick `samyaks/deltav-web`.
-2. Build settings:
-   - **Framework preset:** None
-   - **Build command:** leave empty (if the form insists on one, use `exit 0`)
-   - **Build output directory:** `public`
-3. Save and deploy. The site appears at `deltav-web.pages.dev`.
-4. In the project, open **Custom domains → Set up a custom domain** and add `deltav.info`, plus `www.deltav.info` if you want it. If deltav.info's DNS is on Cloudflare, the records are created for you.
+Deploys go out through GitHub Actions (direct upload). Keep using this workflow for the project. A direct-upload Pages project stays on direct upload, so Cloudflare's **Connect to Git** flow is a different project, not a later switch.
 
-After that, every push to `main` redeploys the site, and pushes to other branches get their own preview URLs.
+### One-time setup
+
+1. In the Cloudflare dashboard, create an API token with the **Cloudflare Pages — Edit** permission. Copy the account ID from the Workers & Pages overview.
+2. In the GitHub repo, go to **Settings → Secrets and variables → Actions** and add:
+   - `CLOUDFLARE_API_TOKEN`
+   - `CLOUDFLARE_ACCOUNT_ID`
+3. Push to `main`, or run **Deploy to Cloudflare Pages** from the Actions tab.
+
+The first run creates the project with `main` as the production branch, then uploads the site. Later pushes to `main` only upload.
+
+### Custom domain
+
+`deltav.info` already resolves to Cloudflare and currently serves a different site (the AI spend control plane). Attaching that hostname here replaces what is live there.
+
+When you want this page on that domain, open the `deltav-web` project, go to **Custom domains → Set up a custom domain**, and add `deltav.info` (and `www.deltav.info` if you want it). DNS is already on Cloudflare, so Pages can create the records.
 
 ## Adding an email sign-up form
 

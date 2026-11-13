@@ -1,0 +1,5 @@
+# Cloudflare Pages project. `pages_build_output_dir` is what marks this
+# as a Pages project rather than a Worker.
+name = "deltav-web"
+pages_build_output_dir = "./public"
+compatibility_date = "2026-11-13"
