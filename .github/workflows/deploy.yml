@@ -64,22 +64,53 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
           set -euo pipefail
-          api="https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/pages/projects/deltav-web/domains"
+          base="https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}"
           auth=(-H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" -H "Content-Type: application/json")
-          summarize() {
-            jq '{success, errors: [.errors[]? | {code, message}], result: (if (.result | type) == "array" then [.result[] | {name, status}] elif .result.name then {name: .result.name, status: .result.status, verification: .result.verification_data.status, validation: .result.validation_data.status, validation_error: .result.validation_data.error_message} else .result end)}'
-          }
-          existing=$(curl -sS "${auth[@]}" "$api")
-          if ! echo "$existing" | jq -e '.success == true' >/dev/null; then
-            echo "Could not list Pages domains"
-            echo "$existing" | summarize
-            exit 1
-          fi
-          if echo "$existing" | jq -e '.result[]? | select(.name == "deltav.info")' >/dev/null; then
+          brief() { jq '{success, errors: [.errors[]? | {code, message}]}'; }
+
+          projects=$(curl -sS "${auth[@]}" "$base/pages/projects?per_page=50")
+          echo "Pages projects:"
+          echo "$projects" | jq '{success, errors: [.errors[]? | {code, message}], names: [.result[]?.name]}'
+          echo "$projects" | jq -e '.success == true' >/dev/null
+
+          owner=""
+          while read -r project; do
+            [ -n "$project" ] || continue
+            domains=$(curl -sS "${auth[@]}" "$base/pages/projects/${project}/domains")
+            echo "Domains on ${project}:"
+            echo "$domains" | jq '{success, errors: [.errors[]? | {code, message}], domains: [.result[]? | {name, status}]}'
+            if echo "$domains" | jq -e '.result[]? | select(.name == "deltav.info")' >/dev/null; then
+              owner=$project
+            fi
+          done < <(echo "$projects" | jq -r '.result[]?.name')
+
+          if [ "$owner" = "deltav-web" ]; then
             echo "deltav.info is already attached to deltav-web"
-            echo "$existing" | summarize
             exit 0
           fi
-          response=$(curl -sS -X POST "${auth[@]}" "$api" --data '{"name":"deltav.info"}')
-          echo "$response" | summarize
-          echo "$response" | jq -e '.success == true' >/dev/null
+
+          if [ -n "$owner" ]; then
+            echo "Moving deltav.info from Pages project ${owner} to deltav-web"
+            removed=$(curl -sS -X DELETE "${auth[@]}" "$base/pages/projects/${owner}/domains/deltav.info")
+            echo "$removed" | brief
+            echo "$removed" | jq -e '.success == true' >/dev/null
+          else
+            echo "deltav.info is not on a Pages project this token can see"
+            workers=$(curl -sS "${auth[@]}" "$base/workers/domains")
+            echo "Workers custom domains:"
+            echo "$workers" | jq '{success, errors: [.errors[]? | {code, message}], domains: [.result[]? | {id, hostname, service, environment}]}'
+            domain_id=$(echo "$workers" | jq -r '.result[]? | select(.hostname == "deltav.info") | .id' | head -n 1)
+            if [ -n "$domain_id" ]; then
+              echo "Removing Workers custom domain ${domain_id}"
+              removed=$(curl -sS -X DELETE "${auth[@]}" "$base/workers/domains/${domain_id}")
+              echo "$removed" | brief
+              echo "$removed" | jq -e '.success == true' >/dev/null
+            fi
+          fi
+
+          response=$(curl -sS -X POST "${auth[@]}" "$base/pages/projects/deltav-web/domains" --data '{"name":"deltav.info"}')
+          echo "$response" | jq '{success, errors: [.errors[]? | {code, message}], name: .result.name, status: .result.status, verification: .result.verification_data.status, validation: .result.validation_data.status, validation_error: .result.validation_data.error_message}'
+          if echo "$response" | jq -e '.success == true or (.errors[]? | .code == 8000018)' >/dev/null; then
+            exit 0
+          fi
+          exit 1
