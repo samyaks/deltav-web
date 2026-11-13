@@ -30,7 +30,7 @@ Or, with Node 18 or later, `npm run dev`. Then open http://localhost:8080. Edit 
 
 ## Hosting on Cloudflare Pages
 
-Pushes to `main` upload `public/` as-is to the Pages project `deltav-web`. The production site is [deltav-web.pages.dev](https://deltav-web.pages.dev).
+Pushes to `main` upload `public/` as-is to the Pages project `deltav-web`. Production is [deltav.info](https://deltav.info). [deltav-web.pages.dev](https://deltav-web.pages.dev) stays as the Pages hostname.
 
 Deploys go out through GitHub Actions (direct upload). Keep using this workflow for the project. A direct-upload Pages project stays on direct upload, so Cloudflare's **Connect to Git** flow is a different project, not a later switch.
 
@@ -46,9 +46,7 @@ The first run creates the project with `main` as the production branch, then upl
 
 ### Custom domain
 
-`deltav.info` already resolves to Cloudflare and currently serves a different site (the AI spend control plane). Attaching that hostname here replaces what is live there.
-
-When you want this page on that domain, open the `deltav-web` project, go to **Custom domains → Set up a custom domain**, and add `deltav.info` (and `www.deltav.info` if you want it). DNS is already on Cloudflare, so Pages can create the records.
+Each deploy attaches `deltav.info` to the `deltav-web` Pages project if it is not already attached. The zone is on Cloudflare, so Pages creates the DNS record. That hostname is the main page for this site.
 
 ## Adding an email sign-up form
 

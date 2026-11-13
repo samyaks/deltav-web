@@ -57,3 +57,29 @@ jobs:
           wranglerVersion: "4"
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           command: pages deploy public --project-name=deltav-web --branch=main --commit-hash=${{ github.sha }}
+
+      - name: Attach deltav.info
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -euo pipefail
+          api="https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/pages/projects/deltav-web/domains"
+          auth=(-H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" -H "Content-Type: application/json")
+          summarize() {
+            jq '{success, errors: [.errors[]? | {code, message}], result: (if (.result | type) == "array" then [.result[] | {name, status}] elif .result.name then {name: .result.name, status: .result.status, verification: .result.verification_data.status, validation: .result.validation_data.status, validation_error: .result.validation_data.error_message} else .result end)}'
+          }
+          existing=$(curl -sS "${auth[@]}" "$api")
+          if ! echo "$existing" | jq -e '.success == true' >/dev/null; then
+            echo "Could not list Pages domains"
+            echo "$existing" | summarize
+            exit 1
+          fi
+          if echo "$existing" | jq -e '.result[]? | select(.name == "deltav.info")' >/dev/null; then
+            echo "deltav.info is already attached to deltav-web"
+            echo "$existing" | summarize
+            exit 0
+          fi
+          response=$(curl -sS -X POST "${auth[@]}" "$api" --data '{"name":"deltav.info"}')
+          echo "$response" | summarize
+          echo "$response" | jq -e '.success == true' >/dev/null
