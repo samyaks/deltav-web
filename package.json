@@ -1,0 +1,14 @@
+{
+  "name": "deltav-web",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Delta-V marketing site: a static landing page with optional email capture.",
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "start": "node scripts/dev.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
