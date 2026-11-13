@@ -117,3 +117,48 @@ jobs:
             exit 0
           fi
           exit 1
+
+      - name: Point deltav.info DNS at Pages
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -euo pipefail
+          auth=(-H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" -H "Content-Type: application/json")
+          api="https://api.cloudflare.com/client/v4"
+          target="deltav-web.pages.dev"
+          domain=$(curl -sS "${auth[@]}" "$api/accounts/${CLOUDFLARE_ACCOUNT_ID}/pages/projects/deltav-web/domains/deltav.info")
+          echo "Pages domain:"
+          echo "$domain" | jq '{success, errors: [.errors[]? | {code, message}], status: .result.status, verification: .result.verification_data.status, verification_error: .result.verification_data.error_message, validation: .result.validation_data.status, validation_error: .result.validation_data.error_message}'
+
+          zone=$(curl -sS "${auth[@]}" "$api/zones?name=deltav.info")
+          echo "Zone:"
+          echo "$zone" | jq '{success, errors: [.errors[]? | {code, message}], zones: [.result[]? | {id, name, status}]}'
+          zid=$(echo "$zone" | jq -r '.result[0].id // empty')
+          if [ -z "$zid" ]; then
+            echo "This token cannot read the deltav.info zone, so DNS was not changed."
+            exit 1
+          fi
+          recs=$(curl -sS "${auth[@]}" "$api/zones/${zid}/dns_records?per_page=100")
+          echo "Current apex and www records:"
+          echo "$recs" | jq '{success, errors: [.errors[]? | {code, message}], records: [.result[]? | select(.name == "deltav.info" or .name == "www.deltav.info") | {id, type, name, content, proxied}]}'
+          echo "$recs" | jq -e '.success == true' >/dev/null
+
+          echo "$recs" | jq -r --arg t "$target" '.result[]? | select(.name == "deltav.info" and (.type == "A" or .type == "AAAA" or (.type == "CNAME" and .content != $t))) | .id' | while read -r id; do
+            [ -n "$id" ] || continue
+            echo "Removing conflicting apex record ${id}"
+            deleted=$(curl -sS -X DELETE "${auth[@]}" "$api/zones/${zid}/dns_records/${id}")
+            echo "$deleted" | jq '{success, errors: [.errors[]? | {code, message}]}'
+            echo "$deleted" | jq -e '.success == true' >/dev/null
+          done
+
+          recs=$(curl -sS "${auth[@]}" "$api/zones/${zid}/dns_records?name=deltav.info")
+          has=$(echo "$recs" | jq -r --arg t "$target" '[.result[]? | select(.type == "CNAME" and .content == $t and .proxied == true)] | length')
+          if [ "$has" = "0" ]; then
+            created=$(curl -sS -X POST "${auth[@]}" "$api/zones/${zid}/dns_records" --data "{\"type\":\"CNAME\",\"name\":\"deltav.info\",\"content\":\"${target}\",\"proxied\":true,\"ttl\":1}")
+            echo "Created CNAME:"
+            echo "$created" | jq '{success, errors: [.errors[]? | {code, message}], type: .result.type, name: .result.name, content: .result.content, proxied: .result.proxied}'
+            echo "$created" | jq -e '.success == true' >/dev/null
+          else
+            echo "Proxied CNAME to ${target} is in place"
+          fi
