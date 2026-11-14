@@ -48,12 +48,17 @@ The first run creates the project with `main` as the production branch, then upl
 
 Each deploy attaches `deltav.info` to the `deltav-web` Pages project if it is not already attached. The zone is on Cloudflare, so Pages creates the DNS record. That hostname is the main page for this site.
 
-## Adding an email sign-up form
+## Interest form
 
-For now the "Get my free audit" button opens an email to partners@deltav.info, as in the design. To collect emails on the page instead, there are two options:
+Both landing pages ask for a name, email, and business name. The form posts to `/api/interest`, a Pages Function in `functions/api/interest.js`. Each submission is a row in the D1 database `deltav-leads`: name, email, business, which page (`software` or `law-firms`), and the time. Prompt text and anything else is not accepted.
 
-- **Hosted form service:** create a free form on [Formspree](https://formspree.io) and point a form's `action` at its endpoint. The repo's first commit has a styled sign-up form and its script (`public/main.js`) you can bring back.
-- **On Cloudflare itself:** a small Pages Function can receive the form and store sign-ups in Cloudflare D1 or KV, with no third-party service.
+`npm run dev` writes those rows to `data/leads.jsonl` on this machine. That file is not committed. Production uses D1. The deploy workflow creates the database, applies `schema/leads.sql`, and binds it to the Pages project as `DB`. The API token needs **D1 Edit** in addition to Pages Edit. Until that permission is on the token, the site still publishes and the form tells the visitor to email partners@deltav.info.
+
+To read what was saved:
+
+```bash
+npx wrangler d1 execute deltav-leads --remote --command "SELECT created_at, source, name, email, business FROM leads ORDER BY id DESC"
+```
 
 ## Editing
 
