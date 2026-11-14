@@ -49,6 +49,14 @@ jobs:
           wranglerVersion: "4"
           command: pages project create deltav-web --production-branch main
 
+      - name: Prepare the leads database
+        id: leads
+        continue-on-error: true
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: bash scripts/ensure-leads-db.sh
+
       - name: Deploy
         uses: cloudflare/wrangler-action@v4
         with:
@@ -162,3 +170,10 @@ jobs:
           else
             echo "Proxied CNAME to ${target} is in place"
           fi
+
+      - name: Leads database is required
+        if: always() && steps.leads.outcome == 'failure'
+        run: |
+          echo "The site uploaded, but sign-ups are not being saved."
+          echo "Add D1 Edit to CLOUDFLARE_API_TOKEN, then re-run this workflow."
+          exit 1

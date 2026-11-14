@@ -120,6 +120,8 @@ img, svg { max-width: 100%; }
   font-weight: 500;
 }
 .btn:hover { background: #ffffff; color: #0c0c0c; }
+.btn[disabled] { opacity: 0.7; cursor: progress; }
+button.btn { cursor: pointer; font-family: var(--font); }
 
 /* ---------- Header ---------- */
 
@@ -395,6 +397,46 @@ img, svg { max-width: 100%; }
   text-transform: uppercase;
   color: var(--muted);
   padding-top: 6px;
+}
+
+.interest {
+  width: 100%;
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 8px;
+  text-align: left;
+}
+.interest-fields { display: flex; flex-direction: column; gap: 14px; }
+.interest-fields[hidden], .interest .btn[hidden] { display: none; }
+.interest-field { display: flex; flex-direction: column; gap: 6px; }
+.interest-field span {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.interest input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--line-4);
+  border-radius: 10px;
+  background: var(--bg-chat);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 16px;
+}
+.interest .btn { width: 100%; margin-top: 4px; }
+.interest-status { font-size: 16px; line-height: 1.45; color: var(--accent); }
+.interest-status[data-error] { color: var(--statement); }
+.interest-hp {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
 }
 
 /* ---------- Footer ---------- */
