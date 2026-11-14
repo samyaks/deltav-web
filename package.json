@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "node scripts/dev.mjs",
     "start": "node scripts/dev.mjs",
-    "test": "node --test integrations/*.test.mjs"
+    "test": "node --test integrations/*.test.mjs functions/_lib/*.test.mjs"
   },
   "engines": {
     "node": ">=18"

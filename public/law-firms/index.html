@@ -280,11 +280,29 @@
     <div class="container container--760 cta">
       <h2 id="start-heading" class="h2">See your firm's numbers in two weeks. Free.</h2>
 
-      <!-- To collect emails on the page instead, see "Adding an email sign-up form" in README.md. -->
-      <div class="cta-actions">
-        <a class="btn btn--lg" href="mailto:partners@deltav.info?subject=Delta-V%20free%20audit">Get my free audit</a>
-        <span class="cta-alt">or email <a href="mailto:partners@deltav.info">partners@deltav.info</a></span>
-      </div>
+      <form class="interest" action="/api/interest" method="post">
+        <div class="interest-fields">
+          <input type="hidden" name="source" value="law-firms">
+          <p class="interest-hp" aria-hidden="true">
+            <label>Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+          </p>
+          <label class="interest-field">
+            <span>Name</span>
+            <input name="name" type="text" required maxlength="120" autocomplete="name">
+          </label>
+          <label class="interest-field">
+            <span>Email</span>
+            <input name="email" type="email" required maxlength="200" autocomplete="email" inputmode="email">
+          </label>
+          <label class="interest-field">
+            <span>Business name</span>
+            <input name="business" type="text" required maxlength="200" autocomplete="organization">
+          </label>
+        </div>
+        <button class="btn btn--lg" type="submit">Get my free audit</button>
+        <p class="interest-status" role="status" hidden></p>
+      </form>
+      <p class="cta-alt">or email <a href="mailto:partners@deltav.info">partners@deltav.info</a></p>
       <p class="caps caps--20 caps--12px cta-note">For firms with 50 to 300 lawyers · 10 founding spots</p>
     </div>
   </section>
@@ -305,5 +323,6 @@
   </div>
 </footer>
 
+<script src="/interest.js" defer></script>
 </body>
 </html>
