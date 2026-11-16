@@ -12,7 +12,7 @@
 <meta property="og:description" content="Sample view of AI spend and use across tools, departments, and matters.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/styles.css">
+<link rel="stylesheet" href="/styles.css?v=3">
 <link rel="stylesheet" href="/insights.css?v=2">
 </head>
 <body>
@@ -27,7 +27,13 @@
     </a>
     <nav class="site-nav" aria-label="Law firms">
       <a href="/law-firms/#integrations">Integrations</a>
-      <a href="/law-firms/insights/" aria-current="page">Insights</a>
+      <details class="nav-menu nav-menu--here">
+        <summary>Insights</summary>
+        <div class="nav-menu-panel">
+          <a href="/law-firms/insights/" aria-current="page">Example Audit Report</a>
+          <a href="/law-firms/notes/what-did-you-do-with-the-hours/">Billing for Legal AI</a>
+        </div>
+      </details>
       <a class="btn btn--sm" href="/law-firms/#start">See your numbers</a>
     </nav>
   </div>
@@ -44,7 +50,6 @@
       <a href="#tools">Tools</a>
       <a href="#departments">Departments</a>
       <a href="#matters">Matters</a>
-      <a href="/law-firms/notes/what-did-you-do-with-the-hours/">Billing</a>
     </nav>
   </section>
 
