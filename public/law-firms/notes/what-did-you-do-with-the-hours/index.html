@@ -12,8 +12,7 @@
 <meta property="og:description" content="UBS now requires AI use on the invoice. Firms can show who logged in. Few can say what happened to the fee.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/styles.css">
-<link rel="stylesheet" href="/insights.css?v=2">
+<link rel="stylesheet" href="/styles.css?v=3">
 <link rel="stylesheet" href="/notes.css">
 </head>
 <body>
@@ -28,7 +27,13 @@
     </a>
     <nav class="site-nav" aria-label="Law firms">
       <a href="/law-firms/#integrations">Integrations</a>
-      <a href="/law-firms/insights/">Insights</a>
+      <details class="nav-menu nav-menu--here">
+        <summary>Insights</summary>
+        <div class="nav-menu-panel">
+          <a href="/law-firms/insights/">Example Audit Report</a>
+          <a href="/law-firms/notes/what-did-you-do-with-the-hours/" aria-current="page">Billing for Legal AI</a>
+        </div>
+      </details>
       <a class="btn btn--sm" href="/law-firms/#start">See your numbers</a>
     </nav>
   </div>
@@ -37,13 +42,6 @@
 <main id="main">
 
   <article>
-    <nav class="container container--820 insights-nav note-tabs" aria-label="On this view">
-      <a href="/law-firms/insights/#moves">What to do</a>
-      <a href="/law-firms/insights/#tools">Tools</a>
-      <a href="/law-firms/insights/#departments">Departments</a>
-      <a href="/law-firms/insights/#matters">Matters</a>
-      <a href="/law-firms/notes/what-did-you-do-with-the-hours/" aria-current="page">Billing</a>
-    </nav>
     <header class="container container--820 note">
       <p class="caps caps--16">Note · 16 November 2026</p>
       <h1>How does legal billing<br>change when AI does<br>the work?</h1>
@@ -91,8 +89,8 @@
       <a href="/law-firms/">Law firms</a>
     </div>
     <span>Delta-V · Private beta</span>
-    <a href="/law-firms/insights/">Insights</a>
-    <a href="/law-firms/notes/what-did-you-do-with-the-hours/" aria-current="page">Billing</a>
+    <a href="/law-firms/insights/">Example Audit Report</a>
+    <a href="/law-firms/notes/what-did-you-do-with-the-hours/" aria-current="page">Billing for Legal AI</a>
     <a href="mailto:partners@deltav.info">partners@deltav.info</a>
   </div>
 </footer>

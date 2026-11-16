@@ -2,9 +2,8 @@
 
 .note-header .brand { color: var(--ink); }
 
-.note-tabs { padding-top: 48px; }
 .note {
-  padding-top: 28px;
+  padding-top: 72px;
   padding-bottom: 28px;
   display: flex;
   flex-direction: column;
