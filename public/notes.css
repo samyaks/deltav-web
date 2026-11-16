@@ -1,0 +1,85 @@
+/* Long note. Uses the law-firms tokens in styles.css. */
+
+.note-header .brand { color: var(--ink); }
+
+.note-tabs { padding-top: 48px; }
+.note {
+  padding-top: 28px;
+  padding-bottom: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.note h1 {
+  font-size: clamp(2.35rem, 5.2vw, 3.75rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  font-weight: 400;
+  color: var(--ink);
+  max-width: 22ch;
+}
+.note-lede {
+  max-width: 38rem;
+  font-size: clamp(1.125rem, 2vw, 1.375rem);
+  line-height: 1.45;
+  color: var(--text-2);
+}
+.note-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+}
+
+.note-body {
+  padding-top: 48px;
+  padding-bottom: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.note-body p,
+.note-body li {
+  max-width: 38rem;
+  font-size: 18px;
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+.note-body a { color: var(--accent); }
+
+.example {
+  max-width: 38rem;
+  margin: 8px 0 4px;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+}
+.example figcaption {
+  padding: 12px 0 4px;
+  color: var(--muted);
+}
+.example-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 0;
+  border-top: 1px solid var(--rule);
+  font-size: 16px;
+  color: var(--ink);
+}
+.example-row span:first-child { flex: 1; }
+.example-row span:last-child {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  text-align: right;
+}
+.note-sources {
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+@media (max-width: 640px) {
+  .note { padding-top: 40px; }
+  .note-body { padding-top: 32px; padding-bottom: 56px; }
+  .note-body p, .note-body li { font-size: 17px; }
+}
