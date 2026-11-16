@@ -2,15 +2,20 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 import {
+  parseClioMattersCsv,
+  parseClioTimeCsv,
+  parseEverlawProjectsCsv,
+  parseEverlawUsageCsv,
   parseHarveyMattersCsv,
   parseHarveyUsageCsv,
   parseLegoraAuditCsv,
   parseLegoraCreditsCsv,
+  parseUploadCsv,
 } from "./upload.mjs";
 
 const example = (name) => readFileSync(new URL(`./examples/${name}`, import.meta.url), "utf8");
 
-test("reads the four example uploads", () => {
+test("reads the example uploads for Harvey, Legora, Everlaw, and Clio", () => {
   const [usage] = parseHarveyUsageCsv(example("harvey-usage.csv"));
   assert.equal(usage.user, "user@example.com");
   assert.equal(usage.at, "2026-02-22T14:01:23Z");
@@ -30,6 +35,28 @@ test("reads the four example uploads", () => {
   const [audit] = parseLegoraAuditCsv(example("legora-audit.csv"));
   assert.equal(audit.action, "agent run");
   assert.equal(audit.at, "2026-11-02T15:00:00Z");
+
+  const [everlaw] = parseEverlawUsageCsv(example("everlaw-usage.csv"));
+  assert.equal(everlaw.user, "casey@firm.example");
+  assert.equal(everlaw.matterNumber, "31177-0009");
+  assert.equal(everlaw.docs, 48);
+
+  const [project] = parseEverlawProjectsCsv(example("everlaw-projects.csv"));
+  assert.equal(project.matterNumber, "31177-0009");
+  assert.equal(project.docs, 240);
+
+  const [time] = parseClioTimeCsv(example("clio-time.csv"));
+  assert.equal(time.user, "ada@firm.example");
+  assert.equal(time.matterNumber, "20418-0032");
+  assert.equal(time.hours, 8.6);
+  assert.equal(time.rate, 450);
+
+  const [clioMatter] = parseClioMattersCsv(example("clio-matters.csv"));
+  assert.equal(clioMatter.matterNumber, "20418-0032");
+  assert.equal(clioMatter.status, "Open");
+
+  assert.equal(parseUploadCsv(example("everlaw-usage.csv")).kind, "everlaw-usage");
+  assert.equal(parseUploadCsv(example("clio-time.csv")).kind, "clio-time");
 });
 
 test("keeps a quoted matter number as text and a comma inside an action", () => {
