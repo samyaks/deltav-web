@@ -37,6 +37,7 @@
   font-weight: 500;
 }
 .insights-nav a:hover { color: var(--accent); }
+.insights-nav a[aria-current="page"] { color: var(--ink); }
 
 .stat-grid {
   display: grid;
