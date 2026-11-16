@@ -84,12 +84,14 @@
 .view-lede { max-width: 420px; font-size: 16px; line-height: 1.45; color: var(--text-2); }
 
 .tool-list { display: flex; flex-direction: column; border-top: 1px solid var(--rule); }
-.tool {
+.tool-list .tool {
   display: grid;
-  grid-template-columns: minmax(140px, 1.1fr) minmax(180px, 1.4fr) minmax(220px, 1.6fr);
-  gap: 12px 28px;
+  grid-template-columns: minmax(200px, 240px) minmax(190px, 220px) minmax(220px, 1fr);
+  gap: 4px 36px;
   align-items: center;
-  padding: 18px 0;
+  padding: 16px 0;
+  border: 0;
+  border-radius: 0;
   border-bottom: 1px solid var(--rule);
 }
 .tool-name { font-size: 20px; letter-spacing: -0.02em; }
@@ -158,7 +160,7 @@
   .stat-grid { grid-template-columns: 1fr 1fr; }
   .stat:nth-child(odd) { border-left: 0; }
   .stat:nth-child(1), .stat:nth-child(2) { border-bottom: 1px solid var(--rule); }
-  .tool { grid-template-columns: 1fr; gap: 8px; }
+  .tool-list .tool { grid-template-columns: 1fr; gap: 10px; }
   .move-grid { grid-template-columns: 1fr; }
 }
 
