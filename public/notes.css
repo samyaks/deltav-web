@@ -10,12 +10,12 @@
   gap: 18px;
 }
 .note h1 {
-  font-size: clamp(2.5rem, 6vw, 4.25rem);
-  line-height: 1.02;
+  font-size: clamp(2.35rem, 5.2vw, 3.75rem);
+  line-height: 1.05;
   letter-spacing: -0.03em;
   font-weight: 400;
   color: var(--ink);
-  max-width: 16ch;
+  max-width: 18ch;
 }
 .note-lede {
   max-width: 38rem;
@@ -43,111 +43,31 @@
   line-height: 1.55;
   color: var(--ink-2);
 }
-.note-body h2 {
-  margin-top: 18px;
-  font-size: clamp(1.75rem, 3vw, 2.25rem);
-  line-height: 1.15;
-  letter-spacing: -0.02em;
-  font-weight: 400;
-  max-width: 20ch;
-}
 .note-body a { color: var(--accent); }
-
-.doors {
-  display: grid;
-  gap: 12px;
-  max-width: 38rem;
-}
-.door {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 14px;
-  align-items: baseline;
-  padding: 16px 18px;
-  background: var(--wash);
-  border-radius: 12px;
-}
-.door-num {
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  color: var(--accent);
-}
-.door h3 {
-  font-size: 18px;
-  font-weight: 500;
-  letter-spacing: -0.01em;
-}
-.door p {
-  margin-top: 4px;
-  font-size: 16px;
-  color: var(--text-2);
-}
-
-.numbers {
-  max-width: 38rem;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.numbers li {
-  padding-left: 1.1rem;
-  position: relative;
-}
-.numbers li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.65em;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--accent);
-}
 
 .example {
   max-width: 38rem;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  overflow: hidden;
+  margin: 8px 0 4px;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+}
+.example figcaption {
+  padding: 12px 0 4px;
+  color: var(--muted);
 }
 .example-row {
   display: flex;
   justify-content: space-between;
   gap: 16px;
-  padding: 14px 18px;
+  padding: 10px 0;
   border-top: 1px solid var(--rule);
   font-size: 16px;
+  color: var(--ink);
 }
-.example-row:first-child { border-top: 0; }
-.example-row span:last-child { font-weight: 600; text-align: right; }
-.example-note {
-  padding: 0 18px 14px;
-  font-size: 13px;
+.example-row span:last-child {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
 }
-
-.asks {
-  max-width: 38rem;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.asks li {
-  padding: 14px 16px;
-  border-left: 3px solid var(--statement);
-  background: var(--wash);
-}
-
-.note-reply {
-  max-width: 38rem;
-  margin-top: 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
-}
-.note-reply p { font-size: 16px; }
 
 @media (max-width: 640px) {
   .note { padding-top: 40px; }
