@@ -51,14 +51,14 @@ Then open http://127.0.0.1:8788/talk. That secret and the `data-sitekey` in `pub
 
 `/talk` is the only place the site collects an email. Every "Talk to us" and "Book 20 minutes" button links to it with `?from=talk-to-us` or `?from=book-20-minutes`, which is stored as the lead's source along with the referring path and any `utm_source`, `utm_medium` and `utm_campaign`.
 
-`functions/api/leads.js` validates every field again on the server, verifies the Turnstile token, and inserts with prepared statements. It never logs personal data. The D1 database is `deltav_leads`, bound as `DB` in `wrangler.toml`.
+`functions/api/leads.js` validates every field again on the server, verifies the Turnstile token, and inserts with prepared statements. It never logs personal data. The D1 database is `deltav_leads`, bound as `DB` in `wrangler.toml`. That binding is commented out until the database exists, because a placeholder id makes the Pages deploy fail.
 
 Read the leads with `npm run leads`, or `npm run leads:csv` to write `leads.csv` (gitignored).
 
 ### One-time setup
 
 ```bash
-npx wrangler d1 create deltav_leads          # put the id it prints in wrangler.toml
+npx wrangler d1 create deltav_leads          # uncomment the binding in wrangler.toml and paste this id
 npx wrangler d1 migrations apply deltav_leads --remote
 npx wrangler pages secret put TURNSTILE_SECRET --project-name deltav-web
 ```
