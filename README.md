@@ -11,6 +11,7 @@ public/                 everything that gets published
   article.css           shared styles for the white paper and the guides
   talk/index.html       design partner intake form; every call to action links here
   talk.css, talk.js     styles and client logic for that form
+  analytics.js          PostHog loader and funnel events, loaded on every page
   law-firms/index.html  law firms page
   law-firms/insights/   sample month dashboard (static)
   law-firms/intake/     CSV intake UI → org / user / matter rollups
