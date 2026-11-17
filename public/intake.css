@@ -1,0 +1,108 @@
+/* Intake view. Uses law-firms tokens from styles.css and insights.css. */
+
+.intake-upload {
+  padding-top: 12px;
+  padding-bottom: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.intake-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.drop {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+  padding: 28px 24px;
+  border: 1px dashed var(--line-strong);
+  border-radius: 16px;
+  background: var(--wash);
+  cursor: pointer;
+  transition: border-color 160ms ease, background 160ms ease;
+}
+.drop:hover,
+.drop.is-over {
+  border-color: var(--accent);
+  background: var(--white);
+}
+.drop input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  overflow: hidden;
+}
+.drop-title {
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  font-weight: 600;
+}
+.drop-meta {
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--text-2);
+  max-width: 52ch;
+}
+
+.intake-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--line-strong);
+}
+.btn--ghost:hover {
+  border-color: var(--ink);
+}
+
+.intake-status {
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--text-2);
+}
+.intake-status.is-error {
+  color: var(--statement);
+}
+
+.feed-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--rule);
+}
+.feed-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: 14px;
+}
+.feed-list li span:first-child {
+  color: var(--ink);
+  font-weight: 600;
+}
+.feed-list li span:last-child {
+  color: var(--text-2);
+  text-align: right;
+}
+
+@media (max-width: 640px) {
+  .drop { padding: 22px 18px; }
+  .feed-list li {
+    flex-direction: column;
+    gap: 4px;
+  }
+  .feed-list li span:last-child { text-align: left; }
+}

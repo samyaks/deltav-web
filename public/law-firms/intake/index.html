@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Delta-V · Intake Harvey, Legora, Everlaw, and Clio</title>
+<meta name="description" content="Upload Harvey, Legora, Everlaw, and Clio CSV exports. Delta-V maps them to cost and usage by matter, by person, and for the firm. No prompts, no documents, no client names.">
+<meta name="theme-color" content="#ffffff">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Delta-V">
+<meta property="og:title" content="Delta-V · Intake Harvey, Legora, Everlaw, and Clio">
+<meta property="og:description" content="Map legal AI and Clio CSV exports to matter, user, and firm cost views.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/styles.css">
+<link rel="stylesheet" href="/insights.css">
+<link rel="stylesheet" href="/intake.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header insights-header">
+  <div class="container container--1200 site-header-inner">
+    <a class="brand" href="/law-firms/" aria-label="Delta-V for law firms">
+      <svg width="24" height="24" viewBox="0 0 96 96" aria-hidden="true"><path d="M48 12 L86 82 L10 82 Z" fill="none" stroke="currentColor" stroke-width="7" stroke-linejoin="round"/><line x1="28" y1="60" x2="68" y2="60" stroke="currentColor" stroke-width="8"/></svg>
+      <span class="brand-name">Delta-V</span>
+    </a>
+    <nav class="site-nav" aria-label="Law firms">
+      <a href="/law-firms/#integrations">Integrations</a>
+      <a href="/law-firms/insights/">Insights</a>
+      <a href="/law-firms/intake/" aria-current="page">Intake</a>
+      <a class="btn btn--sm" href="/law-firms/#start">See your numbers</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="container container--1080 insights" aria-labelledby="intake-heading">
+    <p class="caps caps--16">CSV intake · Local only</p>
+    <h1 id="intake-heading">Map the exports to the firm.</h1>
+    <p class="insights-lede">Drop Harvey, Legora, Everlaw, and Clio CSVs. Headers are detected, content fields are refused, and spend is rolled up by tool, by person, and by matter number.</p>
+    <nav class="insights-nav" aria-label="On this view">
+      <a href="#upload">Upload</a>
+      <a href="#org">Firm</a>
+      <a href="#tools">Tools</a>
+      <a href="#users">People</a>
+      <a href="#matters">Matters</a>
+    </nav>
+  </section>
+
+  <section id="upload" class="container container--1080 intake-upload" aria-labelledby="upload-heading">
+    <div class="view-head">
+      <h2 id="upload-heading">Upload</h2>
+      <p class="view-lede">One file per feed. Expected headers match the example CSVs under Integrations.</p>
+    </div>
+
+    <form id="intake-form" class="intake-form">
+      <label class="drop" id="drop-zone">
+        <input id="file-input" type="file" accept=".csv,text/csv" multiple>
+        <span class="drop-title">Drop CSV files here, or choose them</span>
+        <span class="drop-meta">Harvey · Legora · Everlaw · Clio time · Clio matters</span>
+      </label>
+      <div class="intake-actions">
+        <button type="button" class="btn" id="load-demo">Load sample month</button>
+        <button type="button" class="btn btn--ghost" id="clear-files" hidden>Clear</button>
+      </div>
+      <p class="intake-status" id="intake-status" role="status" aria-live="polite">No files yet. Load the sample month to see the rollup.</p>
+      <ul class="feed-list" id="feed-list" hidden></ul>
+    </form>
+  </section>
+
+  <section id="org" class="container container--1080" aria-label="Firm totals" hidden>
+    <div class="stat-grid" id="org-stats"></div>
+  </section>
+
+  <section id="tools" class="container container--1080 view" aria-labelledby="tools-heading" hidden>
+    <div class="view-head">
+      <h2 id="tools-heading">By tool</h2>
+      <p class="view-lede">Usage cost from the CSVs, plus any seat bill you attached in the sample rates.</p>
+    </div>
+    <div class="tool-list" id="tool-list"></div>
+  </section>
+
+  <section id="users" class="container container--1080 view" aria-labelledby="users-heading" hidden>
+    <div class="view-head">
+      <h2 id="users-heading">By person</h2>
+      <p class="view-lede">Who used which tools, on which matter numbers, AI spend, and Clio hours.</p>
+    </div>
+    <div class="sheet-wrap">
+      <table class="sheet">
+        <caption class="visually-hidden">AI spend, hours, and matter counts by person.</caption>
+        <thead>
+          <tr>
+            <th scope="col">Person</th>
+            <th scope="col">AI spend</th>
+            <th scope="col">Hours</th>
+            <th scope="col">Matters</th>
+            <th scope="col">Tools</th>
+          </tr>
+        </thead>
+        <tbody id="user-rows"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="matters" class="container container--1080 view" aria-labelledby="matters-heading" hidden>
+    <div class="view-head">
+      <h2 id="matters-heading">By matter</h2>
+      <p class="view-lede">AI cost and Clio hours on each matter number across Harvey, Legora, Everlaw, and Clio.</p>
+    </div>
+    <div class="sheet-wrap">
+      <table class="sheet">
+        <caption class="visually-hidden">AI spend, hours, people, and tools by matter number.</caption>
+        <thead>
+          <tr>
+            <th scope="col">Matter</th>
+            <th scope="col">AI cost</th>
+            <th scope="col">Hours</th>
+            <th scope="col">People</th>
+            <th scope="col">Tools</th>
+          </tr>
+        </thead>
+        <tbody id="matter-rows"></tbody>
+      </table>
+    </div>
+    <p class="caps caps--16 insights-close">Files stay in this browser. Nothing is uploaded.</p>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container container--1200 site-footer-inner">
+    <div class="footer-industries">
+      <span class="caps caps--18">One platform · by industry</span>
+      <a href="/">Software and AI companies</a>
+      <a href="/law-firms/">Law firms</a>
+      <a href="/law-firms/insights/">Insights</a>
+      <a href="/law-firms/intake/" aria-current="page">Intake</a>
+    </div>
+    <span>Delta-V · Private beta</span>
+    <a href="mailto:partners@deltav.info">partners@deltav.info</a>
+  </div>
+</footer>
+
+<script type="module" src="/law-firms/intake/intake.js"></script>
+</body>
+</html>

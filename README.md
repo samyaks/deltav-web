@@ -12,16 +12,23 @@ public/                 everything that gets published
   talk/index.html       design partner intake form; every call to action links here
   talk.css, talk.js     styles and client logic for that form
   law-firms/index.html  law firms page
+  law-firms/insights/   sample month dashboard (static)
+  law-firms/intake/     CSV intake UI → org / user / matter rollups
   styles.css            law firms page styles; brand colours are CSS variables at the top
+  integrations/         browser copy of the CSV mappers (synced from integrations/)
   _headers              response headers Cloudflare Pages applies
   favicon.svg
   fonts/                Inter Tight and IBM Plex Mono (latin subsets, self-hosted) + OFL licences
   img/seats.svg         the 180-seat grid on the law firms page
+integrations/           Node CSV parsers, ingest rollups, and tests (not the marketing site)
 functions/api/leads.js  POST /api/leads: validates an intake and writes it to D1
 migrations/             D1 schema for the leads table
-scripts/dev.mjs         local preview server (no dependencies)
+scripts/dev.mjs         local preview server
+scripts/ingest.mjs      CLI: CSV paths → org / user / matter JSON
+scripts/sync-integrations.mjs
+                        copies integrations/*.mjs + examples into public/integrations/
 scripts/leads-csv.mjs   exports the leads table to leads.csv
-wrangler.toml           Pages project name, output directory, and the D1 binding
+wrangler.toml           Pages project name, output directory, and D1 configuration
 .github/workflows/deploy.yml
                         deploys public/ to Cloudflare Pages on every push to main
 ```
@@ -35,6 +42,33 @@ python3 -m http.server 8080 --directory public
 ```
 
 Or, with Node 18 or later, `npm run dev`. Then open http://localhost:8080. Edit files in `public/` and refresh the browser to see changes.
+
+## CSV intake (Harvey, Legora, Everlaw, Clio)
+
+The `integrations/` library maps privacy-safe CSV uploads into usage rows, then `ingestFeeds` rolls them up to the firm, each person, and each matter number. Clio time is hours and billed value; it stays separate from AI spend.
+
+```bash
+npm test
+npm run ingest -- --demo
+npm run ingest -- path/to/harvey-usage.csv path/to/clio-time.csv
+```
+
+In the browser, open `/law-firms/intake/`, load the sample month, or drop CSVs. Files stay in the browser. Known feeds:
+
+| Feed | Headers |
+|------|---------|
+| Harvey usage | `user,at,matter_number,product,action,id` |
+| Harvey matters | `matter_number,users,queries,id` |
+| Legora credits | `member,feature,project,credits,at` |
+| Legora audit | `member,action,at` |
+| Everlaw usage | `user,at,matter_number,action,docs,id` |
+| Everlaw projects | `matter_number,users,docs,id` |
+| Clio time | `user,at,matter_number,hours,rate,id` |
+| Clio matters | `matter_number,status,id` |
+
+Prompts, answers, documents, notes, descriptions, and client names are refused.
+
+## Running the design partner form locally
 
 That server only serves static files. To run `/talk` and its endpoint, use Wrangler instead:
 
