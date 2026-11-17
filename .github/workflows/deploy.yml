@@ -43,14 +43,23 @@ jobs:
           fi
 
       - name: Create the Pages project if needed
-        id: create
-        continue-on-error: true
-        uses: cloudflare/wrangler-action@v4
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          wranglerVersion: "4"
-          command: pages project create deltav-web --production-branch main
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -euo pipefail
+          auth=(-H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" -H "Content-Type: application/json")
+          api="https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/pages/projects"
+          projects=$(curl -sS "${auth[@]}" "$api")
+          echo "$projects" | jq '{success, errors: [.errors[]? | {code, message}], names: [.result[]?.name]}'
+          if echo "$projects" | jq -e '.result[]? | select(.name == "deltav-web")' >/dev/null; then
+            echo "deltav-web already exists"
+            exit 0
+          fi
+          created=$(curl -sS -X POST "${auth[@]}" "$api" --data '{"name":"deltav-web","production_branch":"main"}')
+          echo "$created" | jq '{success, errors: [.errors[]? | {code, message}], name: .result.name}'
+          # 8000002 is "a project with this name already exists".
+          echo "$created" | jq -e '.success == true or (.errors[]? | .code == 8000002)' >/dev/null
 
       - name: Deploy
         uses: cloudflare/wrangler-action@v4
@@ -139,7 +148,12 @@ jobs:
           echo "$zone" | jq '{success, errors: [.errors[]? | {code, message}], zones: [.result[]? | {id, name, status}]}'
           zid=$(echo "$zone" | jq -r '.result[0].id // empty')
           if [ -z "$zid" ]; then
-            echo "This token cannot read the deltav.info zone, so DNS was not changed."
+            status=$(echo "$domain" | jq -r '.result.status // empty')
+            if [ "$status" = "active" ]; then
+              echo "This token cannot read the deltav.info zone. deltav.info is already active on Pages, so DNS was left as it is."
+              exit 0
+            fi
+            echo "This token cannot read the deltav.info zone, and deltav.info is not active on Pages."
             exit 1
           fi
           recs=$(curl -sS "${auth[@]}" "$api/zones/${zid}/dns_records?per_page=100")
