@@ -65,7 +65,7 @@ For now the "Get my free audit" button opens an email to partners@deltav.info, a
 - **Industry links:** the footer of each page links to the other. Home is `/`. Law firms is `/law-firms/`.
 - **Sample numbers:** both pages use illustrative data, labelled "Sample data". If you change the seat counts on the law firms page, regenerate `img/seats.svg` to match.
 - **Guides and white paper:** the home page cards link to `/guides/return-on-ai-coding-tools/`, `/guides/track-ai-spend/` and `/white-paper/`. Those pages share `article.css`.
-- **Wording:** the product is DeltaV, and copy says "return", not "ROI". Source titles that contain "ROI" stay as published. No em dashes.
+- **Wording on the software side:** the product is DeltaV, and copy says "return", not "ROI". Source titles that contain "ROI" stay as published. No em dashes.
 
 ## Source design
 
