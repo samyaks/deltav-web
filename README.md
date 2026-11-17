@@ -20,20 +20,15 @@ public/                 everything that gets published
   favicon.svg
   fonts/                Inter Tight and IBM Plex Mono (latin subsets, self-hosted) + OFL licences
   img/seats.svg         the 180-seat grid on the law firms page
-<<<<<<< HEAD
 integrations/           Node CSV parsers, ingest rollups, and tests (not the marketing site)
-scripts/dev.mjs         local preview server (no dependencies)
+functions/api/leads.js  POST /api/leads: validates an intake and writes it to D1
+migrations/             D1 schema for the leads table
+scripts/dev.mjs         local preview server
 scripts/ingest.mjs      CLI: CSV paths → org / user / matter JSON
 scripts/sync-integrations.mjs
                         copies integrations/*.mjs + examples into public/integrations/
-wrangler.toml           Pages project name and output directory
-=======
-functions/api/leads.js  POST /api/leads: validates an intake and writes it to D1
-migrations/             D1 schema for the leads table
-scripts/dev.mjs         local preview server (no dependencies)
 scripts/leads-csv.mjs   exports the leads table to leads.csv
-wrangler.toml           Pages project name, output directory, and the D1 binding
->>>>>>> origin/main
+wrangler.toml           Pages project name, output directory, and D1 configuration
 .github/workflows/deploy.yml
                         deploys public/ to Cloudflare Pages on every push to main
 ```
@@ -48,8 +43,7 @@ python3 -m http.server 8080 --directory public
 
 Or, with Node 18 or later, `npm run dev`. Then open http://localhost:8080. Edit files in `public/` and refresh the browser to see changes.
 
-<<<<<<< HEAD
-## CSV intake (Harvey, Legora, Everlaw)
+## CSV intake (Harvey, Legora, Everlaw, Clio)
 
 The `integrations/` library maps privacy-safe CSV uploads into usage rows, then `ingestFeeds` rolls them up to the firm, each person, and each matter number. Clio time is hours and billed value; it stays separate from AI spend.
 
@@ -73,7 +67,9 @@ In the browser, open `/law-firms/intake/`, load the sample month, or drop CSVs. 
 | Clio matters | `matter_number,status,id` |
 
 Prompts, answers, documents, notes, descriptions, and client names are refused.
-=======
+
+## Running the design partner form locally
+
 That server only serves static files. To run `/talk` and its endpoint, use Wrangler instead:
 
 ```bash
@@ -102,7 +98,6 @@ npx wrangler pages secret put TURNSTILE_SECRET --project-name deltav-web
 ```
 
 Create the Turnstile widget for `deltav.info` at https://dash.cloudflare.com/?to=/:account/turnstile, then put its site key in the `data-sitekey` attribute in `public/talk/index.html` and its secret key into the command above. D1 and Turnstile both stay within Cloudflare's free plan.
->>>>>>> origin/main
 
 ## Hosting on Cloudflare Pages
 
