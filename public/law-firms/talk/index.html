@@ -26,7 +26,6 @@
       <span class="brand-name">Delta-V</span>
     </a>
     <nav class="site-nav" aria-label="Law firms">
-      <a href="/law-firms/#integrations">Integrations</a>
       <details class="nav-menu">
         <summary>Insights</summary>
         <div class="nav-menu-panel">
@@ -128,8 +127,9 @@
         <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
       </div>
 
-      <!-- Same test key as /talk. Replace both data-sitekey values with the deltav.info widget. -->
-      <div class="turnstile cf-turnstile" id="turnstile" data-sitekey="1x00000000000000000000AA" data-theme="light"></div>
+      <!-- Site key for the Turnstile widget "deltav-talk" (hostname deltav.info).
+           For local testing use Cloudflare's test key, 1x00000000000000000000AA. -->
+      <div class="turnstile cf-turnstile" id="turnstile" data-sitekey="0x4AAAAAAGF6D1ikfjk7EimB" data-theme="light"></div>
       <p class="field-error" id="turnstile-error"></p>
 
       <button class="btn btn--lg talk-submit" id="talk-submit" type="submit">Send</button>

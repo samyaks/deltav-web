@@ -27,7 +27,14 @@
       <span class="brand-name">DeltaV</span>
     </a>
     <nav class="nav" aria-label="Main">
-      <a href="#guides">Guides</a>
+      <details class="nav-menu">
+        <summary>Guides</summary>
+        <div class="nav-menu-panel">
+          <a href="/guides/return-on-ai-coding-tools/">Return on AI coding tools</a>
+          <a href="/guides/track-ai-spend/">Track AI spend</a>
+          <a href="/white-paper/">AI ROI Whitepaper</a>
+        </div>
+      </details>
       <a href="/talk?from=talk-to-us">Talk to us</a>
     </nav>
   </div>
@@ -37,7 +44,6 @@
 
   <section class="hero" aria-labelledby="hero-heading">
     <div class="wrap wrap--1040 hero-inner">
-      <p class="kicker kicker--muted">AI spend and return</p>
       <h1 id="hero-heading" class="h1">Is your AI spend paying off?</h1>
       <p class="lede">See what every AI dollar returns. Then move your spend to where it pays off.</p>
       <a class="btn" href="/talk?from=book-20-minutes">Talk to us</a>
@@ -48,7 +54,7 @@
     <div class="wrap wrap--1080 demo-inner">
       <div class="demo-card">
         <div class="demo-chat">
-          <p class="ask-label">→ Ask DeltaV</p>
+          <p class="ask-label">→ Ask Delta-V</p>
           <p class="bubble">Is our AI spend paying off?</p>
           <p class="demo-answer">Mostly. Model API spend is tracking with shipped work. Two things stand out: <span class="text-statement">34 coding seats sat unused</span>, and one support agent ran <span class="text-statement">3x its usual cost</span> on Tuesday.</p>
           <p class="bubble bubble--ghost">What should we do?</p>
@@ -203,8 +209,10 @@
     <div class="wrap wrap--760 band-inner">
       <h2 id="talk-heading" class="h2">Working on this now?</h2>
       <p class="section-lede">We've built the cost engine. We're building the rest with three to four engineering and finance teams. Yours could be one.</p>
-      <a class="btn" href="/talk?from=book-20-minutes">Talk to us</a>
-      <p class="cta-email">or email <a href="mailto:partners@deltav.info">partners@deltav.info</a></p>
+      <div class="cta-actions">
+        <a class="btn" href="/talk?from=book-20-minutes">Talk to us</a>
+        <p class="cta-email">or email <a href="mailto:partners@deltav.info">partners@deltav.info</a></p>
+      </div>
       <p class="cta-note">Private beta · Design partners</p>
     </div>
   </section>
@@ -220,9 +228,6 @@
     </div>
     <span>DeltaV · Private beta</span>
     <nav class="footer-nav" aria-label="Footer">
-      <a href="/guides/return-on-ai-coding-tools/">Guide: Return on AI coding tools</a>
-      <a href="/guides/track-ai-spend/">Guide: Track AI spend</a>
-      <a href="/white-paper/">White paper: AI spend and return</a>
       <a href="https://deltav.info/tour">Early product</a>
       <a href="mailto:contact@deltav.info">contact@deltav.info</a>
     </nav>
