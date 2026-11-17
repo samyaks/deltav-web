@@ -6,6 +6,9 @@ Marketing site for Delta-V: a home page for software and AI companies, plus the 
 public/                 everything that gets published
   index.html            home page (software and AI companies)
   home.css              home page styles; accent and statement colours are CSS variables
+  white-paper/          white paper: the AI question software companies can't answer yet
+  guides/               the two guides linked from the home page
+  article.css           shared styles for the white paper and the guides
   law-firms/index.html  law firms page
   styles.css            law firms page styles; brand colours are CSS variables at the top
   _headers              response headers Cloudflare Pages applies
@@ -61,7 +64,8 @@ For now the "Get my free audit" button opens an email to partners@deltav.info, a
 - **Law firms copy:** `public/law-firms/index.html`. **Law firms colours:** `--accent` (blue) and `--statement` (pink) at the top of `styles.css`. That design also tried these accent options: `#8FB0FF`, `#1C2F6B`, `#1F5C45`.
 - **Industry links:** the footer of each page links to the other. Home is `/`. Law firms is `/law-firms/`.
 - **Sample numbers:** both pages use illustrative data, labelled "Sample data". If you change the seat counts on the law firms page, regenerate `img/seats.svg` to match.
-- **Guides:** the home page includes the two guide cards from the design. The guide articles were not in that export, so those cards and the matching footer links stay on the guides section.
+- **Guides and white paper:** the home page cards link to `/guides/return-on-ai-coding-tools/`, `/guides/track-ai-spend/` and `/white-paper/`. Those pages share `article.css`.
+- **Wording on the software side:** the product is DeltaV, and copy says "return", not "ROI". Source titles that contain "ROI" stay as published. No em dashes.
 
 ## Source design
 

@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>White paper: the AI question software companies can't answer yet · DeltaV</title>
+<meta name="description" content="Why boards want proof of AI return, why today's tracking wouldn't survive a budget review, and what a number that holds up needs.">
+<meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DeltaV">
+<meta property="og:title" content="The AI question software companies can't answer yet">
+<meta property="og:description" content="Why boards want proof of AI return, why today's tracking wouldn't survive a budget review, and what a number that holds up needs.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/ibm-plex-mono-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/article.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <a class="brand" href="/" aria-label="DeltaV home">
+    <svg width="26" height="26" viewBox="0 0 96 96" aria-hidden="true"><path d="M48 12 L86 82 L10 82 Z" fill="none" stroke="#ffffff" stroke-width="7" stroke-linejoin="round"/><line x1="28" y1="60" x2="68" y2="60" stroke="#ffffff" stroke-width="8"/></svg>
+    <span class="brand-name">DeltaV</span>
+  </a>
+  <a class="back-link" href="/">Back to home</a>
+</header>
+
+<main id="main">
+<article class="article article--wide">
+
+  <p class="kicker">White paper · Software companies</p>
+  <h1>The AI Question Software Companies Can't Answer Yet</h1>
+  <p class="byline">Nov 13, 2026 · Saagar K</p>
+  <p class="disclosure">Published by DeltaV, which sells software for the tracking this paper describes.</p>
+
+  <p>Uber spent its entire 2026 AI budget in the first four months of the year, and its COO said the spending had not produced a measurable rise in projects or productivity (<a href="https://techcrunch.com/2026/05/29/coders-are-refusing-to-work-without-ai-and-that-could-come-back-to-bite-them/">TechCrunch</a>, citing The Information). Few companies are that exposed, but most are being asked the same question. In CloudZero's June 2026 survey of 260 finance leaders, 66% said their board now makes further AI funding conditional on proof of return, and 43% said they are already being asked for a number they can't produce (<a href="https://www.cloudzero.com/finance-needs-ai-roi-2026-survey-report/">CloudZero</a>).</p>
+  <p>Finance already knows what proof looks like. A number holds up in a budget review when it can be traced back to a system of record. AI spend now needs the same standard: a record of what each team spent on which AI tools, how much they used them, and what work shipped, drawn from vendor and delivery systems rather than surveys, that holds up when the CFO asks.</p>
+
+  <h2>The AI mix inside software companies today</h2>
+  <p>Software companies are no longer choosing one AI tool. Engineers use several, bought by different people and billed in different ways. In JetBrains' survey for May to July 2026, 90% of professional developers used AI coding agents at work at least weekly and 68% used them daily (<a href="https://blog.jetbrains.com/research/2026/08/ai-coding-agent-adoption-2026/">JetBrains</a>). In The Pragmatic Engineer's 2026 survey, 70% of respondents used between two and four AI tools at the same time (<a href="https://newsletter.pragmaticengineer.com/p/ai-tooling-2026">The Pragmatic Engineer</a>).</p>
+  <p>The mix also moves faster than a contract cycle. Between January and mid-2026, Claude Code rose from 18% to 39% of developers using it at work, while GitHub Copilot fell from 29% to 21% and Cursor from 18% to 12% (JetBrains). A seat decision made in the first quarter was out of date by the third.</p>
+  <p>Company size changes the mix. At companies with more than 10,000 people, 56% of respondents used Copilot. At the smallest startups, 75% used Claude Code and 42% used Cursor (The Pragmatic Engineer). Neither survey reports mid-sized software companies separately.</p>
+
+  <div class="table-scroll">
+    <table class="data-table">
+      <caption class="visually-hidden">Where AI spend lives</caption>
+      <thead>
+        <tr><th scope="col">Category</th><th scope="col">Examples</th><th scope="col">Where the cost and usage record lives</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Coding assistants and agents</th><td>GitHub Copilot, Cursor, Claude Code, OpenAI Codex</td><td>Each vendor's admin console and usage reports</td></tr>
+        <tr><th scope="row">General-purpose assistants</th><td>ChatGPT Enterprise, Claude, Gemini, Microsoft 365 Copilot</td><td>Each vendor's admin console</td></tr>
+        <tr><th scope="row">Model APIs behind products and agents the company builds</th><td>Anthropic, OpenAI and Google APIs</td><td>Vendor usage and cost reports, by key, workspace or project</td></tr>
+        <tr><th scope="row">Cloud AI services</th><td>Amazon Bedrock, Azure OpenAI, Google Vertex AI</td><td>The cloud bill, by account and tag</td></tr>
+        <tr><th scope="row">AI built into existing software</th><td>AI add-ons in work tools the company already buys</td><td>Inside each host product's invoice, often as a price rise at renewal</td></tr>
+        <tr><th scope="row">Unapproved AI</th><td>Personal ChatGPT, Claude or Gemini accounts</td><td>Nowhere the company controls</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>Billing is moving from seats to meters. GitHub moved every Copilot plan to usage-based billing on June 1, 2026, and Cursor bills third-party models by usage on top of its plans (<a href="https://www.developersdigest.tech/blog/ai-coding-tools-pricing-2026">Developers Digest</a>). A seat price is now a floor. One long-running agent can use a week's allowance in an afternoon.</p>
+  <p>Ownership is spread just as thinly. 98% of FinOps teams now manage AI spend, up from 31% two years ago (<a href="https://www.linuxfoundation.org/press/state-of-finops-survey-ai-value-and-skills-top-priorities-as-finops-matures-across-technology-value-98-manage-ai-90-saas-64-licensing-48-data-center-1">FinOps Foundation</a>). Yet when Harness asked who is accountable for AI costs, no function reached a third of answers: platform and DevOps 30%, FinOps 27%, finance 23%, engineering 19% (<a href="https://www.harness.io/state-of-ai-in-finops-2026">Harness</a>).</p>
+  <p>Unapproved AI is common. In a March 2026 survey of 2,001 UK and US employees, 48% used AI tools their employer had not approved, and IT and telecoms workers were the most likely to (<a href="https://www.trustedtechteam.com/blogs/security/shadow-ai-executives-workplace-risk">TrustedTech</a>).</p>
+  <p>So "what do we spend on AI, and what did it produce?" has no single place to look. Each tool keeps its own record, and some keep none the company can see.</p>
+
+  <h2>The two questions a company must be able to answer</h2>
+
+  <h3>"What are we spending on AI, and who is using it?"</h3>
+  <ul>
+    <li>Only 22% of finance leaders can tie AI spend to business outcomes, though 87% say they need to within a year (CloudZero).</li>
+    <li>With metered billing, the invoice no longer equals seats times price. Usage-based charges land after the month closes, on a different line from the licenses.</li>
+    <li>Nearly half of employees use AI their employer has not approved (TrustedTech), so some use never reaches any bill the company sees.</li>
+  </ul>
+  <p>Answering it needs a dated record: which tool, which person and team, how much use, what cost. An invoice total is a starting point, not that record.</p>
+
+  <h3>"What did it return?"</h3>
+  <ul>
+    <li>Gartner reports that 90% of engineering leaders see improvements from AI coding agents, but only 35% report significant ROI across the development lifecycle (Gartner, via <a href="https://www.thinslices.com/insights/ai-coding-agents-measuring-roi-before-you-scale-them">Thinslices</a>).</li>
+    <li>Self-reports mislead. In METR's 2025 controlled trial, experienced developers believed AI had made them about 20% faster when they had been 19% slower. METR now thinks developers are likely sped up in 2026, and still calls self-reported speedups unreliable (<a href="https://metr.org/blog/2026-02-24-uplift-update/">METR</a>).</li>
+    <li>More output is not the same as more delivered. Across 22,000 developers, Faros found tasks completed per developer up 34% under high AI adoption, with bugs per developer up 54% (<a href="https://www.faros.ai/blog/are-ai-coding-assistants-really-saving">Faros</a>) and median review time up more than fourfold (Faros, via <a href="https://rdel.substack.com/p/rdel-157-how-should-engineering-leaders">RDEL</a>).</li>
+  </ul>
+  <p>Both questions need the same thing: a per-team record that puts AI cost next to delivered work, which finance can check.</p>
+
+  <h2>Why today's tracking wouldn't hold up in a budget review</h2>
+  <p>Most companies can show that AI is deployed, not what it returned. In KPMG's Q2 2026 Global AI Pulse of 2,145 senior leaders, only 7% had established ROI for their AI investments. Organizations with strong visibility into their AI spending were five times more likely to have done so, 15% against 3% (KPMG, via <a href="https://aiassemblylines.com/post/how-to-prove-ai-roi-to-the-board-3-measurement-gaps">AI Assembly Lines</a>).</p>
+
+  <div class="table-scroll">
+    <table class="data-table">
+      <caption class="visually-hidden">How AI is tracked today</caption>
+      <thead>
+        <tr><th scope="col">How AI is tracked today</th><th scope="col">Source of the record</th><th scope="col">Would it hold up if the CFO challenged it?</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Developer surveys of time saved</th><td>An engineer's estimate</td><td>No: unchecked, and the METR trial shows how far estimates drift</td></tr>
+        <tr><th scope="row">Seat counts and license totals</th><td>Procurement records</td><td>No: shows access, not use</td></tr>
+        <tr><th scope="row">Lines of code or suggestion acceptance</th><td>Each tool's own activity stats</td><td>No: activity inside the tool, not work shipped</td></tr>
+        <tr><th scope="row">One vendor's admin dashboard</th><td>That vendor's logs</td><td>Partly: real logs, but one tool, no outcome</td></tr>
+        <tr><th scope="row">The monthly invoice or cloud bill</th><td>Finance systems</td><td>Partly: real cost, but no team, and it arrives after the money is spent</td></tr>
+        <tr><th scope="row">Delivery metrics alone</th><td>Git and the issue tracker</td><td>Partly: real outcomes, but no cost, and AI use isn't marked</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>The pieces of a record that holds up exist, but in separate systems. Cost and usage sit with each vendor and the cloud bill. Identity and team sit with IT and HR. Shipped work sits in Git and the issue tracker. Nothing joins them.</p>
+
+  <h2>What makes an AI number hold up</h2>
+  <p>A number that survives a budget review has four properties:</p>
+  <ol>
+    <li><strong>From system records, not surveys.</strong> Cost and usage come from vendor admin, usage and billing reports, not estimates.</li>
+    <li><strong>Tied to a person and a team.</strong> Each seat and key maps to a real person or workload through the identity provider, and to a team.</li>
+    <li><strong>Tied to delivered work.</strong> Cost sits next to an outcome the team already trusts, such as merged pull requests, cycle time or tickets closed.</li>
+    <li><strong>Complete, and honest about the rest.</strong> It includes usage-based charges and API spend as well as seats, keeps an explicit unattributed bucket, and states what it can't see.</li>
+  </ol>
+  <p>Most of this data already exists inside the company's systems:</p>
+
+  <div class="table-scroll">
+    <table class="data-table">
+      <caption class="visually-hidden">The four layers</caption>
+      <thead>
+        <tr><th scope="col">Layer</th><th scope="col">Where the data comes from</th><th scope="col">What it proves</th><th scope="col">What it can't prove</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Identity</th><td>Identity provider (Okta, Microsoft Entra ID) and the HR system</td><td>Who has access to which AI tools, and which team they are on</td><td>How much each tool was used</td></tr>
+        <tr><th scope="row">Seats and usage</th><td>Vendor admin reports for coding and chat assistants</td><td>Per-person usage and spend, by tool and day</td><td>What that use produced</td></tr>
+        <tr><th scope="row">APIs and cloud AI</th><td>Model vendors' usage and cost reports by key, workspace or project; cloud billing by account and tag</td><td>Exact cost per product, agent or workload</td><td>Anything nobody tagged</td></tr>
+        <tr><th scope="row">Delivery</th><td>GitHub or GitLab, and Jira or Linear</td><td>What each team shipped, and when</td><td>Whether AI was used on that work</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>Agents and API workloads can be the easiest AI spend to account for, if the company designs for it. When a workload runs under its own key, project or tag, the vendor's billing report becomes the per-workload record. Without that, it is one more anonymous line on the API bill.</p>
+  <p>Joined, the four layers answer both questions from system records. Three limits stay. AI used through personal accounts never appears in company records, so the AI policy still matters. Cost per outcome shows association, not proof of cause, and should be presented that way. And output needs a quality measure beside it, because more merged code can also mean more review and more bugs.</p>
+  <p>The record never needs prompts or source code. Usage, cost and delivery metadata are enough to show what was spent where and what shipped.</p>
+
+  <h2>The payoff: renewals, budgets and where to invest</h2>
+  <p>The same record that answers the CFO also shows where the money should go.</p>
+  <ul>
+    <li><strong>Renewals based on use.</strong> The tool mix shifted by double digits in two quarters (JetBrains). Seat-level usage shows which licenses earn their cost, and which plan each person needs.</li>
+    <li><strong>Forecastable AI spend.</strong> With metered billing, cost follows usage, not headcount. A per-team record turns a surprise overage into a forecast, and shows which workload caused a spike.</li>
+    <li><strong>Investment that follows return.</strong> Finance teams that can't measure AI outcomes are twice as likely to have held back investment (75% against 38%) and three times as likely to have stopped an initiative (35% against 11%) as those that can (CloudZero, via <a href="https://www.cloudzero.com/blog/cfo-questions-ai-spend/">CloudZero blog</a>). Cost per outcome by team shows where more budget is justified.</li>
+  </ul>
+  <p><em>Example data (illustrative):</em> a company spends $34,100 a month on AI. Platform spends $11,400 and merges 310 pull requests, $37 each. Support spends $13,500 and merges 96, $141 each. 34 coding seats went unused, $1,360 a month. The decisions follow: reclaim the seats, cap the support agent, give Platform more.</p>
+
+  <h2>How DeltaV helps</h2>
+  <p>DeltaV builds one record of AI spend and what it returned. It joins vendor usage and billing reports, identity and delivery data into one vendor-neutral view, so a company can answer finance with evidence and move spend to where it pays off.</p>
+
+  <div class="table-scroll">
+    <table class="data-table">
+      <caption class="visually-hidden">What DeltaV does</caption>
+      <thead>
+        <tr><th scope="col"><span class="visually-hidden">Part of the product</span></th><th scope="col">What DeltaV does</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row" class="strong">See</th><td>Every AI cost in one view: coding and chat seats, model APIs and cloud AI, from each vendor's own admin and billing reports, tied to people and teams.</td></tr>
+        <tr><th scope="row" class="strong">Return</th><td>AI cost next to the work each team shipped, as cost per merged pull request or another outcome the team already trusts.</td></tr>
+        <tr><th scope="row" class="strong">Refocus</th><td>Four kinds of moves, each one approved by you: cut cost with no return, cap cost that is outrunning return, shift work to a cheaper model or plan, invest where return is well above cost.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>DeltaV works from usage, cost and delivery metadata. It does not need prompts or source code.</p>
+  <p>DeltaV is in private beta. The cost engine is built, and the rest is being built with three to four engineering and finance teams as design partners.</p>
+  <p>How to start:</p>
+  <ol>
+    <li><strong>Spend and seat review:</strong> grant read-only admin access to your coding-tool and model accounts. Get one view of spend, active use and idle seats.</li>
+    <li><strong>One-team pilot:</strong> add Git data for one or two teams. Get cost per outcome for those teams, compared over time.</li>
+    <li><strong>Company-wide:</strong> identity, cloud billing and issue-tracker connections, budgets by team, and a monthly review finance can read.</li>
+  </ol>
+
+  <div class="article-cta">
+    <h2>Working on this now?</h2>
+    <p class="email">Email <a href="mailto:partners@deltav.info">partners@deltav.info</a></p>
+    <a class="btn" href="mailto:partners@deltav.info?subject=DeltaV%20design%20partner">Book 20 minutes</a>
+  </div>
+
+  <h2>Sources</h2>
+  <p>Several surveys below were commissioned by vendors that sell cost or engineering measurement tools (CloudZero, Harness, Faros, TrustedTech). Figures marked "via" were read in a secondary report, not the original. Example data is illustrative.</p>
+  <ul>
+    <li><a href="https://techcrunch.com/2026/05/29/coders-are-refusing-to-work-without-ai-and-that-could-come-back-to-bite-them/">TechCrunch: Coders are refusing to work without AI</a> (Uber's AI budget, citing The Information)</li>
+    <li><a href="https://www.cloudzero.com/finance-needs-ai-roi-2026-survey-report/">CloudZero: Finding the ROI of AI, the finance perspective</a> (June 2026)</li>
+    <li><a href="https://www.cloudzero.com/blog/cfo-questions-ai-spend/">CloudZero blog: The three questions every CFO should be asking about AI spend</a></li>
+    <li><a href="https://blog.jetbrains.com/research/2026/08/ai-coding-agent-adoption-2026/">JetBrains: AI coding agents, adoption trends</a> (August 2026)</li>
+    <li><a href="https://newsletter.pragmaticengineer.com/p/ai-tooling-2026">The Pragmatic Engineer: AI tooling for software engineers in 2026</a></li>
+    <li><a href="https://www.developersdigest.tech/blog/ai-coding-tools-pricing-2026">Developers Digest: AI coding tools pricing comparison 2026</a></li>
+    <li><a href="https://www.linuxfoundation.org/press/state-of-finops-survey-ai-value-and-skills-top-priorities-as-finops-matures-across-technology-value-98-manage-ai-90-saas-64-licensing-48-data-center-1">FinOps Foundation: State of FinOps 2026 announcement</a></li>
+    <li><a href="https://www.harness.io/state-of-ai-in-finops-2026">Harness: State of AI in FinOps 2026</a></li>
+    <li><a href="https://www.trustedtechteam.com/blogs/security/shadow-ai-executives-workplace-risk">TrustedTech: Shadow AI survey</a> (March 2026)</li>
+    <li><a href="https://www.thinslices.com/insights/ai-coding-agents-measuring-roi-before-you-scale-them">Thinslices: AI coding agents, measuring ROI before you scale them</a> (Gartner figures)</li>
+    <li><a href="https://metr.org/blog/2026-02-24-uplift-update/">METR: Changing our developer productivity experiment design</a> (February 2026)</li>
+    <li><a href="https://www.faros.ai/blog/are-ai-coding-assistants-really-saving">Faros: Are AI coding assistants really saving time, money and effort?</a></li>
+    <li><a href="https://rdel.substack.com/p/rdel-157-how-should-engineering-leaders">RDEL #157: How should engineering leaders measure the ROI of AI?</a> (Faros review-time figure)</li>
+    <li><a href="https://aiassemblylines.com/post/how-to-prove-ai-roi-to-the-board-3-measurement-gaps">AI Assembly Lines: How to prove AI ROI to the board</a> (KPMG Q2 2026 Global AI Pulse figures)</li>
+  </ul>
+
+  <p class="article-more">Back to: <a href="/">DeltaV home</a></p>
+
+</article>
+</main>
+
+</body>
+</html>
