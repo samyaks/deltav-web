@@ -1,0 +1,127 @@
+/* Law-firm intake at /law-firms/talk/. Tokens come from styles.css. */
+
+[hidden] { display: none !important; }
+
+.legal-talk {
+  padding-top: 72px;
+  padding-bottom: 96px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 560px;
+}
+.legal-talk h1 {
+  font-size: clamp(2.25rem, 5vw, 3.25rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  font-weight: 400;
+  max-width: 16ch;
+}
+.legal-lede {
+  max-width: 42ch;
+  font-size: clamp(1.0625rem, 2vw, 1.25rem);
+  line-height: 1.45;
+  color: var(--text-2);
+}
+
+.talk-form {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+.field-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 0;
+}
+.field-input {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  background: var(--white);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.4;
+}
+.field-input:hover { border-color: var(--ink-2); }
+.field-textarea { resize: vertical; min-height: 110px; }
+select.field-input {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+  background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+}
+
+.field-error {
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--statement);
+}
+.field-error:empty, .form-message:empty { display: none; }
+.form-message {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--statement);
+}
+
+.checkboxes { gap: 10px; }
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  color: var(--ink);
+}
+.checkbox input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+}
+
+.honeypot {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.turnstile:empty { display: none; }
+
+.talk-submit { align-self: flex-start; }
+.talk-submit[disabled] { opacity: 0.6; cursor: default; }
+
+.talk-done {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.talk-done a { color: var(--accent); }
+
+.legal-fallback { font-size: 15px; color: var(--text-2); }
+.legal-fallback a { color: var(--text-2); }
+
+@media (max-width: 640px) {
+  .legal-talk { padding-top: 40px; padding-bottom: 72px; }
+}
