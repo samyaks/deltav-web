@@ -13,7 +13,7 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/styles.css?v=3">
-<link rel="stylesheet" href="/insights.css?v=2">
+<link rel="stylesheet" href="/insights.css?v=3">
 </head>
 <body>
 
@@ -44,11 +44,12 @@
   <section class="container container--1080 insights" aria-labelledby="insights-heading">
     <p class="caps caps--16">Sample data · This month</p>
     <h1 id="insights-heading">Where the firm's AI went.</h1>
-    <p class="insights-lede">Harvey, Legora, and Copilot across the firm, the departments, and the matters. Counts and dollars. No prompts, no documents, no client names.</p>
+    <p class="insights-lede">Harvey, Legora, and Copilot across the firm, the departments, the people, and the matters. Counts and dollars. No prompts, no documents, no client names.</p>
     <nav class="insights-nav" aria-label="On this view">
       <a href="#moves">What to do</a>
       <a href="#tools">Tools</a>
       <a href="#departments">Departments</a>
+      <a href="#staff">Staff</a>
       <a href="#matters">Matters</a>
     </nav>
   </section>
@@ -202,6 +203,77 @@
       </tbody>
     </table>
     </div>
+  </section>
+
+  <section id="staff" class="container container--1080 view" aria-labelledby="staff-heading">
+    <div class="view-head">
+      <h2 id="staff-heading">Human hours by staff</h2>
+      <p class="view-lede">Hours logged this month. The mark is the share of those hours where an AI tool was used.</p>
+    </div>
+    <figure class="staff-chart">
+      <div class="staff-chart-head" aria-hidden="true">
+        <span>Staff</span>
+        <span>Human hours</span>
+        <span>AI usage</span>
+      </div>
+      <ul>
+        <li>
+          <div class="staff-who">
+            <p class="staff-name">Priya Nair</p>
+            <p class="staff-role">Associate · Litigation</p>
+          </div>
+          <div class="staff-track" aria-hidden="true"><span style="width: 96.7%"></span></div>
+          <p class="staff-hours">174 h</p>
+          <p class="ai-mark ai-mark--high"><span class="ai-dot" aria-hidden="true"></span><span class="visually-hidden">AI usage </span>48%</p>
+        </li>
+        <li>
+          <div class="staff-who">
+            <p class="staff-name">Jonah Ellis</p>
+            <p class="staff-role">Senior associate · Corporate</p>
+          </div>
+          <div class="staff-track" aria-hidden="true"><span style="width: 90%"></span></div>
+          <p class="staff-hours">162 h</p>
+          <p class="ai-mark ai-mark--high"><span class="ai-dot" aria-hidden="true"></span><span class="visually-hidden">AI usage </span>71%</p>
+        </li>
+        <li>
+          <div class="staff-who">
+            <p class="staff-name">Chris Dalton</p>
+            <p class="staff-role">Associate · Employment</p>
+          </div>
+          <div class="staff-track" aria-hidden="true"><span style="width: 83.9%"></span></div>
+          <p class="staff-hours">151 h</p>
+          <p class="ai-mark ai-mark--low"><span class="ai-dot" aria-hidden="true"></span><span class="visually-hidden">AI usage </span>6%</p>
+        </li>
+        <li>
+          <div class="staff-who">
+            <p class="staff-name">Sam Ortega</p>
+            <p class="staff-role">Paralegal · Corporate</p>
+          </div>
+          <div class="staff-track" aria-hidden="true"><span style="width: 81.1%"></span></div>
+          <p class="staff-hours">146 h</p>
+          <p class="ai-mark ai-mark--low"><span class="ai-dot" aria-hidden="true"></span><span class="visually-hidden">AI usage </span>0%</p>
+        </li>
+        <li>
+          <div class="staff-who">
+            <p class="staff-name">Elena Voss</p>
+            <p class="staff-role">Counsel · IP</p>
+          </div>
+          <div class="staff-track" aria-hidden="true"><span style="width: 65.6%"></span></div>
+          <p class="staff-hours">118 h</p>
+          <p class="ai-mark ai-mark--high"><span class="ai-dot" aria-hidden="true"></span><span class="visually-hidden">AI usage </span>58%</p>
+        </li>
+        <li>
+          <div class="staff-who">
+            <p class="staff-name">Amina Shah</p>
+            <p class="staff-role">Partner · Corporate</p>
+          </div>
+          <div class="staff-track" aria-hidden="true"><span style="width: 51.1%"></span></div>
+          <p class="staff-hours">92 h</p>
+          <p class="ai-mark ai-mark--mid"><span class="ai-dot" aria-hidden="true"></span><span class="visually-hidden">AI usage </span>19%</p>
+        </li>
+      </ul>
+      <figcaption class="staff-note">Bars are out of 180 hours. Blue is AI on 40 percent or more of the hours. Pink is under 10 percent. Sample names.</figcaption>
+    </figure>
   </section>
 
   <section id="matters" class="container container--1080 view" aria-labelledby="matters-heading">
