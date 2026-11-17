@@ -222,9 +222,21 @@
 .staff-note { margin-top: 12px; font-size: 13px; line-height: 1.45; color: var(--muted); }
 
 .hours-chart { margin: 0; }
+.hours-scale {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr) 2rem;
+  column-gap: 8px;
+  margin-bottom: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.hours-scale span:last-child { grid-column: 3; text-align: right; }
 .hours-plot {
   display: grid;
-  grid-template-columns: 2rem minmax(0, 1fr);
+  grid-template-columns: 2rem minmax(0, 1fr) 2rem;
   column-gap: 8px;
   row-gap: 8px;
 }
@@ -242,9 +254,11 @@
   font-variant-numeric: tabular-nums;
   color: var(--muted);
 }
+.hours-yaxis--right { grid-column: 3; align-items: flex-start; }
 .hours-canvas { grid-column: 2; grid-row: 1; min-width: 0; }
 .hours-chart svg { display: block; width: 100%; height: auto; }
 .hours-grid line { stroke: var(--rule); stroke-width: 1; }
+.hours-bar { fill: var(--hours); opacity: 0.28; }
 .hours-line {
   fill: none;
   stroke: var(--hours);
@@ -292,17 +306,6 @@
   color: var(--text-2);
 }
 .hours-note { margin-top: 12px; font-size: 13px; line-height: 1.45; color: var(--muted); }
-.hours-follow {
-  padding-top: 36px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.hours-follow h3 {
-  font-size: clamp(1.35rem, 2.4vw, 1.75rem);
-  letter-spacing: -0.02em;
-  line-height: 1.15;
-}
 
 .insights-close { padding-top: 48px; padding-bottom: 72px; }
 

@@ -13,7 +13,7 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/styles.css?v=3">
-<link rel="stylesheet" href="/insights.css?v=7">
+<link rel="stylesheet" href="/insights.css?v=8">
 </head>
 <body>
 
@@ -280,9 +280,10 @@
   <section id="case-types" class="container container--1080 view" aria-labelledby="case-types-heading">
     <div class="view-head">
       <h2 id="case-types-heading">Human hours by case type</h2>
-      <p class="view-lede">Average hours on one file, June through November. Lease reviews and IP filings fell. Employment agreements stayed near 6 hours.</p>
+      <p class="view-lede">June through November. Lines are hours on one file. Bars are how many files. Lease reviews and IP filings took fewer hours. Employment agreements stayed near 6.</p>
     </div>
     <figure class="hours-chart">
+      <div class="hours-scale" aria-hidden="true"><span>Hours</span><span>Cases</span></div>
       <div class="hours-plot">
         <div class="hours-yaxis" aria-hidden="true">
           <span>16</span>
@@ -293,8 +294,34 @@
         </div>
         <div class="hours-canvas">
           <svg viewBox="0 0 600 240" role="img" aria-labelledby="hours-chart-title hours-chart-desc">
-            <title id="hours-chart-title">Human hours by case type, June to November</title>
-            <desc id="hours-chart-desc">Commercial lease reviews fell from 14.2 hours to 8.6. IP filings fell from 9.4 to 6.1. Trademark filings fell from 3.4 to 2.1. Employment agreements stayed near 6 hours, from 6.1 to 5.8.</desc>
+            <title id="hours-chart-title">Human hours and number of cases by type, June to November</title>
+            <desc id="hours-chart-desc">Lines are hours on one file. Commercial lease reviews fell from 14.2 hours to 8.6. IP filings fell from 9.4 to 6.1. Trademark filings fell from 3.4 to 2.1. Employment agreements stayed near 6 hours, from 6.1 to 5.8. Bars are the number of files. Lease files went from 18 to 23, IP filings from 11 to 14, employment agreements from 27 to 28, and trademark filings from 9 to 10.</desc>
+            <g class="hours-bars" aria-hidden="true">
+              <rect class="hours-bar hours-line--lease" x="29" y="105" width="9" height="135"></rect>
+              <rect class="hours-bar hours-line--lease" x="129" y="90" width="9" height="150"></rect>
+              <rect class="hours-bar hours-line--lease" x="229" y="97.5" width="9" height="142.5"></rect>
+              <rect class="hours-bar hours-line--lease" x="329" y="75" width="9" height="165"></rect>
+              <rect class="hours-bar hours-line--lease" x="429" y="82.5" width="9" height="157.5"></rect>
+              <rect class="hours-bar hours-line--lease" x="529" y="67.5" width="9" height="172.5"></rect>
+              <rect class="hours-bar hours-line--ip" x="40" y="157.5" width="9" height="82.5"></rect>
+              <rect class="hours-bar hours-line--ip" x="140" y="150" width="9" height="90"></rect>
+              <rect class="hours-bar hours-line--ip" x="240" y="165" width="9" height="75"></rect>
+              <rect class="hours-bar hours-line--ip" x="340" y="142.5" width="9" height="97.5"></rect>
+              <rect class="hours-bar hours-line--ip" x="440" y="150" width="9" height="90"></rect>
+              <rect class="hours-bar hours-line--ip" x="540" y="135" width="9" height="105"></rect>
+              <rect class="hours-bar hours-line--employment" x="51" y="37.5" width="9" height="202.5"></rect>
+              <rect class="hours-bar hours-line--employment" x="151" y="45" width="9" height="195"></rect>
+              <rect class="hours-bar hours-line--employment" x="251" y="30" width="9" height="210"></rect>
+              <rect class="hours-bar hours-line--employment" x="351" y="37.5" width="9" height="202.5"></rect>
+              <rect class="hours-bar hours-line--employment" x="451" y="22.5" width="9" height="217.5"></rect>
+              <rect class="hours-bar hours-line--employment" x="551" y="30" width="9" height="210"></rect>
+              <rect class="hours-bar hours-line--trademark" x="62" y="172.5" width="9" height="67.5"></rect>
+              <rect class="hours-bar hours-line--trademark" x="162" y="180" width="9" height="60"></rect>
+              <rect class="hours-bar hours-line--trademark" x="262" y="165" width="9" height="75"></rect>
+              <rect class="hours-bar hours-line--trademark" x="362" y="172.5" width="9" height="67.5"></rect>
+              <rect class="hours-bar hours-line--trademark" x="462" y="157.5" width="9" height="82.5"></rect>
+              <rect class="hours-bar hours-line--trademark" x="562" y="165" width="9" height="75"></rect>
+            </g>
             <g class="hours-grid" aria-hidden="true">
               <line x1="0" y1="0" x2="600" y2="0"></line>
               <line x1="0" y1="60" x2="600" y2="60"></line>
@@ -313,23 +340,30 @@
               <circle class="hours-line--trademark" cx="550" cy="208.5" r="4"></circle>
             </g>
           </svg>
-          <div class="hours-xaxis" aria-hidden="true">
-            <span>Jun</span>
-            <span>Jul</span>
-            <span>Aug</span>
-            <span>Sep</span>
-            <span>Oct</span>
-            <span>Nov</span>
-          </div>
+        </div>
+        <div class="hours-yaxis hours-yaxis--right" aria-hidden="true">
+          <span>32</span>
+          <span>24</span>
+          <span>16</span>
+          <span>8</span>
+          <span>0</span>
+        </div>
+        <div class="hours-xaxis" aria-hidden="true">
+          <span>Jun</span>
+          <span>Jul</span>
+          <span>Aug</span>
+          <span>Sep</span>
+          <span>Oct</span>
+          <span>Nov</span>
         </div>
       </div>
       <ul class="hours-legend">
-        <li><span class="hours-swatch hours-line--lease" aria-hidden="true"></span>Commercial lease <span class="hours-range">14.2 → 8.6</span></li>
-        <li><span class="hours-swatch hours-line--ip" aria-hidden="true"></span>IP filing <span class="hours-range">9.4 → 6.1</span></li>
-        <li><span class="hours-swatch hours-line--employment" aria-hidden="true"></span>Employment agreement <span class="hours-range">6.1 → 5.8</span></li>
-        <li><span class="hours-swatch hours-line--trademark" aria-hidden="true"></span>Trademark filing <span class="hours-range">3.4 → 2.1</span></li>
+        <li><span class="hours-swatch hours-line--lease" aria-hidden="true"></span>Commercial lease <span class="hours-range">14.2 → 8.6 h · 18 → 23</span></li>
+        <li><span class="hours-swatch hours-line--ip" aria-hidden="true"></span>IP filing <span class="hours-range">9.4 → 6.1 h · 11 → 14</span></li>
+        <li><span class="hours-swatch hours-line--employment" aria-hidden="true"></span>Employment agreement <span class="hours-range">6.1 → 5.8 h · 27 → 28</span></li>
+        <li><span class="hours-swatch hours-line--trademark" aria-hidden="true"></span>Trademark filing <span class="hours-range">3.4 → 2.1 h · 9 → 10</span></li>
       </ul>
-      <figcaption class="hours-note">Hours are human time on a typical file of that type. The pink line is the one that barely moved. Sample data.</figcaption>
+      <figcaption class="hours-note">Lines are hours on one file, read on the left. Bars are the number of files, read on the right. The pink hours barely moved. Sample data.</figcaption>
       <table class="visually-hidden">
         <caption>Average human hours by case type, June to November</caption>
         <thead>
@@ -362,60 +396,6 @@
           </tr>
         </tbody>
       </table>
-    </figure>
-
-    <div id="case-counts" class="hours-follow">
-      <h3>Number of cases</h3>
-      <p class="view-lede">Files of the same four types, June through November.</p>
-    </div>
-    <figure class="hours-chart">
-      <div class="hours-plot">
-        <div class="hours-yaxis" aria-hidden="true">
-          <span>32</span>
-          <span>24</span>
-          <span>16</span>
-          <span>8</span>
-          <span>0</span>
-        </div>
-        <div class="hours-canvas">
-          <svg viewBox="0 0 600 240" role="img" aria-labelledby="cases-chart-title cases-chart-desc">
-            <title id="cases-chart-title">Number of cases by type, June to November</title>
-            <desc id="cases-chart-desc">Commercial lease files went from 18 to 23. IP filings went from 11 to 14. Employment agreements went from 27 to 28. Trademark filings went from 9 to 10.</desc>
-            <g class="hours-grid" aria-hidden="true">
-              <line x1="0" y1="0" x2="600" y2="0"></line>
-              <line x1="0" y1="60" x2="600" y2="60"></line>
-              <line x1="0" y1="120" x2="600" y2="120"></line>
-              <line x1="0" y1="180" x2="600" y2="180"></line>
-              <line x1="0" y1="239.5" x2="600" y2="239.5"></line>
-            </g>
-            <polyline class="hours-line hours-line--lease" points="50,105 150,90 250,97.5 350,75 450,82.5 550,67.5"></polyline>
-            <polyline class="hours-line hours-line--ip" points="50,157.5 150,150 250,165 350,142.5 450,150 550,135"></polyline>
-            <polyline class="hours-line hours-line--employment" points="50,37.5 150,45 250,30 350,37.5 450,22.5 550,30"></polyline>
-            <polyline class="hours-line hours-line--trademark" points="50,172.5 150,180 250,165 350,172.5 450,157.5 550,165"></polyline>
-            <g class="hours-dots" aria-hidden="true">
-              <circle class="hours-line--lease" cx="550" cy="67.5" r="4"></circle>
-              <circle class="hours-line--ip" cx="550" cy="135" r="4"></circle>
-              <circle class="hours-line--employment" cx="550" cy="30" r="4"></circle>
-              <circle class="hours-line--trademark" cx="550" cy="165" r="4"></circle>
-            </g>
-          </svg>
-          <div class="hours-xaxis" aria-hidden="true">
-            <span>Jun</span>
-            <span>Jul</span>
-            <span>Aug</span>
-            <span>Sep</span>
-            <span>Oct</span>
-            <span>Nov</span>
-          </div>
-        </div>
-      </div>
-      <ul class="hours-legend">
-        <li><span class="hours-swatch hours-line--lease" aria-hidden="true"></span>Commercial lease <span class="hours-range">18 → 23</span></li>
-        <li><span class="hours-swatch hours-line--ip" aria-hidden="true"></span>IP filing <span class="hours-range">11 → 14</span></li>
-        <li><span class="hours-swatch hours-line--employment" aria-hidden="true"></span>Employment agreement <span class="hours-range">27 → 28</span></li>
-        <li><span class="hours-swatch hours-line--trademark" aria-hidden="true"></span>Trademark filing <span class="hours-range">9 → 10</span></li>
-      </ul>
-      <figcaption class="hours-note">Counts are files of that type, not only the ones that used AI. Sample data.</figcaption>
       <table class="visually-hidden">
         <caption>Number of cases by type, June to November</caption>
         <thead>
