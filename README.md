@@ -6,14 +6,29 @@ Marketing site for Delta-V: a home page for software and AI companies, plus the 
 public/                 everything that gets published
   index.html            home page (software and AI companies)
   home.css              home page styles; accent and statement colours are CSS variables
+  white-paper/          white paper: the AI question software companies can't answer yet
+  guides/               the two guides linked from the home page
+  article.css           shared styles for the white paper and the guides
+  talk/index.html       design partner intake form; every call to action links here
+  talk.css, talk.js     styles and client logic for that form
   law-firms/index.html  law firms page
+  law-firms/insights/   sample month dashboard (static)
+  law-firms/intake/     CSV intake UI → org / user / matter rollups
   styles.css            law firms page styles; brand colours are CSS variables at the top
+  integrations/         browser copy of the CSV mappers (synced from integrations/)
   _headers              response headers Cloudflare Pages applies
   favicon.svg
   fonts/                Inter Tight and IBM Plex Mono (latin subsets, self-hosted) + OFL licences
   img/seats.svg         the 180-seat grid on the law firms page
-scripts/dev.mjs         local preview server (no dependencies)
-wrangler.toml           Pages project name and output directory
+integrations/           Node CSV parsers, ingest rollups, and tests (not the marketing site)
+functions/api/leads.js  POST /api/leads: validates an intake and writes it to D1
+migrations/             D1 schema for the leads table
+scripts/dev.mjs         local preview server
+scripts/ingest.mjs      CLI: CSV paths → org / user / matter JSON
+scripts/sync-integrations.mjs
+                        copies integrations/*.mjs + examples into public/integrations/
+scripts/leads-csv.mjs   exports the leads table to leads.csv
+wrangler.toml           Pages project name, output directory, and D1 configuration
 .github/workflows/deploy.yml
                         deploys public/ to Cloudflare Pages on every push to main
 ```
@@ -27,6 +42,62 @@ python3 -m http.server 8080 --directory public
 ```
 
 Or, with Node 18 or later, `npm run dev`. Then open http://localhost:8080. Edit files in `public/` and refresh the browser to see changes.
+
+## CSV intake (Harvey, Legora, Everlaw, Clio)
+
+The `integrations/` library maps privacy-safe CSV uploads into usage rows, then `ingestFeeds` rolls them up to the firm, each person, and each matter number. Clio time is hours and billed value; it stays separate from AI spend.
+
+```bash
+npm test
+npm run ingest -- --demo
+npm run ingest -- path/to/harvey-usage.csv path/to/clio-time.csv
+```
+
+In the browser, open `/law-firms/intake/`, load the sample month, or drop CSVs. Files stay in the browser. Known feeds:
+
+| Feed | Headers |
+|------|---------|
+| Harvey usage | `user,at,matter_number,product,action,id` |
+| Harvey matters | `matter_number,users,queries,id` |
+| Legora credits | `member,feature,project,credits,at` |
+| Legora audit | `member,action,at` |
+| Everlaw usage | `user,at,matter_number,action,docs,id` |
+| Everlaw projects | `matter_number,users,docs,id` |
+| Clio time | `user,at,matter_number,hours,rate,id` |
+| Clio matters | `matter_number,status,id` |
+
+Prompts, answers, documents, notes, descriptions, and client names are refused.
+
+## Running the design partner form locally
+
+That server only serves static files. To run `/talk` and its endpoint, use Wrangler instead:
+
+```bash
+npm install
+npx wrangler d1 migrations apply deltav_leads --local
+echo 'TURNSTILE_SECRET="1x0000000000000000000000000000000AA"' > .dev.vars
+npx wrangler pages dev public --port 8788
+```
+
+Then open http://127.0.0.1:8788/talk. That secret and the `data-sitekey` in `public/talk/index.html` are Cloudflare's Turnstile test keys, which always pass and show a "for testing only" notice on the widget. Read what the local form stored with `npx wrangler d1 execute deltav_leads --local --command "SELECT * FROM leads"`.
+
+## The design partner form
+
+`/talk` is the only place the site collects an email. Every "Talk to us" and "Book 20 minutes" button links to it with `?from=talk-to-us` or `?from=book-20-minutes`, which is stored as the lead's source along with the referring path and any `utm_source`, `utm_medium` and `utm_campaign`.
+
+`functions/api/leads.js` validates every field again on the server, verifies the Turnstile token, and inserts with prepared statements. It never logs personal data. The D1 database is `deltav_leads`, bound as `DB` in `wrangler.toml`. That binding is commented out until the database exists, because a placeholder id makes the Pages deploy fail.
+
+Read the leads with `npm run leads`, or `npm run leads:csv` to write `leads.csv` (gitignored).
+
+### One-time setup
+
+```bash
+npx wrangler d1 create deltav_leads          # uncomment the binding in wrangler.toml and paste this id
+npx wrangler d1 migrations apply deltav_leads --remote
+npx wrangler pages secret put TURNSTILE_SECRET --project-name deltav-web
+```
+
+Create the Turnstile widget for `deltav.info` at https://dash.cloudflare.com/?to=/:account/turnstile, then put its site key in the `data-sitekey` attribute in `public/talk/index.html` and its secret key into the command above. D1 and Turnstile both stay within Cloudflare's free plan.
 
 ## Hosting on Cloudflare Pages
 
@@ -61,7 +132,8 @@ For now the "Get my free audit" button opens an email to partners@deltav.info, a
 - **Law firms copy:** `public/law-firms/index.html`. **Law firms colours:** `--accent` (blue) and `--statement` (pink) at the top of `styles.css`. That design also tried these accent options: `#8FB0FF`, `#1C2F6B`, `#1F5C45`.
 - **Industry links:** the footer of each page links to the other. Home is `/`. Law firms is `/law-firms/`.
 - **Sample numbers:** both pages use illustrative data, labelled "Sample data". If you change the seat counts on the law firms page, regenerate `img/seats.svg` to match.
-- **Guides:** the home page includes the two guide cards from the design. The guide articles were not in that export, so those cards and the matching footer links stay on the guides section.
+- **Guides and white paper:** the home page cards link to `/guides/return-on-ai-coding-tools/`, `/guides/track-ai-spend/` and `/white-paper/`. Those pages share `article.css`.
+- **Wording on the software side:** the product is DeltaV, and copy says "return", not "ROI". Source titles that contain "ROI" stay as published. No em dashes.
 
 ## Source design
 
