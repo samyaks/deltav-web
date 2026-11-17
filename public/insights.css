@@ -154,6 +154,67 @@
 .move-card p { font-size: 15px; line-height: 1.5; color: var(--text-2); }
 .move-card--invest { border-color: var(--accent); background: var(--white); }
 
+.staff-chart { margin: 0; }
+.staff-chart-head,
+.staff-chart li {
+  display: grid;
+  grid-template-columns: minmax(180px, 240px) minmax(140px, 1fr) 4.25rem 4.5rem;
+  column-gap: 24px;
+  align-items: center;
+}
+.staff-chart-head {
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--rule);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.staff-chart-head span:nth-child(2) { grid-column: 2 / 4; }
+.staff-chart-head span:last-child,
+.staff-hours,
+.ai-mark { text-align: right; }
+.staff-chart li {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.staff-name { font-size: 16px; letter-spacing: -0.01em; color: var(--ink); font-weight: 600; }
+.staff-role { margin-top: 3px; font-size: 13px; color: var(--text-2); }
+.staff-track {
+  height: 8px;
+  border-radius: 4px;
+  background: var(--rule);
+  overflow: hidden;
+}
+.staff-track > span { display: block; height: 100%; background: var(--ink); border-radius: 4px; }
+.staff-hours {
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+.ai-mark {
+  display: grid;
+  grid-template-columns: 8px 2.6rem;
+  justify-content: end;
+  align-items: center;
+  column-gap: 8px;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  color: var(--ink);
+}
+.ai-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  flex: none;
+}
+.ai-mark--high { color: var(--accent); }
+.ai-mark--low { color: var(--statement); }
+.staff-note { margin-top: 12px; font-size: 13px; line-height: 1.45; color: var(--muted); }
+
 .insights-close { padding-top: 48px; padding-bottom: 72px; }
 
 @media (max-width: 900px) {
@@ -162,6 +223,15 @@
   .stat:nth-child(1), .stat:nth-child(2) { border-bottom: 1px solid var(--rule); }
   .tool-list .tool { grid-template-columns: 1fr; gap: 10px; }
   .move-grid { grid-template-columns: 1fr; }
+  .staff-chart-head { display: none; }
+  .staff-chart li {
+    grid-template-columns: 1fr auto auto;
+    row-gap: 10px;
+  }
+  .staff-who { grid-column: 1; }
+  .staff-track { grid-column: 1 / -1; grid-row: 2; }
+  .staff-hours { grid-column: 2; grid-row: 1; }
+  .ai-mark { grid-column: 3; grid-row: 1; }
 }
 
 @media (max-width: 640px) {
