@@ -355,13 +355,14 @@ img, svg { max-width: 100%; }
 
 .band--cards .band-inner { padding-top: 120px; padding-bottom: 120px; gap: 22px; }
 .card-grid {
-  display: flex; flex-wrap: wrap; gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
   width: 100%;
   margin-top: 20px;
   text-align: left;
 }
 .card {
-  flex: 1 1 320px;
   background: var(--bg-guide);
   border: 1px solid var(--line-2);
   border-radius: 10px;
@@ -373,13 +374,13 @@ img, svg { max-width: 100%; }
 .card-kicker {
   font-family: var(--mono);
   font-size: 12px;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--faint);
 }
 .card h3 { font-size: 24px; line-height: 1.2; letter-spacing: -0.015em; }
 .card p { font-size: 16px; line-height: 1.5; color: var(--muted); }
-.card-more { font-size: 15px; color: var(--accent); margin-top: 6px; }
+.card-more { font-size: 15px; color: var(--accent); margin-top: auto; padding-top: 6px; }
 
 /* ---------- Close ---------- */
 
