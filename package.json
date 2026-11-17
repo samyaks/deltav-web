@@ -7,9 +7,14 @@
   "scripts": {
     "dev": "node scripts/dev.mjs",
     "start": "node scripts/dev.mjs",
-    "test": "node --test integrations/*.test.mjs"
+    "test": "node --test integrations/*.test.mjs",
+    "leads": "wrangler d1 execute deltav_leads --remote --command \"SELECT * FROM leads ORDER BY created_at DESC, id DESC\"",
+    "leads:csv": "node scripts/leads-csv.mjs"
   },
   "engines": {
     "node": ">=18"
+  },
+  "devDependencies": {
+    "wrangler": "^4.163.0"
   }
 }

@@ -9,14 +9,19 @@ public/                 everything that gets published
   white-paper/          white paper: the AI question software companies can't answer yet
   guides/               the two guides linked from the home page
   article.css           shared styles for the white paper and the guides
+  talk/index.html       design partner intake form; every call to action links here
+  talk.css, talk.js     styles and client logic for that form
   law-firms/index.html  law firms page
   styles.css            law firms page styles; brand colours are CSS variables at the top
   _headers              response headers Cloudflare Pages applies
   favicon.svg
   fonts/                Inter Tight and IBM Plex Mono (latin subsets, self-hosted) + OFL licences
   img/seats.svg         the 180-seat grid on the law firms page
+functions/api/leads.js  POST /api/leads: validates an intake and writes it to D1
+migrations/             D1 schema for the leads table
 scripts/dev.mjs         local preview server (no dependencies)
-wrangler.toml           Pages project name and output directory
+scripts/leads-csv.mjs   exports the leads table to leads.csv
+wrangler.toml           Pages project name, output directory, and the D1 binding
 .github/workflows/deploy.yml
                         deploys public/ to Cloudflare Pages on every push to main
 ```
@@ -30,6 +35,35 @@ python3 -m http.server 8080 --directory public
 ```
 
 Or, with Node 18 or later, `npm run dev`. Then open http://localhost:8080. Edit files in `public/` and refresh the browser to see changes.
+
+That server only serves static files. To run `/talk` and its endpoint, use Wrangler instead:
+
+```bash
+npm install
+npx wrangler d1 migrations apply deltav_leads --local
+echo 'TURNSTILE_SECRET="1x0000000000000000000000000000000AA"' > .dev.vars
+npx wrangler pages dev public --port 8788
+```
+
+Then open http://127.0.0.1:8788/talk. That secret and the `data-sitekey` in `public/talk/index.html` are Cloudflare's Turnstile test keys, which always pass and show a "for testing only" notice on the widget. Read what the local form stored with `npx wrangler d1 execute deltav_leads --local --command "SELECT * FROM leads"`.
+
+## The design partner form
+
+`/talk` is the only place the site collects an email. Every "Talk to us" and "Book 20 minutes" button links to it with `?from=talk-to-us` or `?from=book-20-minutes`, which is stored as the lead's source along with the referring path and any `utm_source`, `utm_medium` and `utm_campaign`.
+
+`functions/api/leads.js` validates every field again on the server, verifies the Turnstile token, and inserts with prepared statements. It never logs personal data. The D1 database is `deltav_leads`, bound as `DB` in `wrangler.toml`.
+
+Read the leads with `npm run leads`, or `npm run leads:csv` to write `leads.csv` (gitignored).
+
+### One-time setup
+
+```bash
+npx wrangler d1 create deltav_leads          # put the id it prints in wrangler.toml
+npx wrangler d1 migrations apply deltav_leads --remote
+npx wrangler pages secret put TURNSTILE_SECRET --project-name deltav-web
+```
+
+Create the Turnstile widget for `deltav.info` at https://dash.cloudflare.com/?to=/:account/turnstile, then put its site key in the `data-sitekey` attribute in `public/talk/index.html` and its secret key into the command above. D1 and Turnstile both stay within Cloudflare's free plan.
 
 ## Hosting on Cloudflare Pages
 
