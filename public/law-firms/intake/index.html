@@ -14,7 +14,7 @@
 <link rel="preload" href="/fonts/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/styles.css">
 <link rel="stylesheet" href="/insights.css">
-<link rel="stylesheet" href="/intake.css">
+<link rel="stylesheet" href="/intake.css?v=2">
 <script src="/analytics.js" defer></script>
 </head>
 <body>
@@ -42,6 +42,7 @@
     <h1 id="intake-heading">Map the exports to the firm.</h1>
     <p class="insights-lede">Drop Harvey, Legora, Everlaw, and Clio CSVs. Headers are detected, content fields are refused, and spend is rolled up by tool, by person, and by matter number.</p>
     <nav class="insights-nav" aria-label="On this view">
+      <a href="#formats">CSV formats</a>
       <a href="#upload">Upload</a>
       <a href="#org">Firm</a>
       <a href="#tools">Tools</a>
@@ -53,7 +54,7 @@
   <section id="upload" class="container container--1080 intake-upload" aria-labelledby="upload-heading">
     <div class="view-head">
       <h2 id="upload-heading">Upload</h2>
-      <p class="view-lede">One file per feed. Expected headers match the example CSVs under Integrations.</p>
+      <p class="view-lede">One file per feed. Match a <a href="#formats">CSV format</a> below, then drop the file here.</p>
     </div>
 
     <form id="intake-form" class="intake-form">
@@ -69,6 +70,95 @@
       <p class="intake-status" id="intake-status" role="status" aria-live="polite">No files yet. Load the sample month to see the rollup.</p>
       <ul class="feed-list" id="feed-list" hidden></ul>
     </form>
+  </section>
+
+  <section id="formats" class="container container--1080 view" aria-labelledby="formats-heading">
+    <div class="view-head">
+      <h2 id="formats-heading">CSV formats</h2>
+      <p class="view-lede">The first row is the header. Keep those names, in that order. Dates are UTC. Matter numbers stay as written. Leave out prompts, documents, and client names.</p>
+    </div>
+
+    <div class="format-list">
+      <div class="format-group">
+        <p class="caps caps--16">Harvey</p>
+        <article class="format">
+          <div class="format-head">
+            <h3>Usage</h3>
+            <a class="format-download" href="/integrations/examples/harvey-usage.csv" download="harvey-usage.csv">Download example</a>
+          </div>
+          <pre class="format-csv">user,at,matter_number,product,action,id
+user@example.com,2026-02-22T14:01:23Z,1234.56,ASSISTANT,CREATE,019c85a7-a7c9-784f-bc59-0ddd5654274d</pre>
+        </article>
+        <article class="format">
+          <div class="format-head">
+            <h3>Matters</h3>
+            <a class="format-download" href="/integrations/examples/harvey-matters.csv" download="harvey-matters.csv">Download example</a>
+          </div>
+          <pre class="format-csv">matter_number,users,queries,id
+M001,8,37,018d856f-0664-772c-9ed9-b2316fd881d3</pre>
+        </article>
+      </div>
+
+      <div class="format-group">
+        <p class="caps caps--16">Legora</p>
+        <article class="format">
+          <div class="format-head">
+            <h3>Credits</h3>
+            <a class="format-download" href="/integrations/examples/legora-credits.csv" download="legora-credits.csv">Download example</a>
+          </div>
+          <pre class="format-csv">member,feature,project,credits,at
+ada@firm.example,Agent,20418-0032,12,2026-11-01T00:00:00Z</pre>
+        </article>
+        <article class="format">
+          <div class="format-head">
+            <h3>Audit</h3>
+            <a class="format-download" href="/integrations/examples/legora-audit.csv" download="legora-audit.csv">Download example</a>
+          </div>
+          <pre class="format-csv">member,action,at
+ada@firm.example,agent run,2026-11-02T15:00:00Z</pre>
+        </article>
+      </div>
+
+      <div class="format-group">
+        <p class="caps caps--16">Everlaw</p>
+        <article class="format">
+          <div class="format-head">
+            <h3>Usage</h3>
+            <a class="format-download" href="/integrations/examples/everlaw-usage.csv" download="everlaw-usage.csv">Download example</a>
+          </div>
+          <pre class="format-csv">user,at,matter_number,action,docs,id
+casey@firm.example,2026-11-03T16:20:00Z,31177-0009,review,48,ev-1001</pre>
+        </article>
+        <article class="format">
+          <div class="format-head">
+            <h3>Projects</h3>
+            <a class="format-download" href="/integrations/examples/everlaw-projects.csv" download="everlaw-projects.csv">Download example</a>
+          </div>
+          <pre class="format-csv">matter_number,users,docs,id
+31177-0009,3,240,ev-proj-01</pre>
+        </article>
+      </div>
+
+      <div class="format-group">
+        <p class="caps caps--16">Clio</p>
+        <article class="format">
+          <div class="format-head">
+            <h3>Time</h3>
+            <a class="format-download" href="/integrations/examples/clio-time.csv" download="clio-time.csv">Download example</a>
+          </div>
+          <pre class="format-csv">user,at,matter_number,hours,rate,id
+ada@firm.example,2026-11-01T00:00:00Z,20418-0032,8.6,450,clio-t-001</pre>
+        </article>
+        <article class="format">
+          <div class="format-head">
+            <h3>Matters</h3>
+            <a class="format-download" href="/integrations/examples/clio-matters.csv" download="clio-matters.csv">Download example</a>
+          </div>
+          <pre class="format-csv">matter_number,status,id
+20418-0032,Open,clio-m-001</pre>
+        </article>
+      </div>
+    </div>
   </section>
 
   <section id="org" class="container container--1080" aria-label="Firm totals" hidden>
