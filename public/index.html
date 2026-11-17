@@ -235,5 +235,91 @@
   </div>
 </footer>
 
+<script>
+// Match the subtitle's width to the headline so both share the same side margins.
+(function () {
+  const heading = document.getElementById("hero-heading");
+  const subtitle = document.querySelector(".hero .lede");
+  const hero = document.querySelector(".hero-inner");
+  if (!heading || !subtitle || !hero || !heading.firstChild) return;
+
+  const widestLine = (node) => {
+    const text = node.textContent || "";
+    const range = document.createRange();
+    if (!text) return 0;
+    range.setStart(node, 0);
+    range.setEnd(node, 1);
+    const first = range.getClientRects()[0];
+    if (!first) return 0;
+    let lastTop = first.top;
+    let start = 0;
+    let widest = 0;
+    const commit = (from, to) => {
+      let a = from;
+      let b = to;
+      while (a < b && /\s/.test(text[a])) a += 1;
+      while (b > a && /\s/.test(text[b - 1])) b -= 1;
+      if (a >= b) return;
+      range.setStart(node, a);
+      range.setEnd(node, b);
+      widest = Math.max(widest, range.getBoundingClientRect().width);
+    };
+    for (let i = 1; i <= text.length; i += 1) {
+      range.setStart(node, i - 1);
+      range.setEnd(node, i);
+      const rect = range.getClientRects()[0];
+      if (!rect) continue;
+      if (Math.abs(rect.top - lastTop) > 1) {
+        commit(start, i - 1);
+        start = i - 1;
+        lastTop = rect.top;
+      }
+    }
+    commit(start, text.length);
+    return widest;
+  };
+
+  let frame = 0;
+  const align = () => {
+    subtitle.style.fontSize = "";
+    subtitle.style.width = "";
+    subtitle.style.maxWidth = "";
+    subtitle.style.whiteSpace = "nowrap";
+    const natural = subtitle.getBoundingClientRect().width;
+    const size = parseFloat(getComputedStyle(subtitle).fontSize);
+    const target = widestLine(heading.firstChild);
+
+    if (!(target > 0) || !(natural > 0) || natural > target + 0.5) {
+      subtitle.style.fontSize = "";
+      subtitle.style.whiteSpace = "";
+      if (target > 0) {
+        subtitle.style.width = target + "px";
+        subtitle.style.maxWidth = "100%";
+      }
+      return;
+    }
+
+    subtitle.style.fontSize = (size * target / natural) + "px";
+    subtitle.style.width = target + "px";
+    subtitle.style.maxWidth = "100%";
+    const range = document.createRange();
+    range.selectNodeContents(subtitle.firstChild);
+    const rendered = range.getBoundingClientRect().width;
+    if (rendered > target + 0.5) {
+      subtitle.style.fontSize = (parseFloat(subtitle.style.fontSize) * target / rendered) + "px";
+    }
+  };
+
+  const schedule = () => {
+    cancelAnimationFrame(frame);
+    frame = requestAnimationFrame(align);
+  };
+
+  align();
+  if (window.ResizeObserver) new ResizeObserver(schedule).observe(hero);
+  else window.addEventListener("resize", schedule);
+})();
+</script>
+
 </body>
 </html>
