@@ -147,8 +147,8 @@ img, svg { max-width: 100%; }
   font-size: clamp(1.125rem, 2vw, 1.5rem);
   line-height: 1.4;
   color: var(--text-2);
-  max-width: 620px;
-  text-align: justify;
+  max-width: 100%;
+  text-align: center;
 }
 
 /* ---------- Product preview ---------- */
@@ -435,7 +435,6 @@ img, svg { max-width: 100%; }
   .wrap { padding-left: 20px; padding-right: 20px; }
   .site-header-inner { padding-top: 18px; padding-bottom: 18px; }
   .hero-inner { padding-top: 64px; padding-bottom: 56px; gap: 18px; }
-  .lede { text-align: center; }
   .demo-inner { padding-bottom: 72px; }
   .demo-chat, .demo-dash { padding: 20px; }
   .spend-table { font-size: 14px; }
