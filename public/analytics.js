@@ -70,10 +70,11 @@
     if (url.origin !== window.location.origin) return;
 
     const target = url.pathname.replace(/\/+$/, "");
-    if (target === "/talk") {
+    if (target === "/talk" || target === "/law-firms/talk") {
       const from = url.searchParams.get("from");
+      const known = from === "talk-to-us" || from === "book-20-minutes" || from === "free-audit";
       window.deltavAnalytics.track("cta_clicked", {
-        label: from === "talk-to-us" || from === "book-20-minutes" ? from : "other",
+        label: known ? from : "other",
         page: path,
       });
     } else if (target.startsWith("/guides/") && target !== path.replace(/\/+$/, "")) {

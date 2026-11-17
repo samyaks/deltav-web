@@ -1,5 +1,5 @@
-// POST /api/leads: stores one design partner intake from /talk in D1.
-// The option lists below must match the ones in public/talk/index.html.
+// POST /api/leads: stores one intake from /talk or /law-firms/talk/ in D1.
+// The option lists below must match those two forms.
 // Never log personal data.
 
 const ROLES = [
@@ -8,9 +8,24 @@ const ROLES = [
   "Platform or DevEx",
   "Product",
   "Founder or executive",
+  "Managing partner",
+  "Innovation or knowledge",
+  "Finance",
+  "Information technology",
+  "Practice group leader",
   "Other",
 ];
-const TEAM_SIZES = ["1 to 25", "26 to 100", "101 to 500", "501 to 2,000", "2,000+"];
+const TEAM_SIZES = [
+  "1 to 25",
+  "26 to 100",
+  "101 to 500",
+  "501 to 2,000",
+  "2,000+",
+  "Under 50",
+  "50 to 150",
+  "151 to 300",
+  "Over 300",
+];
 const AI_TOOLS = [
   "GitHub Copilot",
   "Cursor",
@@ -18,10 +33,16 @@ const AI_TOOLS = [
   "ChatGPT or OpenAI API",
   "Anthropic API",
   "Gemini",
+  "Harvey",
+  "Legora",
+  "Everlaw",
+  "Microsoft Copilot",
+  "Clio",
+  "Relativity",
   "Other",
 ];
 const MONTHLY_SPEND = ["Under $10k", "$10k to $50k", "$50k to $250k", "Over $250k", "Not sure"];
-const SOURCES = ["talk-to-us", "book-20-minutes"];
+const SOURCES = ["talk-to-us", "book-20-minutes", "free-audit"];
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const EMAIL_MAX = 254;

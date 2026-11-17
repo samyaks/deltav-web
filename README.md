@@ -84,7 +84,7 @@ Then open http://127.0.0.1:8788/talk. That secret and the `data-sitekey` in `pub
 
 ## The design partner form
 
-`/talk` is the only place the site collects an email. Every "Talk to us" and "Book 20 minutes" button links to it with `?from=talk-to-us` or `?from=book-20-minutes`, which is stored as the lead's source along with the referring path and any `utm_source`, `utm_medium` and `utm_campaign`.
+`/talk` collects a software company. `/law-firms/talk/` collects a law firm, with the same fields and the tools the legal pages already name: Harvey, Legora, Everlaw, Microsoft Copilot, Clio, and Relativity. "Talk to us" and "Book 20 minutes" link to `/talk` with `?from=talk-to-us` or `?from=book-20-minutes`. "Get my free audit" links to `/law-firms/talk/` with `?from=free-audit`. The source is stored with the referring path and any `utm_source`, `utm_medium` and `utm_campaign`.
 
 `functions/api/leads.js` validates every field again on the server, verifies the Turnstile token, and inserts with prepared statements. It never logs personal data. The D1 database is `deltav_leads`, bound as `DB` in `wrangler.toml`.
 
@@ -98,7 +98,7 @@ The database already exists. Create the table in the D1 console from `migrations
 npx wrangler pages secret put TURNSTILE_SECRET --project-name deltav-web
 ```
 
-Create the Turnstile widget for `deltav.info` at https://dash.cloudflare.com/?to=/:account/turnstile, then put its site key in the `data-sitekey` attribute in `public/talk/index.html` and its secret key into the command above. D1 and Turnstile both stay within Cloudflare's free plan.
+Create the Turnstile widget for `deltav.info` at https://dash.cloudflare.com/?to=/:account/turnstile, then put its site key in the `data-sitekey` attribute in `public/talk/index.html` and `public/law-firms/talk/index.html`, and its secret key into the command above. D1 and Turnstile both stay within Cloudflare's free plan.
 
 ## Hosting on Cloudflare Pages
 

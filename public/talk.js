@@ -8,6 +8,7 @@
   const formError = document.getElementById("form-error");
   const done = document.getElementById("talk-done");
   const required = ["email", "name", "company", "role", "team_size"];
+  const sources = ["talk-to-us", "book-20-minutes", "free-audit"];
   const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   const field = (name) => form.elements[name];
@@ -16,7 +17,8 @@
   const analytics = window.deltavAnalytics || { track() {}, identify() {} };
   const source = () => {
     const from = new URLSearchParams(window.location.search).get("from");
-    return from === "talk-to-us" || from === "book-20-minutes" ? from : "";
+    if (sources.includes(from)) return from;
+    return sources.includes(form.dataset.source) ? form.dataset.source : "";
   };
   form.addEventListener("focusin", () => analytics.track("lead_form_started", { source: source() }), { once: true });
   const errorNode = (name) => document.getElementById(name + "-error");
@@ -92,7 +94,7 @@
       monthly_spend: field("monthly_spend").value,
       question: field("question").value,
       website: field("website").value,
-      source: from === "talk-to-us" || from === "book-20-minutes" ? from : "",
+      source: sources.includes(from) ? from : (sources.includes(form.dataset.source) ? form.dataset.source : ""),
       referrer_path: samePathReferrer(),
       utm_source: params.get("utm_source") || "",
       utm_medium: params.get("utm_medium") || "",
