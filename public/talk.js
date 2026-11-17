@@ -11,6 +11,14 @@
   const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   const field = (name) => form.elements[name];
+
+  // Analytics. Events carry no name, email, company or free text.
+  const analytics = window.deltavAnalytics || { track() {}, identify() {} };
+  const source = () => {
+    const from = new URLSearchParams(window.location.search).get("from");
+    return from === "talk-to-us" || from === "book-20-minutes" ? from : "";
+  };
+  form.addEventListener("focusin", () => analytics.track("lead_form_started", { source: source() }), { once: true });
   const errorNode = (name) => document.getElementById(name + "-error");
 
   function setError(name, message) {
@@ -100,19 +108,36 @@
     const errors = validate();
     if (Object.keys(errors).length > 0) {
       showErrors(errors);
+      analytics.track("lead_form_error", { fields: Object.keys(errors) });
       return;
     }
 
     submit.disabled = true;
     try {
+      const sent = payload();
       const response = await fetch("/api/leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload()),
+        body: JSON.stringify(sent),
       });
       const data = await response.json().catch(() => null);
 
       if (response.ok && data && data.ok) {
+        // Skip the honeypot case: the server stores nothing for it.
+        if (!sent.website) {
+          analytics.identify(sent.email.trim().toLowerCase(), {
+            company: sent.company.trim(),
+            role: sent.role,
+            team_size: sent.team_size,
+          });
+          analytics.track("lead_form_submitted", {
+            source: sent.source,
+            role: sent.role,
+            team_size: sent.team_size,
+            monthly_spend: sent.monthly_spend,
+            ai_tools: sent.ai_tools,
+          });
+        }
         form.hidden = true;
         done.hidden = false;
         done.setAttribute("tabindex", "-1");
@@ -120,7 +145,10 @@
         return;
       }
 
-      if (data && data.errors) showErrors(data.errors);
+      if (data && data.errors) {
+        showErrors(data.errors);
+        analytics.track("lead_form_error", { fields: Object.keys(data.errors) });
+      }
       else formError.textContent = "Something went wrong. Try again in a minute.";
     } catch {
       formError.textContent = "Something went wrong. Try again in a minute.";
