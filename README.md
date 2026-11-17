@@ -80,7 +80,7 @@ echo 'TURNSTILE_SECRET="1x0000000000000000000000000000000AA"' > .dev.vars
 npx wrangler pages dev public --port 8788
 ```
 
-Then open http://127.0.0.1:8788/talk. That secret and the `data-sitekey` in `public/talk/index.html` are Cloudflare's Turnstile test keys, which always pass and show a "for testing only" notice on the widget. Read what the local form stored with `npx wrangler d1 execute deltav_leads --local --command "SELECT * FROM leads"`.
+Then open http://127.0.0.1:8788/talk. That secret is Cloudflare's Turnstile test secret. `public/talk/index.html` carries the real site key for deltav.info, so to submit the form locally, temporarily set its `data-sitekey` to the test key `1x00000000000000000000AA` (always passes, shows a "for testing only" notice) and do not commit that change. Read what the local form stored with `npx wrangler d1 execute deltav_leads --local --command "SELECT * FROM leads"`.
 
 ## The design partner form
 
@@ -98,7 +98,7 @@ The database already exists. Create the table in the D1 console from `migrations
 npx wrangler pages secret put TURNSTILE_SECRET --project-name deltav-web
 ```
 
-Create the Turnstile widget for `deltav.info` at https://dash.cloudflare.com/?to=/:account/turnstile, then put its site key in the `data-sitekey` attribute in `public/talk/index.html` and `public/law-firms/talk/index.html`, and its secret key into the command above. D1 and Turnstile both stay within Cloudflare's free plan.
+The Turnstile widget is `deltav-talk` (hostname `deltav.info`) at https://dash.cloudflare.com/?to=/:account/turnstile. Its site key is in the `data-sitekey` attribute in `public/talk/index.html`; its secret key goes into the command above, or into the Pages project's Variables and Secrets as `TURNSTILE_SECRET`. D1 and Turnstile both stay within Cloudflare's free plan.
 
 ## Hosting on Cloudflare Pages
 

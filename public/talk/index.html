@@ -124,9 +124,9 @@
           <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
         </div>
 
-        <!-- Replace data-sitekey with the Turnstile site key for deltav.info.
-             1x00000000000000000000AA is Cloudflare's test key, which always passes. -->
-        <div class="turnstile cf-turnstile" id="turnstile" data-sitekey="1x00000000000000000000AA" data-theme="dark"></div>
+        <!-- Site key for the Turnstile widget "deltav-talk" (hostname deltav.info).
+             For local testing use Cloudflare's test key, 1x00000000000000000000AA. -->
+        <div class="turnstile cf-turnstile" id="turnstile" data-sitekey="0x4AAAAAAGF6D1ikfjk7EimB" data-theme="dark"></div>
         <p class="field-error" id="turnstile-error"></p>
 
         <button class="talk-submit" id="talk-submit" type="submit">Send</button>
