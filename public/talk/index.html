@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design partners · DeltaV</title>
+<meta name="description" content="Tell us what you're working on. Two minutes. We'll reply within one business day.">
+<meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark">
+<meta name="robots" content="noindex">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/ibm-plex-mono-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/home.css">
+<link rel="stylesheet" href="/talk.css">
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<script src="/talk.js" defer></script>
+</head>
+<body id="top">
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap wrap--1200 site-header-inner">
+    <a class="brand" href="/" aria-label="DeltaV home">
+      <svg width="24" height="24" viewBox="0 0 96 96" aria-hidden="true"><path d="M48 12 L86 82 L10 82 Z" fill="none" stroke="#ffffff" stroke-width="7" stroke-linejoin="round"/><line x1="28" y1="60" x2="68" y2="60" stroke="#ffffff" stroke-width="8"/></svg>
+      <span class="brand-name">DeltaV</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="/#guides">Guides</a>
+      <a href="/talk?from=talk-to-us" aria-current="page">Talk to us</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="talk" aria-labelledby="talk-heading">
+    <div class="wrap wrap--560 talk-inner">
+      <p class="kicker kicker--muted">Design partners</p>
+      <h1 id="talk-heading" class="talk-h1">Tell us what you're working on.</h1>
+      <p class="talk-lede">Two minutes. We'll reply within one business day.</p>
+
+      <form class="talk-form" id="talk-form" method="post" action="/api/leads" novalidate>
+        <p class="form-message form-message--error" id="form-error" role="alert"></p>
+
+        <div class="field">
+          <label class="field-label" for="email">Work email</label>
+          <input class="field-input" id="email" name="email" type="email" autocomplete="email" maxlength="254" required aria-describedby="email-error">
+          <p class="field-error" id="email-error"></p>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="name">Full name</label>
+          <input class="field-input" id="name" name="name" type="text" autocomplete="name" maxlength="200" required aria-describedby="name-error">
+          <p class="field-error" id="name-error"></p>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="company">Company</label>
+          <input class="field-input" id="company" name="company" type="text" autocomplete="organization" maxlength="200" required aria-describedby="company-error">
+          <p class="field-error" id="company-error"></p>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="role">Role</label>
+          <select class="field-input" id="role" name="role" required aria-describedby="role-error">
+            <option value=""></option>
+            <option>Engineering leadership</option>
+            <option>Finance or FinOps</option>
+            <option>Platform or DevEx</option>
+            <option>Product</option>
+            <option>Founder or executive</option>
+            <option>Other</option>
+          </select>
+          <p class="field-error" id="role-error"></p>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="team_size">Engineering team size</label>
+          <select class="field-input" id="team_size" name="team_size" required aria-describedby="team_size-error">
+            <option value=""></option>
+            <option>1 to 25</option>
+            <option>26 to 100</option>
+            <option>101 to 500</option>
+            <option>501 to 2,000</option>
+            <option>2,000+</option>
+          </select>
+          <p class="field-error" id="team_size-error"></p>
+        </div>
+
+        <fieldset class="field checkboxes">
+          <legend class="field-label">AI tools in use</legend>
+          <label class="checkbox"><input type="checkbox" name="ai_tools" value="GitHub Copilot"><span>GitHub Copilot</span></label>
+          <label class="checkbox"><input type="checkbox" name="ai_tools" value="Cursor"><span>Cursor</span></label>
+          <label class="checkbox"><input type="checkbox" name="ai_tools" value="Claude Code"><span>Claude Code</span></label>
+          <label class="checkbox"><input type="checkbox" name="ai_tools" value="ChatGPT or OpenAI API"><span>ChatGPT or OpenAI API</span></label>
+          <label class="checkbox"><input type="checkbox" name="ai_tools" value="Anthropic API"><span>Anthropic API</span></label>
+          <label class="checkbox"><input type="checkbox" name="ai_tools" value="Gemini"><span>Gemini</span></label>
+          <label class="checkbox"><input type="checkbox" name="ai_tools" value="Other"><span>Other</span></label>
+        </fieldset>
+
+        <div class="field">
+          <label class="field-label" for="monthly_spend">Monthly AI spend</label>
+          <select class="field-input" id="monthly_spend" name="monthly_spend" aria-describedby="monthly_spend-error">
+            <option value=""></option>
+            <option>Under $10k</option>
+            <option>$10k to $50k</option>
+            <option>$50k to $250k</option>
+            <option>Over $250k</option>
+            <option>Not sure</option>
+          </select>
+          <p class="field-error" id="monthly_spend-error"></p>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="question">What question do you need to answer about AI spend?</label>
+          <textarea class="field-input field-textarea" id="question" name="question" rows="4" maxlength="500" aria-describedby="question-error"></textarea>
+          <p class="field-error" id="question-error"></p>
+        </div>
+
+        <div class="honeypot" aria-hidden="true">
+          <label for="website">Website</label>
+          <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+        </div>
+
+        <!-- Replace data-sitekey with the Turnstile site key for deltav.info.
+             1x00000000000000000000AA is Cloudflare's test key, which always passes. -->
+        <div class="turnstile cf-turnstile" id="turnstile" data-sitekey="1x00000000000000000000AA" data-theme="dark"></div>
+        <p class="field-error" id="turnstile-error"></p>
+
+        <button class="talk-submit" id="talk-submit" type="submit">Send</button>
+      </form>
+
+      <div class="talk-done" id="talk-done" hidden>
+        <p class="talk-lede">Thanks. We'll reply within one business day.</p>
+        <p><a href="/">Back to home</a></p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap wrap--1200 site-footer-inner">
+    <div class="industries">
+      <span class="industries-label">One platform · by industry</span>
+      <a href="/">Software and AI companies</a>
+      <a href="/law-firms/">Law firms</a>
+    </div>
+    <span>DeltaV · Private beta</span>
+    <nav class="footer-nav" aria-label="Footer">
+      <a href="/guides/return-on-ai-coding-tools/">Guide: Return on AI coding tools</a>
+      <a href="/guides/track-ai-spend/">Guide: Track AI spend</a>
+      <a href="/white-paper/">White paper: AI spend and return</a>
+      <a href="https://deltav.info/tour">Early product</a>
+      <a href="mailto:contact@deltav.info">contact@deltav.info</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
