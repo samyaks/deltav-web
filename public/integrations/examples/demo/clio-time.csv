@@ -1,0 +1,6 @@
+user,at,matter_number,hours,rate,id
+ada@firm.example,2026-11-01T00:00:00Z,20418-0032,8.6,450,clio-t-001
+ben@firm.example,2026-11-02T00:00:00Z,31177-0009,15.4,475,clio-t-002
+cara@firm.example,2026-11-03T00:00:00Z,18820-0014,5.8,400,clio-t-003
+erin@firm.example,2026-11-04T00:00:00Z,44012-0007,6.1,425,clio-t-004
+fran@firm.example,2026-11-05T00:00:00Z,52001-0003,11.2,450,clio-t-005

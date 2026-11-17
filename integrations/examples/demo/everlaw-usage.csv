@@ -1,0 +1,6 @@
+user,at,matter_number,action,docs,id
+casey@firm.example,2026-11-03T16:20:00Z,31177-0009,review,48,ev-1001
+casey@firm.example,2026-11-04T16:20:00Z,31177-0009,review,36,ev-1002
+fran@firm.example,2026-11-02T10:00:00Z,31177-0009,review,22,ev-1003
+fran@firm.example,2026-11-05T11:00:00Z,52001-0003,review,60,ev-1004
+ben@firm.example,2026-11-06T09:30:00Z,52001-0003,search,15,ev-1005
