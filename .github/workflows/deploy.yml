@@ -39,49 +39,6 @@ jobs:
             exit 1
           fi
 
-      - name: Create the leads database if needed
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-        run: |
-          set -euo pipefail
-          auth=(-H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" -H "Content-Type: application/json")
-          base="https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/d1/database"
-
-          created=$(curl -sS -X POST "${auth[@]}" "$base" --data '{"name":"deltav_leads"}')
-          uuid=$(echo "$created" | jq -r '.result.uuid // empty')
-          if [ -z "$uuid" ]; then
-            echo "Create did not return an id:"
-            echo "$created" | jq '{success, errors: [.errors[]? | {code, message}]}'
-            list=$(curl -sS "${auth[@]}" "$base")
-            echo "$list" | jq '{success, errors: [.errors[]? | {code, message}], names: [.result[]?.name]}'
-            uuid=$(echo "$list" | jq -r '.result[]? | select(.name == "deltav_leads") | .uuid' | head -n 1)
-          fi
-          if [ -z "$uuid" ]; then
-            echo "Could not create or find deltav_leads"
-            exit 1
-          fi
-
-          query() {
-            local sql="$1"
-            local response
-            response=$(curl -sS -X POST "${auth[@]}" "$base/${uuid}/query" --data "$(jq -n --arg sql "$sql" '{sql: $sql}')")
-            echo "$response" | jq '{success, errors: [.errors[]? | {code, message}]}'
-            echo "$response" | jq -e '.success == true' >/dev/null
-          }
-          query "CREATE TABLE IF NOT EXISTS leads (id INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT NOT NULL, name TEXT NOT NULL, company TEXT NOT NULL, role TEXT NOT NULL, team_size TEXT NOT NULL, ai_tools TEXT, monthly_spend TEXT, question TEXT, source TEXT, referrer_path TEXT, utm_source TEXT, utm_medium TEXT, utm_campaign TEXT, status TEXT NOT NULL DEFAULT 'new', created_at TEXT NOT NULL DEFAULT (datetime('now')))"
-          query "CREATE INDEX IF NOT EXISTS leads_email_idx ON leads (email)"
-          query "CREATE INDEX IF NOT EXISTS leads_created_at_idx ON leads (created_at)"
-
-          # Bind it for this deploy. The id is not a secret.
-          sed -i "s/^# \\[\\[d1_databases\\]\\]/[[d1_databases]]/" wrangler.toml
-          sed -i "s/^# binding = \"DB\"/binding = \"DB\"/" wrangler.toml
-          sed -i "s/^# database_name = \"deltav_leads\"/database_name = \"deltav_leads\"/" wrangler.toml
-          sed -i "s/^# database_id = \"\"/database_id = \"${uuid}\"/" wrangler.toml
-          sed -i "s/^# migrations_dir = \"migrations\"/migrations_dir = \"migrations\"/" wrangler.toml
-          grep -n "d1_databases\\|database_id" wrangler.toml
-          echo "DATABASE_ID=${uuid}"
-
       - name: Create the Pages project if needed
         id: create
         continue-on-error: true
