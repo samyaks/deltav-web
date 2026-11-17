@@ -258,7 +258,6 @@
 .hours-canvas { grid-column: 2; grid-row: 1; min-width: 0; }
 .hours-chart svg { display: block; width: 100%; height: auto; }
 .hours-grid line { stroke: var(--rule); stroke-width: 1; }
-.hours-bar { fill: var(--hours); opacity: 0.28; }
 .hours-line {
   fill: none;
   stroke: var(--hours);
@@ -266,11 +265,16 @@
   stroke-linecap: round;
   stroke-linejoin: round;
 }
+.hours-line--cases {
+  stroke-dasharray: 0.75 7;
+  stroke-width: 2.75;
+}
 .hours-line--lease { --hours: var(--accent); }
 .hours-line--ip { --hours: var(--ink); }
 .hours-line--employment { --hours: var(--statement); }
 .hours-line--trademark { --hours: var(--muted); }
 .hours-dots circle { fill: var(--hours); stroke: none; }
+.hours-dots--open circle { fill: var(--white); stroke: var(--hours); stroke-width: 1.75; }
 .hours-xaxis {
   grid-column: 2;
   grid-row: 2;
@@ -280,6 +284,7 @@
   font-size: 12px;
   color: var(--muted);
 }
+.hours-key,
 .hours-legend {
   display: flex;
   flex-wrap: wrap;
@@ -287,6 +292,8 @@
   margin: 0;
   padding-top: 8px;
 }
+.hours-key { color: var(--muted); font-size: 13px; }
+.hours-key li,
 .hours-legend li {
   display: flex;
   align-items: center;
@@ -300,6 +307,12 @@
   border-radius: 2px;
   background: var(--hours);
   flex: none;
+}
+.hours-swatch--ink { background: var(--ink); }
+.hours-swatch--dotted {
+  height: 4px;
+  border-radius: 0;
+  background: radial-gradient(circle, var(--ink) 1.35px, transparent 1.55px) left center / 6px 4px repeat-x;
 }
 .hours-range {
   font-variant-numeric: tabular-nums;
