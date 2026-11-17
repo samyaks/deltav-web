@@ -15,7 +15,7 @@
   letter-spacing: -0.03em;
   font-weight: 400;
   color: var(--ink);
-  max-width: 14ch;
+  max-width: 18ch;
 }
 .insights-lede {
   max-width: 560px;
