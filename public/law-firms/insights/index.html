@@ -13,7 +13,7 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/styles.css?v=3">
-<link rel="stylesheet" href="/insights.css?v=5">
+<link rel="stylesheet" href="/insights.css?v=9">
 </head>
 <body>
 
@@ -51,6 +51,7 @@
       <a href="#tools">Tools</a>
       <a href="#departments">Departments</a>
       <a href="#staff">Staff</a>
+      <a href="#case-types">Case types</a>
       <a href="#matters">Matters</a>
       <a href="/law-firms/intake/">Intake CSVs</a>
     </nav>
@@ -275,6 +276,148 @@
         </li>
       </ul>
       <figcaption class="staff-note">Bars are out of 180 hours. Blue is AI on 40 percent or more of the hours. Pink is under 10 percent. Sample names.</figcaption>
+    </figure>
+  </section>
+
+  <section id="case-types" class="container container--1080 view" aria-labelledby="case-types-heading">
+    <div class="view-head">
+      <h2 id="case-types-heading">Human hours by case type</h2>
+      <p class="view-lede">June through November. Solid lines are hours on one file. Dotted lines are how many files. Lease reviews and IP filings took fewer hours. Employment agreements stayed near 6.</p>
+    </div>
+    <figure class="hours-chart">
+      <div class="hours-scale" aria-hidden="true"><span>Hours</span><span>Cases</span></div>
+      <div class="hours-plot">
+        <div class="hours-yaxis" aria-hidden="true">
+          <span>16</span>
+          <span>12</span>
+          <span>8</span>
+          <span>4</span>
+          <span>0</span>
+        </div>
+        <div class="hours-canvas">
+          <svg viewBox="0 0 600 240" role="img" aria-labelledby="hours-chart-title hours-chart-desc">
+            <title id="hours-chart-title">Human hours and number of cases by type, June to November</title>
+            <desc id="hours-chart-desc">Solid lines are hours on one file. Commercial lease reviews fell from 14.2 hours to 8.6. IP filings fell from 9.4 to 6.1. Trademark filings fell from 3.4 to 2.1. Employment agreements stayed near 6 hours, from 6.1 to 5.8. Dotted lines are the number of files. Lease files went from 18 to 23, IP filings from 11 to 14, employment agreements from 27 to 28, and trademark filings from 9 to 10.</desc>
+            <g class="hours-grid" aria-hidden="true">
+              <line x1="0" y1="0" x2="600" y2="0"></line>
+              <line x1="0" y1="60" x2="600" y2="60"></line>
+              <line x1="0" y1="120" x2="600" y2="120"></line>
+              <line x1="0" y1="180" x2="600" y2="180"></line>
+              <line x1="0" y1="239.5" x2="600" y2="239.5"></line>
+            </g>
+            <polyline class="hours-line hours-line--cases hours-line--lease" points="50,105 150,90 250,97.5 350,75 450,82.5 550,67.5"></polyline>
+            <polyline class="hours-line hours-line--cases hours-line--ip" points="50,157.5 150,150 250,165 350,142.5 450,150 550,135"></polyline>
+            <polyline class="hours-line hours-line--cases hours-line--employment" points="50,37.5 150,45 250,30 350,37.5 450,22.5 550,30"></polyline>
+            <polyline class="hours-line hours-line--cases hours-line--trademark" points="50,172.5 150,180 250,165 350,172.5 450,157.5 550,165"></polyline>
+            <polyline class="hours-line hours-line--lease" points="50,27 150,43.5 250,63 350,84 450,102 550,111"></polyline>
+            <polyline class="hours-line hours-line--ip" points="50,99 150,108 250,118.5 350,129 450,141 550,148.5"></polyline>
+            <polyline class="hours-line hours-line--employment" points="50,148.5 150,150 250,147 350,148.5 450,150 550,153"></polyline>
+            <polyline class="hours-line hours-line--trademark" points="50,189 150,192 250,196.5 350,201 450,205.5 550,208.5"></polyline>
+            <g class="hours-dots hours-dots--open" aria-hidden="true">
+              <circle class="hours-line--lease" cx="550" cy="67.5" r="3.5"></circle>
+              <circle class="hours-line--ip" cx="550" cy="135" r="3.5"></circle>
+              <circle class="hours-line--employment" cx="550" cy="30" r="3.5"></circle>
+              <circle class="hours-line--trademark" cx="550" cy="165" r="3.5"></circle>
+            </g>
+            <g class="hours-dots" aria-hidden="true">
+              <circle class="hours-line--lease" cx="550" cy="111" r="4"></circle>
+              <circle class="hours-line--ip" cx="550" cy="148.5" r="4"></circle>
+              <circle class="hours-line--employment" cx="550" cy="153" r="4"></circle>
+              <circle class="hours-line--trademark" cx="550" cy="208.5" r="4"></circle>
+            </g>
+          </svg>
+        </div>
+        <div class="hours-yaxis hours-yaxis--right" aria-hidden="true">
+          <span>32</span>
+          <span>24</span>
+          <span>16</span>
+          <span>8</span>
+          <span>0</span>
+        </div>
+        <div class="hours-xaxis" aria-hidden="true">
+          <span>Jun</span>
+          <span>Jul</span>
+          <span>Aug</span>
+          <span>Sep</span>
+          <span>Oct</span>
+          <span>Nov</span>
+        </div>
+      </div>
+      <ul class="hours-key" aria-hidden="true">
+        <li><span class="hours-swatch hours-swatch--ink"></span>Solid, hours</li>
+        <li><span class="hours-swatch hours-swatch--dotted"></span>Dotted, cases</li>
+      </ul>
+      <ul class="hours-legend">
+        <li><span class="hours-swatch hours-line--lease" aria-hidden="true"></span>Commercial lease <span class="hours-range">14.2 → 8.6 h · 18 → 23</span></li>
+        <li><span class="hours-swatch hours-line--ip" aria-hidden="true"></span>IP filing <span class="hours-range">9.4 → 6.1 h · 11 → 14</span></li>
+        <li><span class="hours-swatch hours-line--employment" aria-hidden="true"></span>Employment agreement <span class="hours-range">6.1 → 5.8 h · 27 → 28</span></li>
+        <li><span class="hours-swatch hours-line--trademark" aria-hidden="true"></span>Trademark filing <span class="hours-range">3.4 → 2.1 h · 9 → 10</span></li>
+      </ul>
+      <figcaption class="hours-note">Solid lines are hours on one file, read on the left. Dotted lines are the number of files, read on the right. The pink hours barely moved. Sample data.</figcaption>
+      <table class="visually-hidden">
+        <caption>Average human hours by case type, June to November</caption>
+        <thead>
+          <tr>
+            <th scope="col">Case type</th>
+            <th scope="col">Jun</th>
+            <th scope="col">Jul</th>
+            <th scope="col">Aug</th>
+            <th scope="col">Sep</th>
+            <th scope="col">Oct</th>
+            <th scope="col">Nov</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Commercial lease</th>
+            <td>14.2</td><td>13.1</td><td>11.8</td><td>10.4</td><td>9.2</td><td>8.6</td>
+          </tr>
+          <tr>
+            <th scope="row">IP filing</th>
+            <td>9.4</td><td>8.8</td><td>8.1</td><td>7.4</td><td>6.6</td><td>6.1</td>
+          </tr>
+          <tr>
+            <th scope="row">Employment agreement</th>
+            <td>6.1</td><td>6.0</td><td>6.2</td><td>6.1</td><td>6.0</td><td>5.8</td>
+          </tr>
+          <tr>
+            <th scope="row">Trademark filing</th>
+            <td>3.4</td><td>3.2</td><td>2.9</td><td>2.6</td><td>2.3</td><td>2.1</td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="visually-hidden">
+        <caption>Number of cases by type, June to November</caption>
+        <thead>
+          <tr>
+            <th scope="col">Case type</th>
+            <th scope="col">Jun</th>
+            <th scope="col">Jul</th>
+            <th scope="col">Aug</th>
+            <th scope="col">Sep</th>
+            <th scope="col">Oct</th>
+            <th scope="col">Nov</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Commercial lease</th>
+            <td>18</td><td>20</td><td>19</td><td>22</td><td>21</td><td>23</td>
+          </tr>
+          <tr>
+            <th scope="row">IP filing</th>
+            <td>11</td><td>12</td><td>10</td><td>13</td><td>12</td><td>14</td>
+          </tr>
+          <tr>
+            <th scope="row">Employment agreement</th>
+            <td>27</td><td>26</td><td>28</td><td>27</td><td>29</td><td>28</td>
+          </tr>
+          <tr>
+            <th scope="row">Trademark filing</th>
+            <td>9</td><td>8</td><td>10</td><td>9</td><td>11</td><td>10</td>
+          </tr>
+        </tbody>
+      </table>
     </figure>
   </section>
 
