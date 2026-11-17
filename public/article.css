@@ -149,15 +149,6 @@ img, svg { max-width: 100%; }
 }
 
 .table-scroll { overflow-x: auto; }
-.table-caption {
-  font-family: var(--mono);
-  font-size: 12px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--faint);
-  text-align: left;
-  padding-bottom: 10px;
-}
 .data-table {
   width: 100%;
   min-width: 560px;
