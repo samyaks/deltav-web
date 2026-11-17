@@ -225,7 +225,7 @@ input, button { font: inherit; }
 
 .hero-wrap { position: relative; overflow: hidden; }
 .hero {
-  padding-top: 110px; padding-bottom: 56px;
+  padding-top: 44px; padding-bottom: 56px;
   display: flex; flex-direction: column; align-items: center; gap: 28px;
   text-align: center;
 }
@@ -529,7 +529,7 @@ input, button { font: inherit; }
   .container { padding-left: 20px; padding-right: 20px; }
   .site-header-inner { padding-top: 18px; padding-bottom: 18px; }
   .nav-menu-panel { left: 0; right: auto; max-width: calc(100vw - 40px); }
-  .hero { padding-top: 64px; padding-bottom: 40px; gap: 18px; }
+  .hero { padding-top: 26px; padding-bottom: 40px; gap: 18px; }
   .demo { padding-bottom: 56px; }
   .demo-chat, .demo-dash { padding: 20px; }
   .dash-table { font-size: 14px; }
