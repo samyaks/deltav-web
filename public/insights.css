@@ -224,7 +224,7 @@
 .hours-chart { margin: 0; }
 .hours-plot {
   display: grid;
-  grid-template-columns: 1.75rem minmax(0, 1fr);
+  grid-template-columns: 2rem minmax(0, 1fr);
   column-gap: 8px;
   row-gap: 8px;
 }
@@ -292,6 +292,17 @@
   color: var(--text-2);
 }
 .hours-note { margin-top: 12px; font-size: 13px; line-height: 1.45; color: var(--muted); }
+.hours-follow {
+  padding-top: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.hours-follow h3 {
+  font-size: clamp(1.35rem, 2.4vw, 1.75rem);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
 
 .insights-close { padding-top: 48px; padding-bottom: 72px; }
 
