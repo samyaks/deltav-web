@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guide: how to track AI spend across seats, APIs, and cloud · DeltaV</title>
+<meta name="description" content="Find every place you pay for AI, pull it into one schema, and attribute it to teams.">
+<meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DeltaV">
+<meta property="og:title" content="How to track AI spend across seats, APIs, and cloud">
+<meta property="og:description" content="Find every place you pay for AI, pull it into one schema, and attribute it to teams.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/ibm-plex-mono-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/article.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <a class="brand" href="/" aria-label="DeltaV home">
+    <svg width="26" height="26" viewBox="0 0 96 96" aria-hidden="true"><path d="M48 12 L86 82 L10 82 Z" fill="none" stroke="#ffffff" stroke-width="7" stroke-linejoin="round"/><line x1="28" y1="60" x2="68" y2="60" stroke="#ffffff" stroke-width="8"/></svg>
+    <span class="brand-name">DeltaV</span>
+  </a>
+  <a class="back-link" href="/">Back to home</a>
+</header>
+
+<main id="main">
+<article class="article">
+
+  <p class="kicker">Guide · AI cost management</p>
+  <h1>How to track AI spend across seats, APIs, and cloud</h1>
+  <p class="standfirst">Most companies cannot answer "what do we spend on AI?" in one number. This guide shows how to get there, and how to keep it current.</p>
+
+  <div class="callout">
+    <p class="callout-label">The short answer</p>
+    <p>To track AI spend, list every place your company pays for AI, pull cost and usage from each vendor's admin reporting, put it all in one schema, attribute it to teams, and set budgets with alerts. Review it monthly, because AI pricing and usage change faster than cloud ever did.</p>
+  </div>
+
+  <h2>The four places AI spend hides</h2>
+  <ul>
+    <li><span class="lead-in">Seat licenses.</span> Coding assistants and chat assistants billed per user per month.</li>
+    <li><span class="lead-in">Model APIs.</span> Token-based usage from products and agents your teams built.</li>
+    <li><span class="lead-in">Cloud AI services.</span> Models consumed through your cloud provider, which land on the cloud bill.</li>
+    <li><span class="lead-in">AI add-ons.</span> AI features bundled into software you already buy, often as a price increase at renewal.</li>
+  </ul>
+
+  <h2>Why the invoice is not enough</h2>
+  <p>An invoice is a monthly total that arrives after the money is spent. It cannot tell you which team or workload drove the cost, and it smooths over spikes. One agent stuck in a retry loop can multiply its own cost several times over while the company total barely moves, because that workload is a small share of the bill. You only see it if you track spend per team and per workload.</p>
+
+  <h2>Step 1. Build the inventory</h2>
+  <p>Ask finance for every vendor with AI in the product name or the contract, then ask engineering which API keys and cloud AI services are in use. The two lists rarely match, and the gap is your first finding.</p>
+
+  <h2>Step 2. Pull usage from the source</h2>
+  <p>Use each vendor's admin or usage reporting instead of invoices. It is more detailed and more current. Read-only access is enough, which keeps the security review short.</p>
+
+  <h2>Step 3. Normalize to one schema</h2>
+  <p>Seats, tokens, and cloud charges use different units. Convert them into one table with a date, a source, a team, a quantity, and a cost. The FinOps Foundation's FOCUS specification is a good starting schema, and it keeps your AI data compatible with the cloud cost tools finance already uses.</p>
+
+  <h2>Step 4. Attribute to teams</h2>
+  <p>Map seats to people and people to teams. Map API keys to the product or workload that uses them. Keep an explicit "unattributed" bucket so totals always reconcile. A shrinking unattributed bucket is a useful measure of progress.</p>
+
+  <h2>Step 5. Set budgets and watch for spikes</h2>
+  <p>Give each team or workload a monthly budget and alert on two things: forecast to exceed budget, and a sudden jump against that workload's own baseline. Where the vendor offers spend limits or seat controls, use them so a limit is enforced and not only reported.</p>
+
+  <h2>Frequently asked questions</h2>
+  <h3>Can cloud cost tools track AI spend?</h3>
+  <p>They cover AI consumed through your cloud provider. They generally do not see seat licenses or usage billed directly by AI vendors, which is a large share of AI spend at software companies.</p>
+  <h3>Who should own AI spend?</h3>
+  <p>Finance owns the budget and engineering owns the usage. The teams that manage it well give both the same numbers, the way FinOps did for cloud.</p>
+  <h3>How often should we review it?</h3>
+  <p>Monthly for budgets, and continuously for spikes. Usage-based AI costs can change in hours.</p>
+
+  <div class="article-cta">
+    <h2>Want this without the spreadsheet?</h2>
+    <p>DeltaV is building AI cost management that tracks spend across every source and ties it to outcomes. We are in private beta and looking for three to four engineering and finance teams to shape it with us.</p>
+    <p class="email">Email <a href="mailto:partners@deltav.info">partners@deltav.info</a></p>
+    <a class="btn" href="mailto:partners@deltav.info?subject=DeltaV%20design%20partner">Book 20 minutes</a>
+  </div>
+
+  <p class="article-more">Next: <a href="/guides/return-on-ai-coding-tools/">How to measure the return on AI coding tools</a></p>
+
+</article>
+</main>
+
+</body>
+</html>
