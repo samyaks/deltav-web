@@ -221,6 +221,78 @@
 .ai-mark--low { color: var(--statement); }
 .staff-note { margin-top: 12px; font-size: 13px; line-height: 1.45; color: var(--muted); }
 
+.hours-chart { margin: 0; }
+.hours-plot {
+  display: grid;
+  grid-template-columns: 1.75rem minmax(0, 1fr);
+  column-gap: 8px;
+  row-gap: 8px;
+}
+.hours-yaxis {
+  grid-column: 1;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: -0.5em;
+  margin-bottom: -0.5em;
+  font-size: 12px;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+}
+.hours-canvas { grid-column: 2; grid-row: 1; min-width: 0; }
+.hours-chart svg { display: block; width: 100%; height: auto; }
+.hours-grid line { stroke: var(--rule); stroke-width: 1; }
+.hours-line {
+  fill: none;
+  stroke: var(--hours);
+  stroke-width: 2.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.hours-line--lease { --hours: var(--accent); }
+.hours-line--ip { --hours: var(--ink); }
+.hours-line--employment { --hours: var(--statement); }
+.hours-line--trademark { --hours: var(--muted); }
+.hours-dots circle { fill: var(--hours); stroke: none; }
+.hours-xaxis {
+  grid-column: 2;
+  grid-row: 2;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  text-align: center;
+  font-size: 12px;
+  color: var(--muted);
+}
+.hours-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 22px;
+  margin: 0;
+  padding-top: 8px;
+}
+.hours-legend li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--ink);
+}
+.hours-swatch {
+  width: 18px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--hours);
+  flex: none;
+}
+.hours-range {
+  font-variant-numeric: tabular-nums;
+  color: var(--text-2);
+}
+.hours-note { margin-top: 12px; font-size: 13px; line-height: 1.45; color: var(--muted); }
+
 .insights-close { padding-top: 48px; padding-bottom: 72px; }
 
 @media (max-width: 900px) {
