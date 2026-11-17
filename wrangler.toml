@@ -4,11 +4,9 @@ name = "deltav-web"
 pages_build_output_dir = "./public"
 compatibility_date = "2026-11-13"
 
-# Design partner intake from /talk. Uncomment after
-# `npx wrangler d1 create deltav_leads` and paste the id it prints.
-# A placeholder id makes the Pages deploy reject the Function.
-# [[d1_databases]]
-# binding = "DB"
-# database_name = "deltav_leads"
-# database_id = ""
-# migrations_dir = "migrations"
+# Design partner intake from /talk. Database created in the Cloudflare dashboard.
+[[d1_databases]]
+binding = "DB"
+database_name = "deltav_leads"
+database_id = "48ef27ff-b364-4c2b-8e09-cb58ff1a27cf"
+migrations_dir = "migrations"
