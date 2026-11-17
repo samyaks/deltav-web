@@ -1,5 +1,7 @@
 // The /talk form: validate, post to /api/leads, show the result.
 
+import { isGmailOrYahoo, WORK_EMAIL_ERROR } from "./email-domain.js";
+
 (function () {
   const form = document.getElementById("talk-form");
   if (!form) return;
@@ -55,6 +57,7 @@
     });
     const email = field("email").value.trim();
     if (email && (email.length > 254 || !EMAIL.test(email))) errors.email = "Enter a valid email address.";
+    else if (email && isGmailOrYahoo(email)) errors.email = WORK_EMAIL_ERROR;
     return errors;
   }
 

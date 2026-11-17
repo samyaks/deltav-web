@@ -1,6 +1,9 @@
 // POST /api/leads: stores one design partner intake from /talk in D1.
 // The option lists below must match the ones in public/talk/index.html.
+// Gmail and Yahoo addresses are rejected with the same rule as public/email-domain.js.
 // Never log personal data.
+
+import { isGmailOrYahoo, WORK_EMAIL_ERROR } from "../email-domain.js";
 
 const ROLES = [
   "Engineering leadership",
@@ -88,6 +91,8 @@ export async function onRequest({ request, env }) {
   const errors = {};
   if (!email || email.length > EMAIL_MAX || !EMAIL.test(email)) {
     errors.email = "Enter a valid email address.";
+  } else if (isGmailOrYahoo(email)) {
+    errors.email = WORK_EMAIL_ERROR;
   }
   if (!name) errors.name = "Required.";
   if (!company) errors.company = "Required.";

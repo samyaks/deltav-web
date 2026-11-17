@@ -9,7 +9,7 @@
     "start": "node scripts/sync-integrations.mjs && node scripts/dev.mjs",
     "sync": "node scripts/sync-integrations.mjs",
     "ingest": "node scripts/ingest.mjs",
-    "test": "node --test integrations/*.test.mjs",
+    "test": "node --test integrations/*.test.mjs functions/*.test.mjs",
     "leads": "wrangler d1 execute deltav_leads --remote --command \"SELECT * FROM leads ORDER BY created_at DESC, id DESC\"",
     "leads:csv": "node scripts/leads-csv.mjs"
   },
