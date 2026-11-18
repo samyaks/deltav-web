@@ -236,6 +236,10 @@ input, button { font: inherit; }
   color: var(--ink-2);
   text-wrap: balance;
 }
+.hero h1 .text-statement {
+  display: block;
+  text-wrap: balance;
+}
 
 /* Product preview card */
 .demo { padding-bottom: 76px; }
