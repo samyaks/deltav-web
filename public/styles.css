@@ -229,17 +229,12 @@ input, button { font: inherit; }
   display: flex; flex-direction: column; align-items: center; gap: 28px;
   text-align: center;
 }
-.hero-kicker {
-  font-size: clamp(1.125rem, 2vw, 1.5rem);
-  line-height: 1.4;
-  color: var(--text-2);
-  max-width: 620px;
-}
 .hero h1 {
-  font-size: clamp(2.75rem, 7.5vw, 6rem);
-  line-height: 1.04;
+  font-size: clamp(1.85rem, 4.4vw, 3.25rem);
+  line-height: 1.12;
   letter-spacing: -0.025em;
   color: var(--ink-2);
+  text-wrap: balance;
 }
 
 /* Product preview card */

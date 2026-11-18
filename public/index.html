@@ -27,7 +27,14 @@
       <span class="brand-name">DeltaV</span>
     </a>
     <nav class="nav" aria-label="Main">
-      <a href="#guides">Evidence</a>
+      <details class="nav-menu">
+        <summary>Guides</summary>
+        <div class="nav-menu-panel">
+          <a href="/guides/return-on-ai-coding-tools/">Return on AI coding tools</a>
+          <a href="/guides/track-ai-spend/">Track AI spend</a>
+          <a href="/white-paper/">AI ROI Whitepaper</a>
+        </div>
+      </details>
       <a href="/talk?from=talk-to-us">Talk to us</a>
     </nav>
   </div>
@@ -37,10 +44,9 @@
 
   <section class="hero" aria-labelledby="hero-heading">
     <div class="wrap wrap--1040 hero-inner">
-      <p class="kicker kicker--muted">AI spend and return</p>
       <h1 id="hero-heading" class="h1">Is your AI spend paying off?</h1>
       <p class="lede">See what every AI dollar returns. Then move your spend to where it pays off.</p>
-      <a class="btn" href="/talk?from=book-20-minutes">Book 20 minutes</a>
+      <a class="btn" href="/talk?from=book-20-minutes">Talk to us</a>
     </div>
   </section>
 
@@ -48,7 +54,7 @@
     <div class="wrap wrap--1080 demo-inner">
       <div class="demo-card">
         <div class="demo-chat">
-          <p class="ask-label">→ Ask DeltaV</p>
+          <p class="ask-label">→ Ask Delta-V</p>
           <p class="bubble">Is our AI spend paying off?</p>
           <p class="demo-answer">Mostly. Model API spend is tracking with shipped work. Two things stand out: <span class="text-statement">34 coding seats sat unused</span>, and one support agent ran <span class="text-statement">3x its usual cost</span> on Tuesday.</p>
           <p class="bubble bubble--ghost">What should we do?</p>
@@ -61,7 +67,6 @@
               <p class="dash-label">Total AI spend · this month</p>
               <p class="dash-total">$34,100</p>
             </div>
-            <p class="dash-sample">Sample data</p>
           </div>
 
           <svg class="spend-chart" role="img" aria-label="Daily AI spend with a spike on Tuesday" viewBox="0 0 600 110" preserveAspectRatio="none">
@@ -72,7 +77,7 @@
           </svg>
 
           <table class="spend-table">
-            <caption class="visually-hidden">AI spend sources this month, with active use where it applies. Sample data.</caption>
+            <caption class="visually-hidden">AI spend sources this month, with active use where it applies.</caption>
             <colgroup><col style="width: 42.9%"><col style="width: 28.55%"><col style="width: 28.55%"></colgroup>
             <thead>
               <tr><th scope="col">Source</th><th scope="col">Monthly</th><th scope="col">Active use</th></tr>
@@ -115,7 +120,7 @@
       <p class="section-lede">Spend next to the work it produced, so you can prove the return on AI with numbers finance accepts.</p>
       <div class="roi">
         <table class="roi-table">
-          <caption class="visually-hidden">AI spend, pull requests merged, and cost per pull request by team. Sample data.</caption>
+          <caption class="visually-hidden">AI spend, pull requests merged, and cost per pull request by team.</caption>
           <colgroup><col style="width: 28.6%"><col style="width: 23.8%"><col style="width: 23.8%"><col style="width: 23.8%"></colgroup>
           <thead>
             <tr><th scope="col">Team</th><th scope="col">AI spend</th><th scope="col">PRs merged</th><th scope="col">Cost per PR</th></tr>
@@ -127,7 +132,7 @@
           </tbody>
         </table>
       </div>
-      <p class="note">Sample data · Support costs 3x more per PR than the other teams</p>
+      <p class="note">Support costs 3x more per PR than the other teams</p>
     </div>
   </section>
 
@@ -135,7 +140,6 @@
     <div class="wrap wrap--960 band-inner">
       <p class="kicker">03 · Refocus</p>
       <h2 id="refocus-heading" class="h2">Put the money where it works.</h2>
-      <p class="section-lede">DeltaV turns the numbers into four kinds of moves. You approve them. The spend follows the return.</p>
       <ul class="moves">
         <li class="move">
           <p class="move-label text-statement">Cut</p>
@@ -158,7 +162,7 @@
           <p>Give Platform more seats. Lowest cost per PR in the company.</p>
         </li>
       </ul>
-      <p class="note">Sample data · You approve every move</p>
+      <p class="note">You approve every move</p>
     </div>
   </section>
 
@@ -194,8 +198,10 @@
     <div class="wrap wrap--760 band-inner">
       <h2 id="talk-heading" class="h2">Working on this now?</h2>
       <p class="section-lede">We've built the cost engine. We're building the rest with three to four engineering and finance teams. Yours could be one.</p>
-      <a class="btn" href="/talk?from=book-20-minutes">Book 20 minutes</a>
-      <p class="cta-email">or email <a href="mailto:partners@deltav.info">partners@deltav.info</a></p>
+      <div class="cta-actions">
+        <a class="btn" href="/talk?from=book-20-minutes">Talk to us</a>
+        <p class="cta-email">or email <a href="mailto:partners@deltav.info">partners@deltav.info</a></p>
+      </div>
       <p class="cta-note">Private beta · Design partners</p>
     </div>
   </section>
@@ -211,14 +217,97 @@
     </div>
     <span>DeltaV · Private beta</span>
     <nav class="footer-nav" aria-label="Footer">
-      <a href="/guides/return-on-ai-coding-tools/">Guide: Return on AI coding tools</a>
-      <a href="/guides/track-ai-spend/">Guide: Track AI spend</a>
-      <a href="/white-paper/">White paper: AI spend and return</a>
       <a href="https://deltav.info/tour">Early product</a>
       <a href="mailto:contact@deltav.info">contact@deltav.info</a>
     </nav>
   </div>
 </footer>
+
+<script>
+// Match the subtitle's width to the headline so both share the same side margins.
+(function () {
+  const heading = document.getElementById("hero-heading");
+  const subtitle = document.querySelector(".hero .lede");
+  const hero = document.querySelector(".hero-inner");
+  if (!heading || !subtitle || !hero || !heading.firstChild) return;
+
+  const widestLine = (node) => {
+    const text = node.textContent || "";
+    const range = document.createRange();
+    if (!text) return 0;
+    range.setStart(node, 0);
+    range.setEnd(node, 1);
+    const first = range.getClientRects()[0];
+    if (!first) return 0;
+    let lastTop = first.top;
+    let start = 0;
+    let widest = 0;
+    const commit = (from, to) => {
+      let a = from;
+      let b = to;
+      while (a < b && /\s/.test(text[a])) a += 1;
+      while (b > a && /\s/.test(text[b - 1])) b -= 1;
+      if (a >= b) return;
+      range.setStart(node, a);
+      range.setEnd(node, b);
+      widest = Math.max(widest, range.getBoundingClientRect().width);
+    };
+    for (let i = 1; i <= text.length; i += 1) {
+      range.setStart(node, i - 1);
+      range.setEnd(node, i);
+      const rect = range.getClientRects()[0];
+      if (!rect) continue;
+      if (Math.abs(rect.top - lastTop) > 1) {
+        commit(start, i - 1);
+        start = i - 1;
+        lastTop = rect.top;
+      }
+    }
+    commit(start, text.length);
+    return widest;
+  };
+
+  let frame = 0;
+  const align = () => {
+    subtitle.style.fontSize = "";
+    subtitle.style.width = "";
+    subtitle.style.maxWidth = "";
+    subtitle.style.whiteSpace = "nowrap";
+    const natural = subtitle.getBoundingClientRect().width;
+    const size = parseFloat(getComputedStyle(subtitle).fontSize);
+    const target = widestLine(heading.firstChild);
+
+    if (!(target > 0) || !(natural > 0) || natural > target + 0.5) {
+      subtitle.style.fontSize = "";
+      subtitle.style.whiteSpace = "";
+      if (target > 0) {
+        subtitle.style.width = target + "px";
+        subtitle.style.maxWidth = "100%";
+      }
+      return;
+    }
+
+    subtitle.style.fontSize = (size * target / natural) + "px";
+    subtitle.style.width = target + "px";
+    subtitle.style.maxWidth = "100%";
+    const range = document.createRange();
+    range.selectNodeContents(subtitle.firstChild);
+    const rendered = range.getBoundingClientRect().width;
+    if (rendered > target + 0.5) {
+      subtitle.style.fontSize = (parseFloat(subtitle.style.fontSize) * target / rendered) + "px";
+    }
+  };
+
+  const schedule = () => {
+    cancelAnimationFrame(frame);
+    frame = requestAnimationFrame(align);
+  };
+
+  align();
+  if (window.ResizeObserver) new ResizeObserver(schedule).observe(hero);
+  else window.addEventListener("resize", schedule);
+})();
+</script>
 
 </body>
 </html>

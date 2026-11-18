@@ -84,7 +84,7 @@ Then open http://127.0.0.1:8788/talk. That secret is Cloudflare's Turnstile test
 
 ## The design partner form
 
-`/talk` collects a software company. `/law-firms/talk/` collects a law firm, with the same fields and the tools the legal pages already name: Harvey, Legora, Everlaw, Microsoft Copilot, Clio, and Relativity. "Talk to us" and "Book 20 minutes" link to `/talk` with `?from=talk-to-us` or `?from=book-20-minutes`. "Get my free audit" links to `/law-firms/talk/` with `?from=free-audit`. The source is stored with the referring path and any `utm_source`, `utm_medium` and `utm_campaign`.
+`/talk` collects a software company. `/law-firms/talk/` collects a law firm, with the same fields and the tools the legal pages already name: Harvey, Legora, Everlaw, Microsoft Copilot, Clio, and Relativity. The nav "Talk to us" links to `/talk` with `?from=talk-to-us`. The same label on the home, guide, and white paper buttons links with `?from=book-20-minutes`. "Get my free audit" links to `/law-firms/talk/` with `?from=free-audit`. The source is stored with the referring path and any `utm_source`, `utm_medium` and `utm_campaign`.
 
 `functions/api/leads.js` validates every field again on the server, verifies the Turnstile token, and inserts with prepared statements. It never logs personal data. The D1 database is `deltav_leads`, bound as `DB` in `wrangler.toml`.
 
