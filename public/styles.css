@@ -230,7 +230,7 @@ input, button { font: inherit; }
   text-align: center;
 }
 .hero h1 {
-  font-size: clamp(1.85rem, 4.4vw, 3.25rem);
+  font-size: clamp(2.75rem, 7.5vw, 5.25rem);
   line-height: 1.12;
   letter-spacing: -0.025em;
   color: var(--ink-2);
