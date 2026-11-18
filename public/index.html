@@ -35,7 +35,7 @@
           <a href="/white-paper/">AI ROI Whitepaper</a>
         </div>
       </details>
-      <a href="/talk?from=talk-to-us">Talk to us</a>
+      <a class="btn" href="/talk?from=talk-to-us">Talk to us</a>
     </nav>
   </div>
 </header>
@@ -100,16 +100,76 @@
   </section>
 
   <section class="band band--raised" aria-labelledby="investment-heading">
-    <div class="wrap wrap--960 band-inner">
+    <div class="wrap wrap--1080 band-inner">
       <p class="kicker">01 · The investment</p>
       <h2 id="investment-heading" class="h2">See the whole investment.</h2>
       <p class="section-lede">Everything you spend on AI, in one place. Today that is four bills and four dashboards.</p>
-      <ul class="chips">
-        <li>Coding assistants</li>
-        <li>Chat seats</li>
-        <li>LLM APIs</li>
-        <li>Cloud AI</li>
-      </ul>
+
+      <div class="ledger" role="img" aria-label="Four vendor invoices join into one ledger totaling $51.7k. LLM APIs are the largest share at 48%.">
+        <ul class="ledger-invoices">
+          <li class="ledger-invoice">
+            <p class="ledger-invoice-label">Invoice 01</p>
+            <div class="ledger-invoice-row">
+              <span>Coding assistants</span>
+              <span class="ledger-invoice-amt">$11.4k</span>
+            </div>
+            <span class="ledger-invoice-bar" style="--fill: 22%"></span>
+          </li>
+          <li class="ledger-invoice">
+            <p class="ledger-invoice-label">Invoice 02</p>
+            <div class="ledger-invoice-row">
+              <span>Chat seats</span>
+              <span class="ledger-invoice-amt">$6.8k</span>
+            </div>
+            <span class="ledger-invoice-bar" style="--fill: 13%"></span>
+          </li>
+          <li class="ledger-invoice ledger-invoice--focus">
+            <p class="ledger-invoice-label">Invoice 03</p>
+            <div class="ledger-invoice-row">
+              <span>LLM APIs</span>
+              <span class="ledger-invoice-amt">$24.6k</span>
+            </div>
+            <span class="ledger-invoice-bar" style="--fill: 48%"></span>
+          </li>
+          <li class="ledger-invoice">
+            <p class="ledger-invoice-label">Invoice 04</p>
+            <div class="ledger-invoice-row">
+              <span>Cloud AI</span>
+              <span class="ledger-invoice-amt">$8.9k</span>
+            </div>
+            <span class="ledger-invoice-bar" style="--fill: 17%"></span>
+          </li>
+        </ul>
+
+        <svg class="ledger-flows" viewBox="0 0 160 360" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M0 36 C70 36, 90 180, 160 180"></path>
+          <path d="M0 124 C70 124, 90 180, 160 180"></path>
+          <path class="ledger-flow--focus" d="M0 212 C70 212, 90 180, 160 180"></path>
+          <path d="M0 300 C70 300, 90 180, 160 180"></path>
+          <circle class="ledger-flow-dot" cx="160" cy="180" r="4"></circle>
+        </svg>
+
+        <div class="ledger-total">
+          <p class="ledger-total-head">
+            <svg width="16" height="16" viewBox="0 0 96 96" aria-hidden="true"><path d="M48 12 L86 82 L10 82 Z" fill="none" stroke="currentColor" stroke-width="7" stroke-linejoin="round"/><line x1="28" y1="60" x2="68" y2="60" stroke="currentColor" stroke-width="8"/></svg>
+            <span>One ledger · MTD</span>
+          </p>
+          <p class="ledger-total-amt">$51.7k</p>
+          <p class="ledger-total-meta">4 vendors · 1 view</p>
+          <div class="ledger-stack" aria-hidden="true">
+            <span style="flex: 22"></span>
+            <span style="flex: 13"></span>
+            <span class="ledger-stack--focus" style="flex: 48"></span>
+            <span style="flex: 17"></span>
+          </div>
+          <ul class="ledger-legend">
+            <li><span class="ledger-swatch"></span>Coding 22%</li>
+            <li><span class="ledger-swatch"></span>Chat 13%</li>
+            <li class="ledger-legend--focus"><span class="ledger-swatch"></span>APIs 48%</li>
+            <li><span class="ledger-swatch"></span>Cloud 17%</li>
+          </ul>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -166,11 +226,11 @@
     </div>
   </section>
 
-  <section id="guides" class="band band--cards" aria-labelledby="guides-heading">
+  <section id="guides" class="band band--cards" aria-labelledby="white-papers">
     <div class="wrap wrap--1080 band-inner">
-      <p class="kicker">Guides</p>
-      <h2 id="guides-heading" class="h2">Do it yourself first.</h2>
-      <p class="section-lede">Two step-by-step guides to the method behind DeltaV.</p>
+      <p class="kicker">Evidence</p>
+      <h2 id="white-papers" class="h2">The evidence, in full.</h2>
+      <p class="section-lede">Guides to the method, and the research on AI spend and return by industry.</p>
       <div class="card-grid">
         <a class="card" href="/guides/return-on-ai-coding-tools/">
           <span class="card-kicker">Guide · DeltaV</span>
@@ -184,16 +244,6 @@
           <p>Find every place you pay for AI, pull it into one schema, and attribute it to teams.</p>
           <span class="card-more">Read the guide →</span>
         </a>
-      </div>
-    </div>
-  </section>
-
-  <section id="white-papers" class="band band--cards band--raised" aria-labelledby="white-papers-heading">
-    <div class="wrap wrap--1080 band-inner">
-      <p class="kicker">White papers</p>
-      <h2 id="white-papers-heading" class="h2">The evidence, in full.</h2>
-      <p class="section-lede">What the research says about AI spend and return, by industry.</p>
-      <div class="card-grid">
         <a class="card" href="/white-paper/">
           <span class="card-kicker">White paper · Software companies</span>
           <h3>The AI question software companies can't answer yet</h3>
@@ -225,7 +275,6 @@
       <a href="#top" aria-current="page">Software and AI companies</a>
       <a href="/law-firms/">Law firms</a>
     </div>
-    <span>DeltaV · Private beta</span>
     <nav class="footer-nav" aria-label="Footer">
       <a href="https://deltav.info/tour">Early product</a>
       <a href="mailto:contact@deltav.info">contact@deltav.info</a>
