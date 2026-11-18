@@ -503,6 +503,24 @@ input, button { font: inherit; }
 }
 .site-footer a { color: var(--ink-2); text-decoration: none; padding: 12px 0; }
 .site-footer a:hover { text-decoration: underline; }
+.industries {
+  flex: 1 1 100%;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 4px 28px;
+  padding-bottom: 16px; margin-bottom: 8px;
+  border-bottom: 1px solid var(--rule);
+}
+.industries-label {
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.site-footer .industries a[aria-current="page"] { color: var(--ink); }
+.footer-nav { display: flex; flex-wrap: wrap; gap: 12px 28px; }
+.site-footer .footer-nav a { color: var(--muted); }
+.site-footer .footer-nav a:hover,
+.site-footer .industries a:hover { color: var(--ink); text-decoration: none; }
 .footer-industries {
   flex: 1 1 100%;
   display: flex; flex-wrap: wrap; align-items: center; gap: 4px 28px;
