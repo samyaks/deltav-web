@@ -15,10 +15,8 @@
   letter-spacing: -0.03em;
   font-weight: 400;
   color: var(--ink);
-  max-width: 22ch;
 }
 .note-lede {
-  max-width: 38rem;
   font-size: clamp(1.125rem, 2vw, 1.375rem);
   line-height: 1.45;
   color: var(--text-2);
@@ -38,7 +36,6 @@
 }
 .note-body p,
 .note-body li {
-  max-width: 38rem;
   font-size: 18px;
   line-height: 1.55;
   color: var(--ink-2);
@@ -46,7 +43,6 @@
 .note-body a { color: var(--accent); }
 
 .example {
-  max-width: 38rem;
   margin: 8px 0 4px;
   border-top: 1px solid var(--ink);
   border-bottom: 1px solid var(--ink);
