@@ -3,15 +3,13 @@
 //
 // The project token is found in PostHog under Project settings. It is public
 // by design, so it is safe to commit. If it is empty, nothing loads.
+// Every page, including the law-firm pages, uses the same capture: autocapture,
+// session replay with inputs masked, and the funnel events below.
 
 (function () {
   const PROJECT_TOKEN = "phc_qoV2gvEbFK8KiyuVPGoTeVd8xdpTfbj8hqH92e9cKnmW";
   const API_HOST = "https://us.i.posthog.com"; // EU projects: https://eu.i.posthog.com
   const LIVE_HOSTS = ["deltav.info", "www.deltav.info"];
-
-  // Pages that can show a visitor's own uploaded data. Pageviews only there:
-  // no click capture and no session replay.
-  const PAGEVIEW_ONLY = ["/law-firms/intake", "/law-firms/insights"];
 
   const queue = [];
   let ready = false;
@@ -35,8 +33,6 @@
   const live = LIVE_HOSTS.includes(window.location.hostname);
   if (!PROJECT_TOKEN || !live) return;
 
-  const pageviewOnly = PAGEVIEW_ONLY.some((prefix) => path.startsWith(prefix));
-
   const script = document.createElement("script");
   script.async = true;
   script.crossOrigin = "anonymous";
@@ -47,8 +43,7 @@
       api_host: API_HOST,
       defaults: "2026-08-30",
       person_profiles: "identified_only",
-      autocapture: !pageviewOnly,
-      disable_session_recording: pageviewOnly,
+      autocapture: true,
       session_recording: { maskAllInputs: true },
     });
     ready = true;
@@ -69,7 +64,10 @@
     }
     if (url.origin !== window.location.origin) return;
 
+    const here = path.replace(/\/+$/, "");
     const target = url.pathname.replace(/\/+$/, "");
+    if (target === here) return;
+
     if (target === "/talk" || target === "/law-firms/talk") {
       const from = url.searchParams.get("from");
       const known = from === "talk-to-us" || from === "book-20-minutes" || from === "free-audit";
@@ -77,10 +75,14 @@
         label: known ? from : "other",
         page: path,
       });
-    } else if (target.startsWith("/guides/") && target !== path.replace(/\/+$/, "")) {
+    } else if (target.startsWith("/guides/")) {
       window.deltavAnalytics.track("guide_card_clicked", { guide: target.split("/")[2], page: path });
-    } else if (target === "/white-paper" && target !== path.replace(/\/+$/, "")) {
+    } else if (target === "/white-paper") {
       window.deltavAnalytics.track("white_paper_clicked", { paper: "software-companies", page: path });
+    } else if (target === "/law-firms/insights") {
+      window.deltavAnalytics.track("insights_clicked", { page: path });
+    } else if (target.startsWith("/law-firms/notes/")) {
+      window.deltavAnalytics.track("note_clicked", { note: target.split("/").pop(), page: path });
     }
   });
 })();
