@@ -25,7 +25,7 @@ nav button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 .right{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 .open{font-size:14px;color:var(--acc);text-decoration:none;white-space:nowrap}.open:hover{text-decoration:underline}
 main{flex:1 1 auto;display:flex;flex-direction:column;min-height:0}
-.frame{flex:1 1 auto;margin:16px auto 24px;width:min(1400px,calc(100% - 48px));border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card);position:relative;min-height:560px}
+.frame{flex:1 1 auto;margin:12px auto 16px;width:min(1400px,calc(100% - 48px));border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card);position:relative;min-height:min(780px,calc(100vh - 120px))}
 .frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#fff}
 .note{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;color:var(--mute);font-size:14px;pointer-events:none}
 @media(max-width:600px){.frame{width:calc(100% - 24px);margin:12px auto 16px;border-radius:10px}.wrap{padding:0 12px}}
@@ -46,20 +46,18 @@ main{flex:1 1 auto;display:flex;flex-direction:column;min-height:0}
 </div></header>
 <main>
   <div class="frame">
-    <div class="note" id="note">Loading the sheet. If it stays blank, sign in to Google with the account SK shared it with.</div>
+    <div class="note" id="note">Loading the full sheet. If Google asks you to sign in, use the account that has access. Browsers sometimes block that sign-in inside this box — use Open in Google Sheets, then come back.</div>
     <iframe id="sheet" title="Delta-V Ops Google Sheet" allow="clipboard-write" loading="eager"></iframe>
   </div>
 </main>
 <script>
 {
-  // The tab buttons switch the embedded sheet to a named tab. Fill GIDS from the sheet's
-  // URL: open a tab in Google Sheets and copy the number after "#gid=". A tab with no gid
-  // here still works: the sheet's own tab strip is visible at the bottom of the embed.
+  // Full editor (menus + tab strip). Fill GIDS from each tab's URL "#gid=" for direct jumps.
   const SHEET='1FF-0pW4Fav2RJtGVZUaYsiKcmi3X7naIpQ2p81IsjQs';
   const GIDS={Dashboard:'',Tasks:'',Outreach:'',Resources:'',Personas:'',Messages:''};
   const f=document.getElementById('sheet'),nav=document.getElementById('nav'),open=document.getElementById('openLink');
-  const url=t=>`https://docs.google.com/spreadsheets/d/${SHEET}/edit?rm=minimal${GIDS[t]?'#gid='+GIDS[t]:''}`;
-  function show(t){f.src=url(t);open.href=`https://docs.google.com/spreadsheets/d/${SHEET}/edit${GIDS[t]?'#gid='+GIDS[t]:''}`;for(const b of nav.querySelectorAll('button'))b.classList.toggle('on',b.dataset.tab===t);try{history.replaceState(null,'','#'+t.toLowerCase())}catch(e){}}
+  const url=t=>`https://docs.google.com/spreadsheets/d/${SHEET}/edit${GIDS[t]?'#gid='+GIDS[t]:''}`;
+  function show(t){f.src=url(t);open.href=url(t);for(const b of nav.querySelectorAll('button'))b.classList.toggle('on',b.dataset.tab===t);try{history.replaceState(null,'','#'+t.toLowerCase())}catch(e){}}
   nav.addEventListener('click',e=>{const b=e.target.closest('button[data-tab]');if(b)show(b.dataset.tab)});
   f.addEventListener('load',()=>{document.getElementById('note').style.display='none'});
   const h=(location.hash||'').slice(1).toLowerCase();const start=Object.keys(GIDS).find(k=>k.toLowerCase()===h)||'Dashboard';
