@@ -7,14 +7,17 @@
 // session replay with inputs masked, and the funnel events below.
 //
 // Do not add a public/404.html. Cloudflare Pages serves the home page for
-// unknown paths and leaves the path in the address bar; that is what makes
-// personal outreach links like /KyleA work without per-person redirects.
+// unknown top-level paths and leaves the path in the address bar; that is what
+// makes personal outreach links like /KyleA work without per-person redirects.
+// Law-firm outreach uses /law-firms/:code via functions/_middleware.js.
 
 (function () {
   const PROJECT_TOKEN = "phc_qoV2gvEbFK8KiyuVPGoTeVd8xdpTfbj8hqH92e9cKnmW";
   const API_HOST = "https://us.i.posthog.com"; // EU projects: https://eu.i.posthog.com
   const LIVE_HOSTS = ["deltav.info", "www.deltav.info"];
   const PATH_CODE = /^\/([A-Za-z0-9]{2,40})\/?$/;
+  const LAW_PATH_CODE = /^\/law-firms\/([A-Za-z0-9]{2,40})\/?$/;
+  const LAW_RESERVED = { talk: 1, insights: 1, intake: 1, notes: 1 };
 
   const queue = [];
   let ready = false;
@@ -50,13 +53,26 @@
     }
   }
 
-  // Personal outreach: /KyleA serves the home page with the path still in the bar.
+  function pathOutreachCode(pathname, page) {
+    if (page === "home") {
+      const match = pathname.match(PATH_CODE);
+      return match ? match[1] : "";
+    }
+    if (page === "law-firms") {
+      const match = pathname.match(LAW_PATH_CODE);
+      if (!match) return "";
+      const code = match[1];
+      return LAW_RESERVED[code.toLowerCase()] ? "" : code;
+    }
+    return "";
+  }
+
+  // Personal outreach: /KyleA → home, /law-firms/KyleA → law firms.
   // Prefer ?utm_content= when present; otherwise take the path segment as typed.
   const path = window.location.pathname;
   const utmContent = new URLSearchParams(window.location.search).get("utm_content");
-  const onHome = document.body && document.body.getAttribute("data-page") === "home";
-  const pathMatch = onHome ? path.match(PATH_CODE) : null;
-  const pathCode = pathMatch ? pathMatch[1] : "";
+  const page = document.body && document.body.getAttribute("data-page");
+  const pathCode = pathOutreachCode(path, page);
   const outreachCode = utmContent || pathCode || "";
 
   if (outreachCode) saveOutreach(outreachCode);
@@ -64,6 +80,7 @@
   if (pathCode) {
     window.deltavAnalytics.track("outreach_link_opened", {
       outreach_code: outreachCode,
+      page: page || "",
     });
   }
 

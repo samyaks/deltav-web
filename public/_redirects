@@ -1,3 +1,6 @@
 # Private ops dashboard for SK and Samyak lives at /Dash/ (Cloudflare Access gates it).
 /dash   /Dash/  301
 /Dash   /Dash/  301
+
+# Law-firm outreach paths like /law-firms/KyleA are handled in
+# functions/_middleware.js (keeps the path in the address bar).
