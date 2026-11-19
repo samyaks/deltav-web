@@ -163,7 +163,13 @@ input, button { font: inherit; }
 
 /* ---------- Header ---------- */
 
-.site-header { position: relative; z-index: 30; background: var(--white); border-bottom: 1px solid var(--rule); }
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--white);
+  border-bottom: 1px solid var(--rule);
+}
 .site-header-inner {
   padding-top: 28px; padding-bottom: 28px;
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px;
