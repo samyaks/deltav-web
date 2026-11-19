@@ -5,11 +5,16 @@
 // by design, so it is safe to commit. If it is empty, nothing loads.
 // Every page, including the law-firm pages, uses the same capture: autocapture,
 // session replay with inputs masked, and the funnel events below.
+//
+// Do not add a public/404.html. Cloudflare Pages serves the home page for
+// unknown paths and leaves the path in the address bar; that is what makes
+// personal outreach links like /KyleA work without per-person redirects.
 
 (function () {
   const PROJECT_TOKEN = "phc_qoV2gvEbFK8KiyuVPGoTeVd8xdpTfbj8hqH92e9cKnmW";
   const API_HOST = "https://us.i.posthog.com"; // EU projects: https://eu.i.posthog.com
   const LIVE_HOSTS = ["deltav.info", "www.deltav.info"];
+  const PATH_CODE = /^\/([A-Za-z0-9]{2,40})\/?$/;
 
   const queue = [];
   let ready = false;
@@ -29,7 +34,41 @@
     },
   };
 
+  function readStoredOutreach() {
+    try {
+      return sessionStorage.getItem("outreach_code") || "";
+    } catch {
+      return "";
+    }
+  }
+
+  function saveOutreach(code) {
+    try {
+      sessionStorage.setItem("outreach_code", code);
+    } catch {
+      /* sessionStorage may be blocked */
+    }
+  }
+
+  // Personal outreach: /KyleA serves the home page with the path still in the bar.
+  // Prefer ?utm_content= when present; otherwise take the path segment as typed.
   const path = window.location.pathname;
+  const utmContent = new URLSearchParams(window.location.search).get("utm_content");
+  const onHome = document.body && document.body.getAttribute("data-page") === "home";
+  const pathMatch = onHome ? path.match(PATH_CODE) : null;
+  const pathCode = pathMatch ? pathMatch[1] : "";
+  const outreachCode = utmContent || pathCode || "";
+
+  if (outreachCode) saveOutreach(outreachCode);
+
+  if (pathCode) {
+    window.deltavAnalytics.track("outreach_link_opened", {
+      outreach_code: outreachCode,
+    });
+  }
+
+  const registerCode = outreachCode || readStoredOutreach();
+
   const live = LIVE_HOSTS.includes(window.location.hostname);
   if (!PROJECT_TOKEN || !live) return;
 
@@ -39,15 +78,34 @@
   script.src = API_HOST.replace(".i.posthog.com", "-assets.i.posthog.com") + "/static/array.js";
   script.onload = function () {
     if (!window.posthog || !window.posthog.init) return;
-    window.posthog.init(PROJECT_TOKEN, {
+
+    function markReady() {
+      ready = true;
+      queue.splice(0).forEach((call) => call(window.posthog));
+    }
+
+    const options = {
       api_host: API_HOST,
       defaults: "2026-08-30",
       person_profiles: "identified_only",
       autocapture: true,
       session_recording: { maskAllInputs: true },
-    });
-    ready = true;
-    queue.splice(0).forEach((call) => call(window.posthog));
+    };
+
+    // Register before the first pageview so outreach_code is on that event too.
+    if (registerCode) {
+      options.capture_pageview = false;
+      options.loaded = function (posthog) {
+        posthog.register({ outreach_code: registerCode });
+        posthog.capture("$pageview");
+        markReady();
+      };
+      window.posthog.init(PROJECT_TOKEN, options);
+      return;
+    }
+
+    window.posthog.init(PROJECT_TOKEN, options);
+    markReady();
   };
   document.head.appendChild(script);
 
