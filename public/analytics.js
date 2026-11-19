@@ -29,6 +29,14 @@
     },
   };
 
+  // Personal outreach links land with ?utm_content=Code; keep it for /talk.
+  try {
+    const content = new URLSearchParams(window.location.search).get("utm_content");
+    if (content) sessionStorage.setItem("outreach_code", content);
+  } catch {
+    /* sessionStorage may be blocked */
+  }
+
   const path = window.location.pathname;
   const live = LIVE_HOSTS.includes(window.location.hostname);
   if (!PROJECT_TOKEN || !live) return;
