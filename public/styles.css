@@ -465,34 +465,34 @@ input, button { font: inherit; }
 /* Five AI tools into one ledger (same component as the software home page) */
 .ledger {
   width: 100%;
-  max-width: 920px;
-  margin-top: 10px;
+  max-width: 680px;
+  margin-top: 4px;
   display: grid;
-  grid-template-columns: minmax(220px, 280px) minmax(72px, 1fr) minmax(240px, 320px);
+  grid-template-columns: minmax(160px, 200px) minmax(48px, 1fr) minmax(180px, 230px);
   align-items: stretch;
-  gap: 0 8px;
+  gap: 0 6px;
   text-align: left;
 }
 .ledger-invoices {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 10px;
-  min-height: 440px;
+  gap: 6px;
+  min-height: 300px;
 }
 .ledger-invoice {
   background: var(--white);
   border: 1px solid var(--line);
-  border-radius: 10px;
-  padding: 12px 16px 10px;
+  border-radius: 8px;
+  padding: 8px 12px 7px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 5px;
 }
 .ledger-invoice-label {
   font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.16em;
+  font-size: 9px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--muted);
 }
@@ -500,14 +500,14 @@ input, button { font: inherit; }
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  gap: 12px;
+  gap: 8px;
   color: var(--ink);
-  font-size: 15px;
+  font-size: 13px;
 }
 .ledger-invoice-amt { font-variant-numeric: tabular-nums; }
 .ledger-invoice-bar {
   display: block;
-  height: 3px;
+  height: 2px;
   border-radius: 999px;
   background: linear-gradient(
     to right,
@@ -530,57 +530,57 @@ input, button { font: inherit; }
 .ledger-flows {
   width: 100%;
   height: 100%;
-  min-height: 440px;
+  min-height: 300px;
   align-self: stretch;
 }
 .ledger-flows path {
   fill: none;
   stroke: var(--line-strong);
-  stroke-width: 1.5;
+  stroke-width: 1.25;
 }
 .ledger-flows .ledger-flow--focus {
   stroke: var(--accent);
-  stroke-width: 2;
+  stroke-width: 1.75;
 }
 .ledger-flow-dot { fill: var(--ink); }
 
 .ledger-total {
   background: var(--white);
   border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 22px 22px 20px;
+  border-radius: 10px;
+  padding: 16px 16px 14px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 10px;
-  min-height: 440px;
+  gap: 7px;
+  min-height: 300px;
 }
 .ledger-total-head {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   font-family: var(--mono);
-  font-size: 12px;
-  letter-spacing: 0.16em;
+  font-size: 10px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink);
 }
-.ledger-total-head svg { color: var(--ink); flex: 0 0 auto; }
+.ledger-total-head svg { color: var(--ink); flex: 0 0 auto; width: 13px; height: 13px; }
 .ledger-total-amt {
-  font-size: clamp(2.5rem, 5vw, 3.25rem);
+  font-size: clamp(1.75rem, 3.5vw, 2.25rem);
   letter-spacing: -0.03em;
   line-height: 1;
   color: var(--ink);
 }
 .ledger-total-meta {
-  font-size: 14px;
+  font-size: 12px;
   color: var(--muted);
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 .ledger-stack {
   display: flex;
   width: 100%;
-  height: 10px;
+  height: 7px;
   border-radius: 999px;
   overflow: hidden;
   background: var(--rule);
@@ -589,25 +589,25 @@ input, button { font: inherit; }
 .ledger-stack span {
   display: block;
   background: var(--ink-2);
-  min-width: 4px;
+  min-width: 3px;
 }
 .ledger-stack--focus { background: var(--accent) !important; }
 .ledger-legend {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px 16px;
-  margin-top: 6px;
-  font-size: 13px;
+  gap: 5px 10px;
+  margin-top: 4px;
+  font-size: 11px;
   color: var(--muted);
 }
 .ledger-legend li {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 .ledger-swatch {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   border-radius: 2px;
   background: var(--ink-2);
   flex: 0 0 auto;
@@ -618,8 +618,8 @@ input, button { font: inherit; }
 @media (max-width: 820px) {
   .ledger {
     grid-template-columns: 1fr;
-    gap: 18px;
-    max-width: 420px;
+    gap: 12px;
+    max-width: 320px;
   }
   .ledger-flows { display: none; }
   .ledger-invoices { min-height: 0; }
