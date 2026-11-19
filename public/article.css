@@ -56,6 +56,10 @@ img, svg { max-width: 100%; }
 /* ---------- Header ---------- */
 
 .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--bg);
   max-width: 1248px;
   margin: 0 auto;
   padding: 28px 24px;
