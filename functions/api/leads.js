@@ -33,6 +33,8 @@ const AI_TOOLS = [
   "ChatGPT or OpenAI API",
   "Anthropic API",
   "Gemini",
+  "AI agents in our own product",
+  "Not sure",
   "Harvey",
   "Legora",
   "Everlaw",
@@ -42,7 +44,14 @@ const AI_TOOLS = [
   "Other",
 ];
 const MONTHLY_SPEND = ["Under $10k", "$10k to $50k", "$50k to $250k", "Over $250k", "Not sure"];
+const GOALS = [
+  "Whether our AI spend is paying off",
+  "Which teams and tools are getting value",
+  "How to cap or control usage before the bill arrives",
+  "Something else",
+];
 const SOURCES = ["talk-to-us", "book-20-minutes", "free-audit"];
+const OUTREACH = /^[A-Za-z0-9]{1,40}$/;
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const EMAIL_MAX = 254;
@@ -99,8 +108,15 @@ export async function onRequest({ request, env }) {
   const name = asString(body.name).slice(0, SHORT_MAX);
   const company = asString(body.company).slice(0, SHORT_MAX);
   const role = oneOf(asString(body.role), ROLES);
-  const teamSize = oneOf(asString(body.team_size), TEAM_SIZES);
+  // team_size is NOT NULL in SQLite and cannot be dropped in place. Soft form
+  // no longer collects it; store "" when absent. Law-firm form may still send one.
+  const teamSizeRaw = asString(body.team_size);
+  const teamSize = teamSizeRaw ? oneOf(teamSizeRaw, TEAM_SIZES) || "" : "";
+  const goalRaw = asString(body.goal);
+  const goal = goalRaw ? oneOf(goalRaw, GOALS) : null;
   const question = asString(body.question);
+  const outreachRaw = asString(body.outreach_code);
+  const outreachCode = outreachRaw && OUTREACH.test(outreachRaw) ? outreachRaw : null;
 
   const tools = Array.isArray(body.ai_tools) ? body.ai_tools.map(asString) : [];
   const aiTools = AI_TOOLS.filter((tool) => tools.includes(tool)).join(", ") || null;
@@ -113,7 +129,7 @@ export async function onRequest({ request, env }) {
   if (!name) errors.name = "Required.";
   if (!company) errors.company = "Required.";
   if (!role) errors.role = "Choose an option.";
-  if (!teamSize) errors.team_size = "Choose an option.";
+  if (goalRaw && !goal) errors.goal = "Choose an option.";
   if (question.length > QUESTION_MAX) errors.question = "500 characters maximum.";
   if (Object.keys(errors).length > 0) return json(400, { ok: false, errors });
 
@@ -135,9 +151,9 @@ export async function onRequest({ request, env }) {
   try {
     await env.DB.prepare(
       `INSERT INTO leads
-         (email, name, company, role, team_size, ai_tools, monthly_spend, question,
-          source, referrer_path, utm_source, utm_medium, utm_campaign)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+         (email, name, company, role, team_size, goal, ai_tools, monthly_spend, question,
+          outreach_code, source, referrer_path, utm_source, utm_medium, utm_campaign)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
     )
       .bind(
         email,
@@ -145,9 +161,11 @@ export async function onRequest({ request, env }) {
         company,
         role,
         teamSize,
+        goal,
         aiTools,
         monthlySpend,
         question || null,
+        outreachCode,
         source,
         referrerPath,
         utmSource,

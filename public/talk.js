@@ -7,11 +7,12 @@
   const submit = document.getElementById("talk-submit");
   const formError = document.getElementById("form-error");
   const done = document.getElementById("talk-done");
-  const required = ["email", "name", "company", "role", "team_size"];
+  const required = ["email", "name", "company", "role"];
   const sources = ["talk-to-us", "book-20-minutes", "free-audit"];
   const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   const field = (name) => form.elements[name];
+  const checked = (name) => form.querySelector('input[name="' + name + '"]:checked');
 
   // Analytics. Events carry no name, email, company or free text.
   const analytics = window.deltavAnalytics || { track() {}, identify() {} };
@@ -26,6 +27,14 @@
   function setError(name, message) {
     const node = errorNode(name);
     if (node) node.textContent = message || "";
+    if (name === "role") {
+      const radios = form.querySelectorAll('input[name="role"]');
+      radios.forEach((input) => {
+        if (message) input.setAttribute("aria-invalid", "true");
+        else input.removeAttribute("aria-invalid");
+      });
+      return;
+    }
     const input = field(name);
     if (input && input.setAttribute) {
       if (message) input.setAttribute("aria-invalid", "true");
@@ -46,10 +55,11 @@
     Object.keys(errors).forEach((key) => {
       const node = errorNode(key);
       if (node) {
-        node.textContent = errors[key];
-        const input = field(key);
-        if (input && input.setAttribute) input.setAttribute("aria-invalid", "true");
-        if (!first) first = input || node;
+        setError(key, errors[key]);
+        if (!first) {
+          if (key === "role") first = form.querySelector('input[name="role"]') || node;
+          else first = field(key) || node;
+        }
       } else {
         formError.textContent = errors[key];
       }
@@ -60,9 +70,10 @@
 
   function validate() {
     const errors = {};
-    required.forEach((name) => {
-      if (!field(name).value.trim()) errors[name] = name === "role" || name === "team_size" ? "Choose an option." : "Required.";
+    ["email", "name", "company"].forEach((name) => {
+      if (!field(name).value.trim()) errors[name] = "Required.";
     });
+    if (!checked("role")) errors.role = "Choose an option.";
     const email = field("email").value.trim();
     if (email && (email.length > 254 || !EMAIL.test(email))) errors.email = "Enter a valid email address.";
     return errors;
@@ -78,21 +89,36 @@
     }
   }
 
+  function outreachCode() {
+    const params = new URLSearchParams(window.location.search);
+    const fromUrl = params.get("outreach_code") || params.get("utm_content") || "";
+    if (fromUrl) return fromUrl;
+    try {
+      return sessionStorage.getItem("outreach_code") || "";
+    } catch {
+      return "";
+    }
+  }
+
   function payload() {
     const params = new URLSearchParams(window.location.search);
     const from = params.get("from");
     const tools = Array.prototype.slice
       .call(form.querySelectorAll('input[name="ai_tools"]:checked'))
       .map((input) => input.value);
+    const role = checked("role");
+    const goal = checked("goal");
+    const monthly = checked("monthly_spend");
     return {
       email: field("email").value,
       name: field("name").value,
       company: field("company").value,
-      role: field("role").value,
-      team_size: field("team_size").value,
+      role: role ? role.value : "",
+      goal: goal ? goal.value : "",
       ai_tools: tools,
-      monthly_spend: field("monthly_spend").value,
+      monthly_spend: monthly ? monthly.value : "",
       question: field("question").value,
+      outreach_code: outreachCode(),
       website: field("website").value,
       source: sources.includes(from) ? from : (sources.includes(form.dataset.source) ? form.dataset.source : ""),
       referrer_path: samePathReferrer(),
@@ -130,12 +156,12 @@
           analytics.identify(sent.email.trim().toLowerCase(), {
             company: sent.company.trim(),
             role: sent.role,
-            team_size: sent.team_size,
+            outreach_code: sent.outreach_code,
           });
           analytics.track("lead_form_submitted", {
             source: sent.source,
             role: sent.role,
-            team_size: sent.team_size,
+            goal: sent.goal,
             monthly_spend: sent.monthly_spend,
             ai_tools: sent.ai_tools,
           });

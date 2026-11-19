@@ -44,6 +44,7 @@
 
   <section class="talk" aria-labelledby="talk-heading">
     <div class="wrap wrap--560 talk-inner">
+      <p class="eyebrow">Design partners</p>
       <h1 id="talk-heading" class="talk-h1">Tell us what you're working on.</h1>
       <p class="talk-lede">Two minutes. We'll reply within one business day.</p>
 
@@ -56,73 +57,76 @@
           <p class="field-error" id="email-error"></p>
         </div>
 
-        <div class="field">
-          <label class="field-label" for="name">Full name</label>
-          <input class="field-input" id="name" name="name" type="text" autocomplete="name" maxlength="200" required aria-describedby="name-error">
-          <p class="field-error" id="name-error"></p>
+        <div class="row">
+          <div class="field">
+            <label class="field-label" for="name">Full name</label>
+            <input class="field-input" id="name" name="name" type="text" autocomplete="name" maxlength="200" required aria-describedby="name-error">
+            <p class="field-error" id="name-error"></p>
+          </div>
+          <div class="field">
+            <label class="field-label" for="company">Company</label>
+            <input class="field-input" id="company" name="company" type="text" autocomplete="organization" maxlength="200" required aria-describedby="company-error">
+            <p class="field-error" id="company-error"></p>
+          </div>
         </div>
 
-        <div class="field">
-          <label class="field-label" for="company">Company</label>
-          <input class="field-input" id="company" name="company" type="text" autocomplete="organization" maxlength="200" required aria-describedby="company-error">
-          <p class="field-error" id="company-error"></p>
-        </div>
-
-        <div class="field">
-          <label class="field-label" for="role">Role</label>
-          <select class="field-input" id="role" name="role" required aria-describedby="role-error">
-            <option value=""></option>
-            <option>Engineering leadership</option>
-            <option>Finance or FinOps</option>
-            <option>Platform or DevEx</option>
-            <option>Product</option>
-            <option>Founder or executive</option>
-            <option>Other</option>
-          </select>
+        <fieldset class="field" aria-describedby="role-error">
+          <legend class="field-label">Your role</legend>
+          <div class="chips">
+            <label class="chip"><input type="radio" name="role" value="Engineering leadership" required><span>Engineering leadership</span></label>
+            <label class="chip"><input type="radio" name="role" value="Finance or FinOps"><span>Finance or FinOps</span></label>
+            <label class="chip"><input type="radio" name="role" value="Platform or DevEx"><span>Platform or DevEx</span></label>
+            <label class="chip"><input type="radio" name="role" value="Product"><span>Product</span></label>
+            <label class="chip"><input type="radio" name="role" value="Founder or executive"><span>Founder or executive</span></label>
+            <label class="chip"><input type="radio" name="role" value="Other"><span>Other</span></label>
+          </div>
           <p class="field-error" id="role-error"></p>
-        </div>
-
-        <div class="field">
-          <label class="field-label" for="team_size">Engineering team size</label>
-          <select class="field-input" id="team_size" name="team_size" required aria-describedby="team_size-error">
-            <option value=""></option>
-            <option>1 to 25</option>
-            <option>26 to 100</option>
-            <option>101 to 500</option>
-            <option>501 to 2,000</option>
-            <option>2,000+</option>
-          </select>
-          <p class="field-error" id="team_size-error"></p>
-        </div>
-
-        <fieldset class="field checkboxes">
-          <legend class="field-label">AI tools in use</legend>
-          <label class="checkbox"><input type="checkbox" name="ai_tools" value="GitHub Copilot"><span>GitHub Copilot</span></label>
-          <label class="checkbox"><input type="checkbox" name="ai_tools" value="Cursor"><span>Cursor</span></label>
-          <label class="checkbox"><input type="checkbox" name="ai_tools" value="Claude Code"><span>Claude Code</span></label>
-          <label class="checkbox"><input type="checkbox" name="ai_tools" value="ChatGPT or OpenAI API"><span>ChatGPT or OpenAI API</span></label>
-          <label class="checkbox"><input type="checkbox" name="ai_tools" value="Anthropic API"><span>Anthropic API</span></label>
-          <label class="checkbox"><input type="checkbox" name="ai_tools" value="Gemini"><span>Gemini</span></label>
-          <label class="checkbox"><input type="checkbox" name="ai_tools" value="Other"><span>Other</span></label>
         </fieldset>
 
-        <div class="field">
-          <label class="field-label" for="monthly_spend">Monthly AI spend</label>
-          <select class="field-input" id="monthly_spend" name="monthly_spend" aria-describedby="monthly_spend-error">
-            <option value=""></option>
-            <option>Under $10k</option>
-            <option>$10k to $50k</option>
-            <option>$50k to $250k</option>
-            <option>Over $250k</option>
-            <option>Not sure</option>
-          </select>
-          <p class="field-error" id="monthly_spend-error"></p>
-        </div>
+        <fieldset class="field">
+          <legend class="field-label">What are you trying to figure out? <span class="opt">Optional</span></legend>
+          <div class="chips chips--stack">
+            <label class="chip"><input type="radio" name="goal" value="Whether our AI spend is paying off"><span>Whether our AI spend is paying off</span></label>
+            <label class="chip"><input type="radio" name="goal" value="Which teams and tools are getting value"><span>Which teams and tools are getting value</span></label>
+            <label class="chip"><input type="radio" name="goal" value="How to cap or control usage before the bill arrives"><span>How to cap or control usage before the bill arrives</span></label>
+            <label class="chip"><input type="radio" name="goal" value="Something else"><span>Something else</span></label>
+          </div>
+        </fieldset>
 
-        <div class="field">
-          <label class="field-label" for="question">What question do you need to answer about AI spend?</label>
-          <textarea class="field-input field-textarea" id="question" name="question" rows="4" maxlength="500" aria-describedby="question-error"></textarea>
-          <p class="field-error" id="question-error"></p>
+        <div class="optional">
+          <p class="section-label">Optional. Helps us prepare.</p>
+
+          <fieldset class="field">
+            <legend class="field-label">AI tools in use</legend>
+            <div class="chips">
+              <label class="chip"><input type="checkbox" name="ai_tools" value="GitHub Copilot"><span>GitHub Copilot</span></label>
+              <label class="chip"><input type="checkbox" name="ai_tools" value="Cursor"><span>Cursor</span></label>
+              <label class="chip"><input type="checkbox" name="ai_tools" value="Claude Code"><span>Claude Code</span></label>
+              <label class="chip"><input type="checkbox" name="ai_tools" value="ChatGPT or OpenAI API"><span>ChatGPT or OpenAI API</span></label>
+              <label class="chip"><input type="checkbox" name="ai_tools" value="Anthropic API"><span>Anthropic API</span></label>
+              <label class="chip"><input type="checkbox" name="ai_tools" value="Gemini"><span>Gemini</span></label>
+              <label class="chip"><input type="checkbox" name="ai_tools" value="AI agents in our own product"><span>AI agents in our own product</span></label>
+              <label class="chip"><input type="checkbox" name="ai_tools" value="Other"><span>Other</span></label>
+              <label class="chip"><input type="checkbox" name="ai_tools" value="Not sure"><span>Not sure</span></label>
+            </div>
+          </fieldset>
+
+          <fieldset class="field">
+            <legend class="field-label">Monthly AI spend</legend>
+            <div class="chips">
+              <label class="chip"><input type="radio" name="monthly_spend" value="Under $10k"><span>Under $10k</span></label>
+              <label class="chip"><input type="radio" name="monthly_spend" value="$10k to $50k"><span>$10k to $50k</span></label>
+              <label class="chip"><input type="radio" name="monthly_spend" value="$50k to $250k"><span>$50k to $250k</span></label>
+              <label class="chip"><input type="radio" name="monthly_spend" value="Over $250k"><span>Over $250k</span></label>
+              <label class="chip"><input type="radio" name="monthly_spend" value="Not sure"><span>Not sure</span></label>
+            </div>
+          </fieldset>
+
+          <div class="field">
+            <label class="field-label" for="question">Anything else we should know?</label>
+            <textarea class="field-input field-textarea" id="question" name="question" rows="3" maxlength="500" aria-describedby="question-error"></textarea>
+            <p class="field-error" id="question-error"></p>
+          </div>
         </div>
 
         <div class="honeypot" aria-hidden="true">
