@@ -12,7 +12,8 @@
 <meta property="og:description" content="See how AI is used across the firm, by matter, tool, and lawyer. Private by default; ready when a client asks.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/styles.css?v=11">
+<link rel="preload" href="/fonts/ibm-plex-mono-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/styles.css?v=12">
 <script src="/analytics.js" defer></script>
 </head>
 <body>
@@ -216,50 +217,85 @@
   </section>
 
   <section id="integrations" class="band" aria-labelledby="integrations-heading">
-    <div class="container container--1040 integrations">
+    <div class="container container--1080 integrations">
       <p class="caps caps--16">Integrations</p>
       <h2 id="integrations-heading" class="h2">Across the legal stack.</h2>
 
-      <div class="integrations-list">
-        <article class="integrations-group">
-          <div class="integrations-copy">
-            <h3>People</h3>
-            <p>Auth and user management. A seat belongs to a lawyer, so idle licenses show up before renewal.</p>
-          </div>
-          <ul class="integrations-sources">
-            <li><span>Sign-in</span><span>Who the seat belongs to</span></li>
-            <li><span>User directory</span><span>Active and unused accounts</span></li>
-          </ul>
-        </article>
+      <div class="ledger" role="img" aria-label="Claude, Copilot, Harvey, Legora, and Agents join into the Delta-V AI Ledger totaling $48.6k. Harvey is the largest share at 46%.">
+        <ul class="ledger-invoices">
+          <li class="ledger-invoice">
+            <p class="ledger-invoice-label">Source 01</p>
+            <div class="ledger-invoice-row">
+              <span>Claude</span>
+              <span class="ledger-invoice-amt">$4.9k</span>
+            </div>
+            <span class="ledger-invoice-bar" style="--fill: 10%"></span>
+          </li>
+          <li class="ledger-invoice">
+            <p class="ledger-invoice-label">Source 02</p>
+            <div class="ledger-invoice-row">
+              <span>Copilot</span>
+              <span class="ledger-invoice-amt">$5.8k</span>
+            </div>
+            <span class="ledger-invoice-bar" style="--fill: 12%"></span>
+          </li>
+          <li class="ledger-invoice ledger-invoice--focus">
+            <p class="ledger-invoice-label">Source 03</p>
+            <div class="ledger-invoice-row">
+              <span>Harvey</span>
+              <span class="ledger-invoice-amt">$22.4k</span>
+            </div>
+            <span class="ledger-invoice-bar" style="--fill: 46%"></span>
+          </li>
+          <li class="ledger-invoice">
+            <p class="ledger-invoice-label">Source 04</p>
+            <div class="ledger-invoice-row">
+              <span>Legora</span>
+              <span class="ledger-invoice-amt">$11.7k</span>
+            </div>
+            <span class="ledger-invoice-bar" style="--fill: 24%"></span>
+          </li>
+          <li class="ledger-invoice">
+            <p class="ledger-invoice-label">Source 05</p>
+            <div class="ledger-invoice-row">
+              <span>Agents</span>
+              <span class="ledger-invoice-amt">$3.8k</span>
+            </div>
+            <span class="ledger-invoice-bar" style="--fill: 8%"></span>
+          </li>
+        </ul>
 
-        <article class="integrations-group">
-          <div class="integrations-copy">
-            <h3>Matters</h3>
-            <p>Matter numbers and time, from the systems that already run the practice. No client names. No documents.</p>
-          </div>
-          <ul class="integrations-sources">
-            <li><span>CSV</span><span>Matter numbers and time you export</span></li>
-            <li><span>Clio time</span><span>Person, matter, hours, and rate</span></li>
-            <li><span>Clio matters</span><span>Matter number and status</span></li>
-            <li><span>Other practice software</span><span>The same records, from your system</span></li>
-            <li><span>Everlaw usage</span><span>Person, matter, action, and docs reviewed</span></li>
-            <li><span>Everlaw projects</span><span>Document totals on the matter</span></li>
-            <li><span>Relativity</span><span>Review usage on the matter</span></li>
-          </ul>
-        </article>
+        <svg class="ledger-flows" viewBox="0 0 160 440" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M0 36 C70 36, 90 220, 160 220"></path>
+          <path d="M0 124 C70 124, 90 220, 160 220"></path>
+          <path class="ledger-flow--focus" d="M0 220 C70 220, 90 220, 160 220"></path>
+          <path d="M0 316 C70 316, 90 220, 160 220"></path>
+          <path d="M0 404 C70 404, 90 220, 160 220"></path>
+          <circle class="ledger-flow-dot" cx="160" cy="220" r="4"></circle>
+        </svg>
 
-        <article class="integrations-group">
-          <div class="integrations-copy">
-            <h3>Harvey and Legora</h3>
-            <p>Who used it, how often, and the matter it was for. The prompt and the answer stay in the tool.</p>
+        <div class="ledger-total">
+          <p class="ledger-total-head">
+            <svg width="16" height="16" viewBox="0 0 96 96" aria-hidden="true"><path d="M48 12 L86 82 L10 82 Z" fill="none" stroke="currentColor" stroke-width="7" stroke-linejoin="round"/><line x1="28" y1="60" x2="68" y2="60" stroke="currentColor" stroke-width="8"/></svg>
+            <span>Delta-V · AI Ledger</span>
+          </p>
+          <p class="ledger-total-amt">$48.6k</p>
+          <p class="ledger-total-meta">5 tools · 1 view</p>
+          <div class="ledger-stack" aria-hidden="true">
+            <span style="flex: 10"></span>
+            <span style="flex: 12"></span>
+            <span class="ledger-stack--focus" style="flex: 46"></span>
+            <span style="flex: 24"></span>
+            <span style="flex: 8"></span>
           </div>
-          <ul class="integrations-sources">
-            <li><span>Harvey usage</span><span>Person, time, and matter number</span></li>
-            <li><span>Harvey matters</span><span>Query count on the matter</span></li>
-            <li><span>Legora credits</span><span>Person, project, and credits</span></li>
-            <li><span>Legora audit</span><span>Who acted, and when</span></li>
+          <ul class="ledger-legend">
+            <li><span class="ledger-swatch"></span>Claude 10%</li>
+            <li><span class="ledger-swatch"></span>Copilot 12%</li>
+            <li class="ledger-legend--focus"><span class="ledger-swatch"></span>Harvey 46%</li>
+            <li><span class="ledger-swatch"></span>Legora 24%</li>
+            <li><span class="ledger-swatch"></span>Agents 8%</li>
           </ul>
-        </article>
+        </div>
       </div>
 
       <p class="insights-jump"><a href="/law-firms/insights/">See a sample month</a></p>
