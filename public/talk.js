@@ -12,7 +12,15 @@
   const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   const field = (name) => form.elements[name];
+  // Soft /talk uses radio chips; /law-firms/talk/ uses selects for the same names.
   const checked = (name) => form.querySelector('input[name="' + name + '"]:checked');
+  const choice = (name) => {
+    const radio = checked(name);
+    if (radio) return radio.value;
+    const input = field(name);
+    if (input && typeof input.value === "string") return input.value.trim();
+    return "";
+  };
 
   // Analytics. Events carry no name, email, company or free text.
   const analytics = window.deltavAnalytics || { track() {}, identify() {} };
@@ -29,11 +37,13 @@
     if (node) node.textContent = message || "";
     if (name === "role") {
       const radios = form.querySelectorAll('input[name="role"]');
-      radios.forEach((input) => {
-        if (message) input.setAttribute("aria-invalid", "true");
-        else input.removeAttribute("aria-invalid");
-      });
-      return;
+      if (radios.length) {
+        radios.forEach((input) => {
+          if (message) input.setAttribute("aria-invalid", "true");
+          else input.removeAttribute("aria-invalid");
+        });
+        return;
+      }
     }
     const input = field(name);
     if (input && input.setAttribute) {
@@ -57,8 +67,9 @@
       if (node) {
         setError(key, errors[key]);
         if (!first) {
-          if (key === "role") first = form.querySelector('input[name="role"]') || node;
-          else first = field(key) || node;
+          if (key === "role") {
+            first = form.querySelector('input[name="role"]') || field("role") || node;
+          } else first = field(key) || node;
         }
       } else {
         formError.textContent = errors[key];
@@ -73,7 +84,7 @@
     ["email", "name", "company"].forEach((name) => {
       if (!field(name).value.trim()) errors[name] = "Required.";
     });
-    if (!checked("role")) errors.role = "Choose an option.";
+    if (!choice("role")) errors.role = "Choose an option.";
     const email = field("email").value.trim();
     if (email && (email.length > 254 || !EMAIL.test(email))) errors.email = "Enter a valid email address.";
     return errors;
@@ -106,17 +117,15 @@
     const tools = Array.prototype.slice
       .call(form.querySelectorAll('input[name="ai_tools"]:checked'))
       .map((input) => input.value);
-    const role = checked("role");
-    const goal = checked("goal");
-    const monthly = checked("monthly_spend");
     return {
       email: field("email").value,
       name: field("name").value,
       company: field("company").value,
-      role: role ? role.value : "",
-      goal: goal ? goal.value : "",
+      role: choice("role"),
+      team_size: choice("team_size"),
+      goal: choice("goal"),
       ai_tools: tools,
-      monthly_spend: monthly ? monthly.value : "",
+      monthly_spend: choice("monthly_spend"),
       question: field("question").value,
       outreach_code: outreachCode(),
       website: field("website").value,
