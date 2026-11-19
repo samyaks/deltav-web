@@ -141,6 +141,33 @@
 .flag--cut { border-color: var(--statement); color: var(--statement); }
 .flag--invest { border-color: var(--accent); color: var(--accent); }
 
+.sheet--matters { min-width: 760px; }
+.sheet--matters th.tool-col,
+.sheet--matters td.tool-col {
+  text-align: center;
+  width: 4.5rem;
+  font-variant-numeric: tabular-nums;
+}
+.tool-mark {
+  display: inline-block;
+  min-width: 1.75rem;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+.tool-mark--on {
+  color: var(--ink);
+  font-weight: 600;
+}
+.tool-mark--off {
+  color: var(--line-strong);
+}
+.matters-note {
+  margin-top: 4px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
 .move-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

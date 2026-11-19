@@ -3,17 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Delta-V · Matter management with AI</title>
-<meta name="description" content="A sample month of AI use across a law firm: Harvey, Legora, Everlaw, and Copilot by department and matter. Sample data.">
+<title>Delta-V · AI ledger across matters</title>
+<meta name="description" content="Sample AI ledger for a law firm: which matters used Harvey, Legora, Everlaw, and Copilot, which used none, and which spanned most tools.">
 <meta name="theme-color" content="#ffffff">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Delta-V">
-<meta property="og:title" content="Delta-V · Matter management with AI">
-<meta property="og:description" content="Sample view of AI spend and use across tools, departments, and matters.">
+<meta property="og:title" content="Delta-V · AI ledger across matters">
+<meta property="og:description" content="See AI use by matter: none, one or two tools, or across most apps. Sample data.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/styles.css?v=3">
-<link rel="stylesheet" href="/insights.css?v=10">
+<link rel="stylesheet" href="/styles.css?v=11">
+<link rel="stylesheet" href="/insights.css?v=11">
 <script src="/analytics.js" defer></script>
 </head>
 <body>
@@ -43,7 +43,7 @@
 
   <section class="container container--1080 insights" aria-labelledby="insights-heading">
     <p class="caps caps--16">Sample data · This month</p>
-    <h1 id="insights-heading">Matter management with AI</h1>
+    <h1 id="insights-heading">AI ledger across matters</h1>
   </section>
 
   <section class="container container--1080" aria-label="Firm this month">
@@ -60,8 +60,8 @@
       </div>
       <div class="stat">
         <p class="caps caps--12">Matters with AI</p>
-        <p class="stat-value">86</p>
-        <p class="stat-note">Tied to a matter number</p>
+        <p class="stat-value">86 <span class="text-muted">/ 124</span></p>
+        <p class="stat-note">38 open matters with none</p>
       </div>
       <div class="stat">
         <p class="caps caps--12">Recoverable</p>
@@ -131,16 +131,30 @@
       </article>
       <article class="tool">
         <div>
+          <h3 class="tool-name">Everlaw</h3>
+          <p class="tool-meta">24 of 24 seats · 0 idle</p>
+        </div>
+        <div>
+          <p class="tool-spend">$7,200</p>
+          <p class="tool-meta">920 docs · 27 matters</p>
+        </div>
+        <div>
+          <div class="share share--ink" role="img" aria-label="Everlaw is 15 percent of AI spend"><span style="width: 15%"></span></div>
+          <p class="share-label">15% of spend</p>
+        </div>
+      </article>
+      <article class="tool">
+        <div>
           <h3 class="tool-name">Microsoft Copilot</h3>
           <p class="tool-meta">9 of 30 seats · 21 idle</p>
         </div>
         <div>
-          <p class="tool-spend">$12,000</p>
+          <p class="tool-spend">$4,800</p>
           <p class="tool-meta">9 active seats · 18 matters</p>
         </div>
         <div>
-          <div class="share share--statement" role="img" aria-label="Copilot is 25 percent of AI spend"><span style="width: 25%"></span></div>
-          <p class="share-label">25% of spend · most of the idle seats</p>
+          <div class="share share--statement" role="img" aria-label="Copilot is 10 percent of AI spend"><span style="width: 10%"></span></div>
+          <p class="share-label">10% of spend · most of the idle seats</p>
         </div>
       </article>
     </div>
@@ -413,18 +427,20 @@
   <section id="matters" class="container container--1080 view" aria-labelledby="matters-heading">
     <div class="view-head">
       <h2 id="matters-heading">By matter</h2>
-      <p class="view-lede">Four matters where the hours moved, or failed to. AI cost is the share attributed to that matter number.</p>
+      <p class="view-lede">AI use across the open matters this month. Some used none. Some used one or two tools. A few spanned most of the stack.</p>
     </div>
     <div class="sheet-wrap">
-    <table class="sheet">
-      <caption class="visually-hidden">Hours before AI, hours with AI, and AI cost for four sample matters.</caption>
+    <table class="sheet sheet--matters">
+      <caption class="visually-hidden">AI tool use by matter number across Harvey, Legora, Everlaw, and Copilot, with coverage and AI cost. Sample data.</caption>
       <thead>
         <tr>
           <th scope="col">Matter</th>
           <th scope="col">Department</th>
-          <th scope="col">Tools</th>
-          <th scope="col">Hours before</th>
-          <th scope="col">With AI</th>
+          <th scope="col" class="tool-col">Harvey</th>
+          <th scope="col" class="tool-col">Legora</th>
+          <th scope="col" class="tool-col">Everlaw</th>
+          <th scope="col" class="tool-col">Copilot</th>
+          <th scope="col">Coverage</th>
           <th scope="col">AI cost</th>
         </tr>
       </thead>
@@ -432,38 +448,87 @@
         <tr>
           <th scope="row">20418-0032</th>
           <td data-label="Department">Corporate</td>
-          <td data-label="Tools">Harvey, Legora</td>
-          <td data-label="Hours before">14.2</td>
-          <td class="strong" data-label="With AI">8.6</td>
-          <td data-label="AI cost">$84</td>
+          <td class="tool-col" data-label="Harvey"><span class="tool-mark tool-mark--on" title="38 sessions">38</span></td>
+          <td class="tool-col" data-label="Legora"><span class="tool-mark tool-mark--on" title="12 sessions">12</span></td>
+          <td class="tool-col" data-label="Everlaw"><span class="tool-mark tool-mark--on" title="9 sessions">9</span></td>
+          <td class="tool-col" data-label="Copilot"><span class="tool-mark tool-mark--on" title="6 sessions">6</span></td>
+          <td data-label="Coverage"><span class="flag flag--invest">4 of 4</span></td>
+          <td data-label="AI cost">$210</td>
+        </tr>
+        <tr>
+          <th scope="row">26701-0044</th>
+          <td data-label="Department">Litigation</td>
+          <td class="tool-col" data-label="Harvey"><span class="tool-mark tool-mark--on" title="29 sessions">29</span></td>
+          <td class="tool-col" data-label="Legora"><span class="tool-mark tool-mark--on" title="8 sessions">8</span></td>
+          <td class="tool-col" data-label="Everlaw"><span class="tool-mark tool-mark--on" title="41 sessions">41</span></td>
+          <td class="tool-col" data-label="Copilot"><span class="tool-mark tool-mark--off" aria-label="No Copilot use">—</span></td>
+          <td data-label="Coverage"><span class="flag flag--invest">3 of 4</span></td>
+          <td data-label="AI cost">$186</td>
         </tr>
         <tr>
           <th scope="row">31177-0009</th>
           <td data-label="Department">Litigation</td>
-          <td data-label="Tools">Harvey</td>
-          <td data-label="Hours before">22.0</td>
-          <td class="strong" data-label="With AI">15.4</td>
+          <td class="tool-col" data-label="Harvey"><span class="tool-mark tool-mark--on" title="21 sessions">21</span></td>
+          <td class="tool-col" data-label="Legora"><span class="tool-mark tool-mark--off" aria-label="No Legora use">—</span></td>
+          <td class="tool-col" data-label="Everlaw"><span class="tool-mark tool-mark--on" title="14 sessions">14</span></td>
+          <td class="tool-col" data-label="Copilot"><span class="tool-mark tool-mark--off" aria-label="No Copilot use">—</span></td>
+          <td data-label="Coverage"><span class="flag">2 of 4</span></td>
           <td data-label="AI cost">$126</td>
         </tr>
-        <tr class="alert">
-          <th scope="row">18820-0014</th>
-          <td data-label="Department">Employment</td>
-          <td data-label="Tools">Copilot</td>
-          <td data-label="Hours before">6.1</td>
-          <td class="text-statement" data-label="With AI">5.8</td>
-          <td data-label="AI cost">$40</td>
+        <tr>
+          <th scope="row">11840-0021</th>
+          <td data-label="Department">IP</td>
+          <td class="tool-col" data-label="Harvey"><span class="tool-mark tool-mark--on" title="11 sessions">11</span></td>
+          <td class="tool-col" data-label="Legora"><span class="tool-mark tool-mark--on" title="17 sessions">17</span></td>
+          <td class="tool-col" data-label="Everlaw"><span class="tool-mark tool-mark--off" aria-label="No Everlaw use">—</span></td>
+          <td class="tool-col" data-label="Copilot"><span class="tool-mark tool-mark--off" aria-label="No Copilot use">—</span></td>
+          <td data-label="Coverage"><span class="flag">2 of 4</span></td>
+          <td data-label="AI cost">$94</td>
         </tr>
         <tr>
           <th scope="row">44012-0007</th>
           <td data-label="Department">IP</td>
-          <td data-label="Tools">Legora</td>
-          <td data-label="Hours before">9.4</td>
-          <td class="strong" data-label="With AI">6.1</td>
+          <td class="tool-col" data-label="Harvey"><span class="tool-mark tool-mark--off" aria-label="No Harvey use">—</span></td>
+          <td class="tool-col" data-label="Legora"><span class="tool-mark tool-mark--on" title="15 sessions">15</span></td>
+          <td class="tool-col" data-label="Everlaw"><span class="tool-mark tool-mark--off" aria-label="No Everlaw use">—</span></td>
+          <td class="tool-col" data-label="Copilot"><span class="tool-mark tool-mark--off" aria-label="No Copilot use">—</span></td>
+          <td data-label="Coverage"><span class="flag">1 of 4</span></td>
           <td data-label="AI cost">$62</td>
+        </tr>
+        <tr class="alert">
+          <th scope="row">18820-0014</th>
+          <td data-label="Department">Employment</td>
+          <td class="tool-col" data-label="Harvey"><span class="tool-mark tool-mark--off" aria-label="No Harvey use">—</span></td>
+          <td class="tool-col" data-label="Legora"><span class="tool-mark tool-mark--off" aria-label="No Legora use">—</span></td>
+          <td class="tool-col" data-label="Everlaw"><span class="tool-mark tool-mark--off" aria-label="No Everlaw use">—</span></td>
+          <td class="tool-col" data-label="Copilot"><span class="tool-mark tool-mark--on" title="8 sessions">8</span></td>
+          <td data-label="Coverage"><span class="flag flag--cut">1 of 4</span></td>
+          <td data-label="AI cost">$40</td>
+        </tr>
+        <tr>
+          <th scope="row">50112-0003</th>
+          <td data-label="Department">Corporate</td>
+          <td class="tool-col" data-label="Harvey"><span class="tool-mark tool-mark--off" aria-label="No Harvey use">—</span></td>
+          <td class="tool-col" data-label="Legora"><span class="tool-mark tool-mark--off" aria-label="No Legora use">—</span></td>
+          <td class="tool-col" data-label="Everlaw"><span class="tool-mark tool-mark--off" aria-label="No Everlaw use">—</span></td>
+          <td class="tool-col" data-label="Copilot"><span class="tool-mark tool-mark--off" aria-label="No Copilot use">—</span></td>
+          <td data-label="Coverage"><span class="flag flag--cut">None</span></td>
+          <td data-label="AI cost">$0</td>
+        </tr>
+        <tr>
+          <th scope="row">39088-0018</th>
+          <td data-label="Department">Employment</td>
+          <td class="tool-col" data-label="Harvey"><span class="tool-mark tool-mark--off" aria-label="No Harvey use">—</span></td>
+          <td class="tool-col" data-label="Legora"><span class="tool-mark tool-mark--off" aria-label="No Legora use">—</span></td>
+          <td class="tool-col" data-label="Everlaw"><span class="tool-mark tool-mark--off" aria-label="No Everlaw use">—</span></td>
+          <td class="tool-col" data-label="Copilot"><span class="tool-mark tool-mark--off" aria-label="No Copilot use">—</span></td>
+          <td data-label="Coverage"><span class="flag flag--cut">None</span></td>
+          <td data-label="AI cost">$0</td>
         </tr>
       </tbody>
     </table>
     </div>
+    <p class="matters-note">Session counts where a tool touched the matter. Dash means no use recorded. Sample data.</p>
   </section>
 
   <p class="container container--1080 caps caps--16 insights-close">Sample data · illustrative, not a client result</p>
