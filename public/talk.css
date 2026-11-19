@@ -13,6 +13,11 @@
   flex-direction: column;
   gap: 14px;
 }
+#talk-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
 .eyebrow,
 .field-label,
 .section-label {

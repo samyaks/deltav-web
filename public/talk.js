@@ -7,6 +7,7 @@
   const submit = document.getElementById("talk-submit");
   const formError = document.getElementById("form-error");
   const done = document.getElementById("talk-done");
+  const intro = document.getElementById("talk-intro");
   const required = ["email", "name", "company", "role"];
   const sources = ["talk-to-us", "book-20-minutes", "free-audit"];
   const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -176,6 +177,7 @@
           });
         }
         form.hidden = true;
+        if (intro) intro.hidden = true;
         done.hidden = false;
         done.setAttribute("tabindex", "-1");
         done.focus();

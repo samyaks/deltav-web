@@ -10,6 +10,11 @@
   gap: 14px;
   max-width: 560px;
 }
+#talk-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
 .legal-talk h1 {
   font-size: clamp(2.25rem, 5vw, 3.25rem);
   line-height: 1.05;
