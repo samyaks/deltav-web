@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Delta-V AI ROI demo</title>
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
+<script src="/analytics.js" defer></script>
+<script src="/demo-gate.js" defer></script>
+<style>
+:root{
+  --bg:#0a0a0a; --card:rgba(17,17,19,.85); --line:#232326; --hair:#1c1c1f;
+  --hi:#f5f5f4; --text:#c9c9c7; --body:#b0b0ae; --muted:#8b8b90; --dim:#6a6a70; --faint:#58585e;
+  --coral:#ff8672; --coral-line:#5c332c; --coral-tint:rgba(255,134,114,.08);
+  --blue:#7aa5ff; --blue-line:#2c3a5c; --bar:#3f3f44;
+  --mono:'IBM Plex Mono',ui-monospace,monospace; --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:13px;line-height:1.5}
+button{font-family:inherit;cursor:pointer}
+[hidden]{display:none!important}
+:focus-visible{outline:1px solid var(--blue);outline-offset:2px}
+.lab{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.chrome{display:flex;align-items:center;gap:12px;padding:9px 14px;border-bottom:1px solid var(--hair)}
+.dots{display:flex;gap:6px}.dots i{width:9px;height:9px;border-radius:50%;background:#2a2a2d;display:block}
+.url{margin:0 auto;font-family:var(--mono);font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:3px 14px}
+header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;padding:14px 18px;border-bottom:1px solid var(--hair)}
+.brand{display:flex;align-items:center;gap:12px}
+.brand b{display:block;color:var(--hi);font-size:15px;font-weight:600;line-height:1.2}
+.status{display:flex;flex-wrap:wrap;align-items:center;gap:14px}
+.tag{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);border:1px solid var(--blue-line);border-radius:3px;padding:4px 9px}
+.shell{display:grid;grid-template-columns:330px 1fr;min-height:calc(100vh - 96px)}
+.copilot{border-right:1px solid var(--hair);display:flex;flex-direction:column;min-width:0;max-height:calc(100vh - 96px);position:sticky;top:0}
+.copilot>.lab{padding:14px 18px;border-bottom:1px solid var(--hair)}
+#chat{flex:1;overflow-y:auto;padding:16px 18px;display:flex;flex-direction:column;gap:18px}
+.msg p{margin:0;color:var(--text);font-size:13.5px;line-height:1.55}
+.msg b{color:var(--hi);font-weight:600;font-family:var(--mono);font-size:13px}
+.msg b.c{color:var(--coral)}
+.msg.user p{color:var(--hi)}
+.msg.user .lab{margin-bottom:4px;color:var(--faint)}
+.tools{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.tool{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:3px;padding:3px 7px}
+.typing{font-family:var(--mono);color:var(--faint);letter-spacing:.3em}
+.ask{border-top:1px solid var(--hair);padding:14px 18px;display:flex;flex-direction:column;gap:10px}
+.chip{align-self:flex-start;text-align:left;font-family:var(--mono);font-size:11px;color:var(--blue);background:rgba(122,165,255,.08);border:1px solid var(--blue-line);border-radius:999px;padding:7px 13px}
+.chip:hover{background:rgba(122,165,255,.16)}
+.row{display:flex;gap:8px}
+.row input{flex:1;min-width:0;background:#0f0f11;border:1px solid var(--line);border-radius:4px;color:var(--hi);font-family:var(--sans);font-size:12.5px;padding:9px 11px}
+.send{font-family:var(--mono);font-size:10px;letter-spacing:.14em;background:var(--hi);color:#0a0a0a;border:0;border-radius:4px;padding:0 14px;font-weight:600}
+.link{background:none;border:0;padding:0;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.link:hover{color:var(--hi)}
+.canvas{position:relative;padding:14px 18px 60px;min-width:0;overflow:hidden}
+.streaks{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.canvas>*:not(.streaks){position:relative}
+.bar{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;margin-bottom:12px}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:16px 20px;min-width:0}
+.s12{grid-column:span 12}.s8{grid-column:span 8}.s7{grid-column:span 7}.s5{grid-column:span 5}.s4{grid-column:span 4}
+.pin{animation:fade .4s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}
+.kstrip{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:18px 24px}
+.k{display:flex;flex-direction:column;gap:7px;background:none;border:0;padding:0;text-align:left;color:inherit;min-width:0}
+.k .n{font-family:var(--mono);font-size:30px;font-weight:600;color:var(--hi);line-height:1.1;display:flex;flex-wrap:wrap;align-items:baseline;gap:8px}
+.k .n.sm{font-size:22px}
+.k .n.c{color:var(--coral)}
+.k .of{font-family:var(--mono);font-size:11px;font-weight:400;color:var(--faint);text-transform:uppercase}
+.k .f{font-family:var(--mono);font-size:11px;color:var(--body);border-top:1px solid var(--hair);padding-top:8px;line-height:1.55}
+button.k:hover .lab{color:var(--hi)}
+.badge{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--line);border-radius:3px;padding:2px 6px;color:var(--body);white-space:nowrap}
+.badge.c{color:var(--coral);border-color:var(--coral-line)}
+.badge.b{color:var(--blue);border-color:var(--blue-line)}
+.badge.g{color:var(--hi);border-color:#3a3a3e}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.seg button{background:none;border:0;color:var(--muted);font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:6px 10px}
+.seg button[aria-pressed=true]{background:rgba(255,255,255,.08);color:var(--hi)}
+.inv h3{margin:0 0 8px;font-size:14px;font-weight:600;color:var(--hi)}
+.inv .n{font-family:var(--mono);font-size:26px;font-weight:600;color:var(--hi);margin-top:12px}
+.inv .n.c{color:var(--coral)}
+.note{font-size:12px;line-height:1.5;color:var(--muted)}
+.inv .note{margin:12px 0 0;border-top:1px solid var(--hair);padding-top:10px;margin-top:12px}
+.act{display:grid;grid-template-columns:22px minmax(0,1.5fr) 104px 104px minmax(120px,.9fr) 132px;gap:14px;align-items:center;padding:12px 0;border-top:1px solid var(--hair)}
+.act:first-of-type{border-top:0;padding-top:0}
+.act .i{font-family:var(--mono);font-size:11px;color:var(--faint)}
+.act h4{margin:0;font-size:13.5px;font-weight:500;color:var(--hi)}
+.act .meta{display:flex;flex-wrap:wrap;gap:4px 10px;margin-top:5px;align-items:center;font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
+.act .st b{display:block;font-family:var(--mono);font-size:16px;font-weight:600;color:var(--hi);line-height:1.2}
+.act .st span{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);line-height:1.35}
+.act .amt{font-family:var(--mono);font-size:18px;font-weight:600;color:var(--hi);white-space:nowrap}
+.act .amt span{font-size:10px;font-weight:400;letter-spacing:.1em;color:var(--muted);margin-left:4px}
+.act .bar{height:4px;background:#1c1c1f;border-radius:2px;margin-top:6px}.act .bar i{display:block;height:4px;border-radius:2px;background:#ff8672}
+.act .dots i{display:inline-block;width:5px;height:5px;border-radius:50%;background:#3f3f44;margin-right:2px}.act .dots i.on{background:#7aa5ff}
+.act .bt{display:flex;gap:6px;justify-content:flex-end}.act .said{grid-column:2/-1}
+.btn{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;background:none;border:1px solid var(--line);border-radius:3px;color:var(--body);padding:5px 9px}
+.btn:hover{color:var(--hi);border-color:#3a3a3e}
+.btn.p{background:var(--hi);color:#0a0a0a;border-color:var(--hi);font-weight:600}
+.said{font-family:var(--mono);font-size:11px;color:var(--blue);margin-top:8px}
+.tw{overflow-x:auto}
+table{width:100%;min-width:560px;border-collapse:collapse;font-family:var(--mono);font-size:12px}
+th{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);font-weight:400}
+th,td{text-align:right;padding:9px 8px;border-bottom:1px solid var(--hair);white-space:nowrap}
+th:first-child,td:first-child{text-align:left;white-space:normal}
+td{color:var(--text)}
+tr.pool{cursor:pointer}tr.pool:hover td{background:rgba(255,255,255,.03)}
+tr.pool button,tr.line button{background:none;border:0;padding:0;font:inherit;text-align:left;color:var(--hi)}
+tr.line td{color:var(--muted);font-size:11.5px}tr.line td:first-child{padding-left:26px}
+tr.line button{color:var(--blue)}
+tr.tot td{color:var(--hi);font-weight:600;border-bottom:0}
+.dn{color:var(--hi)}.up{color:var(--coral)}
+dl{display:grid;grid-template-columns:max-content 1fr;gap:5px 16px;margin:4px 0 6px;font-family:var(--sans);font-size:12px;white-space:normal}
+dt{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}dd{margin:0;color:var(--body)}
+.adv{display:grid;grid-template-columns:1fr auto;gap:12px;border:1px solid var(--blue-line);background:rgba(122,165,255,.06);border-radius:6px;padding:14px 16px;margin-top:10px}
+.adv h4{margin:0;font-size:13.5px;font-weight:500;color:var(--hi)}
+button.inv{text-align:left;color:inherit;font:inherit;cursor:pointer}
+button.inv:hover{border-color:#3a3a3e}
+.open{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-top:10px;display:block}
+.lock{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
+svg text{font-family:'IBM Plex Mono',monospace}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.78);display:flex;align-items:center;justify-content:center;padding:20px;z-index:50}
+.dialog{background:#111113;border:1px solid var(--line);border-radius:6px;padding:24px;width:100%;max-width:420px}
+.dialog h2{margin:10px 0 6px;font-size:18px;font-weight:600;color:var(--hi)}
+.dialog input{width:100%;margin-top:8px;background:#0a0a0a;border:1px solid var(--line);border-radius:4px;color:var(--hi);font-size:14px;padding:11px 12px}
+.dialog input.bad{border-color:var(--coral-line)}
+.err{font-family:var(--mono);font-size:11px;color:var(--coral);min-height:18px;margin-top:6px}
+.err a{color:var(--coral)}
+.honeypot{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;overflow:hidden;clip:rect(0 0 0 0)}
+@media (max-width:900px){
+  .adv{grid-template-columns:1fr}
+  .shell{grid-template-columns:1fr}
+  .copilot{position:static;max-height:none;border-right:0;border-bottom:1px solid var(--hair)}
+  #chat{max-height:46vh}
+  .s8,.s7,.s5,.s4{grid-column:span 12}
+  .act{grid-template-columns:1fr 1fr;gap:10px}.act .i{display:none}.act>div:nth-child(2),.act .bt,.act .said{grid-column:1/-1}
+  .url{display:none}
+}
+</style>
+</head>
+<body>
+<div class="chrome"><div class="dots"><i></i><i></i><i></i></div><div class="url">app.delta-v.dev/roi</div></div>
+<header>
+  <div class="brand">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 22 21H2L12 3Z" stroke="#f5f5f4" stroke-width="1.6" stroke-linejoin="round"/></svg>
+    <div><b>Delta-V</b><span class="lab">AI ROI</span></div>
+  </div>
+  <div class="status"><span class="lab">→ ROI ΔV · FY26 · 3 investments</span><span class="tag">Scripted demo</span></div>
+</header>
+
+<div class="shell">
+  <aside class="copilot" aria-label="Copilot">
+    <div class="lab">Copilot · tools only, no raw data</div>
+    <div id="chat" aria-live="polite"></div>
+    <div class="ask">
+      <div class="lab" id="next-lab" style="color:var(--faint)">Try next</div>
+      <button type="button" class="chip" id="chip"></button>
+      <div class="row">
+        <input id="ask" type="text" placeholder="Ask about ROI (demo is scripted)" aria-label="Ask about ROI">
+        <button type="button" class="send" id="send">SEND</button>
+      </div>
+      <button type="button" class="link" id="reset" hidden>↺ Restart demo</button>
+    </div>
+  </aside>
+
+  <main class="canvas">
+    <svg class="streaks" id="streaks" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
+    <div class="bar"><span class="lab">Canvas · session only</span><span class="lab" style="color:var(--faint)">Charts pin here from chat →</span></div>
+    <div class="grid">
+      <section class="card s12">
+        <div class="head"><span class="lab">⋮⋮ Portfolio · get_portfolio_roi()</span>
+          <div class="seg" role="group" aria-label="Which savings count">
+            <button type="button" data-mode="all" aria-pressed="true">All savings</button>
+            <button type="button" data-mode="hard" aria-pressed="false">Hard only</button>
+          </div>
+        </div>
+        <div class="kstrip" id="pk"></div>
+      </section>
+      <div class="s12 grid" id="invs" style="gap:12px"></div>
+
+      <section class="card s12 pin" id="p-kpis" hidden>
+        <div class="head"><span class="lab">⋮⋮ Pinned · support assistant · get_investment()</span><span class="lab" style="color:var(--faint)">Tap a number for its formula</span></div>
+        <div class="kstrip" id="kpis"></div>
+      </section>
+      <section class="card s8 pin" id="p-pay" hidden>
+        <div class="head"><span class="lab">⋮⋮ Pinned · payback · get_payback()</span><span class="lab" style="color:var(--hi)">Break-even month 8.3</span></div>
+        <div id="chart"></div>
+      </section>
+      <section class="card s4 pin" id="p-why" hidden>
+        <div class="lab" style="margin-bottom:12px">Why it pays off</div>
+        <div style="display:flex;flex-direction:column;gap:6px;font-family:var(--mono);font-size:11px;color:var(--body)">
+          <div><span style="color:var(--faint)">01</span>&nbsp; 6 tier 1 roles not backfilled</div>
+          <div><span style="color:var(--faint)">02</span>&nbsp; 56 helpdesk seats dropped</div>
+          <div><span style="color:var(--faint)">03</span>&nbsp; $220k of new AI cost added</div>
+        </div>
+        <p class="note" style="border-top:1px solid var(--hair);padding-top:10px;margin:12px 0 0">Every saving here is in the ledger, so the hard-only view gives the same 44%. The baseline was approved by finance before rollout.</p>
+      </section>
+      <section class="card s12 pin" id="p-act" hidden>
+        <div class="head"><span class="lab">⋮⋮ Pinned · what to do next · rank_actions()</span><span class="lab" style="color:var(--faint)">Impact / yr · <span style="color:#7aa5ff">●</span> confidence</span></div>
+        <div id="acts"></div>
+      </section>
+      <section class="card s12 pin" id="p-pools" hidden>
+        <div class="head"><span class="lab">⋮⋮ Pinned · cost pools · get_cost_pools()</span><span class="lab" style="color:var(--faint)">Pool → line → records table</span></div>
+        <div class="lock" id="lock">
+          <p class="note" style="margin:0">Enter a work email to open cost pools, line items and source records.</p>
+          <button type="button" class="btn p" id="unlock">Open the drill-down</button>
+        </div>
+        <div class="tw" id="pools" hidden></div>
+      </section>
+      <section class="card s12 pin" id="p-drill" hidden>
+        <div class="head"><span class="lab" id="d-crumb"></span><button type="button" class="link" id="d-x">✕ Close</button></div>
+        <div id="d-body"></div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<div class="modal" id="gate" hidden>
+  <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="gh">
+    <span class="tag">Keep going</span>
+    <h2 id="gh">See every number down to its source</h2>
+    <p class="note" style="margin:0">Enter your work email to open the cost pools, line items and source records.</p>
+    <form id="gf" novalidate>
+      <label class="lab" for="ge" style="display:block;margin-top:18px">Work email</label>
+      <input id="ge" type="email" autocomplete="email" inputmode="email" placeholder="you@company.com" required maxlength="254" aria-describedby="gerr">
+      <div class="err" id="gerr" role="alert"></div>
+      <div data-turnstile id="gturnstile"></div>
+      <div class="honeypot" aria-hidden="true">
+        <label for="gw">Website</label>
+        <input id="gw" name="website" type="text" tabindex="-1" autocomplete="off">
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button type="submit" class="btn p" id="ggo" style="padding:9px 14px">Open the drill-down</button>
+        <button type="button" class="btn" id="gx" style="padding:9px 14px">Not now</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  function track(name, props){
+    function send(){ if(window.deltavAnalytics) window.deltavAnalytics.track(name, props||{}); }
+    if(window.deltavAnalytics) send();
+    else window.addEventListener("load", send, {once:true});
+  }
+  var k=function(n){var a=Math.abs(n),s=n<0?"-":"";return s+"$"+(a>=1000?(a/1000).toFixed(3).replace(/\.?0+$/,"")+"M":a+"k")};
+  var kk=function(v){return v===0?"$0":"$"+v.toLocaleString("en-US")+"k"};
+  var pc=function(x){return Math.round(x*100)+"%"};
+
+  /* sample data, $K per year */
+  var INV=[
+    {name:"Support assistant",v:"Paying off",cls:"g",why:"Hard savings cover the AI bill three times over.",spend:220,hard:652,soft:0,invest:300,m:true},
+    {name:"Coding tools",v:"On track",cls:"b",why:"Pays off only when freed engineering time is counted. Hard savings do not cover the bill yet.",spend:310,hard:240,soft:399,invest:60,m:true,d:{crumb:"Coding tools · by team",r:"Seat owner mapped to team through the identity directory. Pull requests by author.",s:"Coding tool admin consoles, identity directory, GitHub",f:"Seats weekly, pull requests daily",
+      c:["Team","Seats","Active 30d","AI spend / yr","PRs merged","Cost / PR"],
+      rw:[["Platform","48","46","$104k","2,810","$37"],["Growth","44","39","$92k","2,040","$45"],["Support engineering","26","17","$74k","525","$141"],["Data","22","16","$40k","610","$66"]],
+      ft:["Total","140","118","$310k","5,985","$52"],
+      ad:[{t:"Reclaim 22 seats with no activity in 30 days",w:"9 in Support engineering, 6 in Data, 5 in Growth, 2 in Platform. Each seat is $480 a year before usage.",v:11,ty:"Hard savings"},
+          {t:"Review Support engineering before changing its budget",w:"It pays $141 per pull request, 3.8 times Platform. High cost per outcome is a flag for review, not proof of waste: this team maintains the support assistant.",v:0,ty:"Review"}]}},
+    {name:"AI features in the product",v:"Not measurable yet",cls:"",why:"No outcome metric or approved baseline is connected.",spend:190,hard:0,soft:0,invest:220,m:false,d:{crumb:"AI features in the product · by feature",r:"API key and cloud project mapped to feature.",s:"Model provider usage API, cloud billing export",f:"Synced daily, last today",
+      c:["Feature","AI spend / yr","Outcome metric","Baseline"],
+      rw:[["Search summaries","$112k","None connected","None"],["Smart replies","$51k","Reply acceptance, not tied to revenue","None"],["Auto-tagging","$27k","None connected","None"]],
+      ft:["Total","$190k","",""],
+      ad:[{t:"Connect one outcome metric for search summaries",w:"It is 59% of this spend and has nothing to measure it against. Search-to-click rate from product analytics would be enough to start.",v:0,ty:"Makes ROI measurable"}]}}
+  ];
+  var net=function(i,m){return (m==="hard"?i.hard:i.hard+i.soft)-i.spend};
+  var roi=function(i,m){return (net(i,m)-i.invest)/i.invest};
+  var POOLS=[
+    {n:"Tier 1 support labor",t:"hard",b:1150,a:575,l:[{n:"6 roles not backfilled after attrition, March to August",v:-575,r:"Loaded cost of each position, for the share of its time on ticket handling (100%).",s:"HR system, position records",i:"6 position records",f:"Synced monthly, last on Nov 1",c:["Position","Role","Vacated","Loaded cost / yr","Backfilled"],rw:[["POS-2291","Tier 1 agent","March","$96k","No"],["POS-2304","Tier 1 agent","March","$95k","No"],["POS-2310","Tier 1 agent","April","$97k","No"],["POS-2318","Tier 1 agent","May","$94k","No"],["POS-2333","Tier 1 agent","July","$96k","No"],["POS-2340","Tier 1 agent","August","$97k","No"]],ft:["Total","6 roles","","$575k",""],ad:[{t:"Close the 6 open requisitions",w:"All six roles are still open in the HR system. Until they are closed, finance can treat this as a delay in hiring, not a saving.",v:575,ty:"Protects existing savings"}]}]},
+    {n:"Tier 2 support labor",t:"",b:300,a:300,l:[{n:"3 roles, unchanged",v:0,r:"Loaded cost, 100% of time on escalations.",s:"HR system, position records",i:"3 position records",f:"Synced monthly, last on Nov 1",c:["Position","Role","Loaded cost / yr","Change"],rw:[["POS-2102","Tier 2 specialist","$101k","None"],["POS-2117","Tier 2 specialist","$99k","None"],["POS-2140","Tier 2 specialist","$100k","None"]],ft:["Total","3 roles","$300k",""]}]},
+    {n:"Helpdesk seats and tooling",t:"hard",b:180,a:103,l:[{n:"56 agent seats dropped at renewal",v:-77,r:"Seat price times seats, assigned to the seat owner's team.",s:"Vendor contract and AP invoices",i:"Invoices INV-88213, INV-90477",f:"Synced monthly, last on Nov 3",c:["Team","Seats","Active 30d","Inactive","Cost / yr"],rw:[["Tier 1 support","41","33","8","$56k"],["Tier 2 support","22","19","3","$30k"],["Billing support","12","9","3","$17k"]],ft:["Total","75","61","14","$103k"],ad:[{t:"Reclaim 14 seats with no login in 30 days",w:"8 in Tier 1, 3 in Tier 2, 3 in Billing support. Each costs $1,373 a year. The renewal is in February.",v:19,ty:"Hard savings"}]}]},
+    {n:"AI model usage",t:"new",b:0,a:118,l:[
+      {n:"Chat answers, large model",v:78,r:"API key sk-support-chat mapped to Support, app Assistant.",s:"Provider usage and billing API",i:"304 daily usage records, joined to ticket category",f:"Synced daily, last today",c:["Type of question","Conversations","Model","Cost / yr","Resolved"],rw:[["Password reset","96,000","Large","$17k","98%"],["Order status","88,000","Large","$14k","97%"],["Billing (pilot)","83,000","Large","$21k","71%"],["Product how-to","122,000","Large","$19k","83%"],["Other","71,000","Large","$7k","64%"]],ft:["Total","460,000","","$78k",""],ad:[{t:"Route password resets and order status to the small model",w:"These two are 40% of conversations and cost $31k on the large model. In a 2-week test on the small model, answer quality held at 97%.",v:26,ty:"Cost cut"}]},
+      {n:"Summaries for agents, large model",v:22,r:"API key sk-support-sum mapped to Support, app Agent desk.",s:"Provider usage and billing API",i:"Monthly usage, joined to handle time from the support tool",f:"Synced daily, last today",c:["Month","Summaries","Cost","Avg handle time"],rw:[["June","21,000","$1.1k","6.4 min"],["July","30,000","$1.6k","6.5 min"],["August","44,000","$2.4k","6.4 min"],["September","58,000","$3.1k","6.5 min"],["October","66,000","$3.5k","6.4 min"]],ad:[{t:"Set a $1.2k monthly budget for agent summaries",w:"Monthly cost tripled from June to October and handle time did not move. A budget at the June level holds spend while the team checks whether agents read the summaries.",v:12,ty:"Cost cut"}]},
+      {n:"Classification and routing, small model",v:14,r:"API key sk-support-route mapped to Support, app Assistant.",s:"Provider usage and billing API",i:"304 daily usage records",f:"Synced daily, last today",c:["Step","Calls","Model","Cost / yr"],rw:[["Intent classification","3,900,000","Small","$9k"],["Routing to queue","1,700,000","Small","$5k"]],ft:["Total","5,600,000","","$14k"]},
+      {n:"Unattributed (one untagged key)",v:4,r:"No tag or owner on the key. Shown as its own line, never spread across teams.",s:"Provider usage and billing API",i:"1 API key",f:"Synced daily, last today",c:["Key","Owner","First seen","Model","Cost / yr"],rw:[["…9f2c","Unknown","Aug 12","Large","$4k"]],ad:[{t:"Assign an owner and a team to key …9f2c",w:"It has run since August with no tag. Until it has an owner, its cost cannot be attributed or capped.",v:4,ty:"Protects attribution"}]}]},
+    {n:"AI hosting and retrieval",t:"new",b:0,a:34,l:[{n:"Vector database and hosting",v:34,r:"Cloud resource tag app=support-assistant.",s:"Cloud billing export",i:"14 tagged resources",f:"Synced daily, last today",c:["Resource group","Resources","Cost / yr"],rw:[["Vector database","3","$19k"],["Retrieval API hosting","8","$11k"],["Monitoring","3","$4k"]],ft:["Total","14","$34k"]}]},
+    {n:"AI operations",t:"new",b:0,a:68,l:[{n:"0.4 of one engineer running the assistant",v:68,r:"Loaded cost times the share of time on the workflow (40%), an estimate agreed with finance.",s:"HR system and time allocation",i:"1 position record, 1 allocation estimate",f:"Synced monthly, last on Nov 1",c:["Position","Role","Loaded cost / yr","Share of time","Attributed"],rw:[["POS-1877","ML engineer","$170k","40% (estimate)","$68k"]]}]}
+  ];
+  var ACTS=[
+    {t:"Expand the assistant to billing questions",w:"Billing is 18% of tickets and the next largest type. The assistant resolved 71% of them in a 3-week pilot.",v:96,ty:"Hard savings once 1 more role is not backfilled",o:"Head of Support",c:"Medium",b:"Ticket data, Sept 1 to Oct 31",p:0,l:0,s:"Expand the assistant to billing questions",st:[["18%","of tickets"],["71%","resolved in pilot"]],sy:"Hard, if 1 role not backfilled",ap:false},
+    {t:"Route password resets and order-status questions to a smaller model",w:"These are 40% of conversations. Answer quality held at 97% in a 2-week test.",v:26,ty:"Cost cut",o:"Platform team",c:"High",b:"Usage records and test results, Oct 6 to 19",p:3,l:0,s:"Route simple questions to a smaller model",st:[["40%","of conversations"],["97%","quality held"]],sy:"Cost cut",ap:true},
+    {t:"Reclaim 14 helpdesk seats with no login in 30 days",w:"14 of 75 remaining seats had no activity. Each costs $1,373 a year.",v:19,ty:"Hard savings",o:"IT",c:"High",b:"Seat activity, Oct 1 to 31",p:2,l:0,s:"Reclaim 14 idle helpdesk seats",st:[["14 / 75","seats idle 30 days"],["$1,373","per seat a year"]],sy:"Hard savings",ap:true},
+    {t:"Set a budget for agent summaries",w:"Spend on summaries tripled since June with no change in handle time.",v:12,ty:"Cost cut",o:"Head of Support",c:"Medium",b:"Usage records and handle time, June 1 to Oct 31",p:3,l:1,s:"Set a budget for agent summaries",st:[["3x","spend since June"],["0","change in handle time"]],sy:"Cost cut",ap:true}
+  ];
+  var S={mode:"all",step:0,open:false,busy:false,pend:null,op:-1,ol:-1};
+  try{S.open=localStorage.getItem("dv_demo_access")==="1"}catch(e){}
+
+  /* canvas */
+  function portfolio(){
+    var m=INV.filter(function(i){return i.m}),sp=INV.reduce(function(a,i){return a+i.spend},0);
+    var n=m.reduce(function(a,i){return a+net(i,S.mode)},0),iv=m.reduce(function(a,i){return a+i.invest},0),r=(n-iv)/iv,low=r<.1;
+    $("pk").innerHTML=
+      '<div class="k"><span class="lab">AI spend / yr</span><div class="n">'+k(sp)+'</div></div>'+
+      '<div class="k"><span class="lab">Net savings / yr</span><div class="n">'+k(n)+'<span class="of">2 of 3 measured</span></div></div>'+
+      '<div class="k"><span class="lab">One-time investment</span><div class="n">'+k(iv)+'</div></div>'+
+      '<div class="k"><span class="lab">Portfolio ROI · year 1</span><div class="n'+(low?" c":"")+'">'+pc(r)+(low?'<span class="badge c">Hard savings only</span>':'')+'</div></div>';
+    $("invs").innerHTML=INV.map(function(i){
+      var r=i.m?roi(i,S.mode):null,neg=r!==null&&r<0;
+      return '<button type="button" class="card s4 inv" data-inv="'+INV.indexOf(i)+'"><h3>'+i.name+'</h3><span class="badge '+i.cls+'">'+i.v+'</span>'+
+        '<div class="n'+(neg?" c":"")+'">'+(i.m?pc(r):"n/a")+' <span class="lab">ROI yr 1</span></div>'+
+        '<div class="lab" style="margin-top:6px;color:var(--dim)">'+(i.m?"Net "+k(net(i,S.mode))+" on "+k(i.spend)+" AI spend":k(i.spend)+" AI spend, no baseline")+'</div>'+
+        '<p class="note">'+i.why+'</p><span class="open">Open the breakdown ›</span></button>';
+    }).join("");
+  }
+  function kpis(){
+    var K=[["AI spend","$220k","Tokens $118k + hosting $34k + operations $68k = $220k a year"],
+      ["Workflow TCO before","$1.63M","Tier 1 $1,150k + Tier 2 $300k + helpdesk $180k = $1,630k"],
+      ["Workflow TCO after","$1.198M","Tier 1 $575k + Tier 2 $300k + helpdesk $103k + AI $220k = $1,198k"],
+      ["Net savings","$432k","Baseline $1,630k - current $1,198k = $432k. All of it is hard savings."],
+      ["Investment","$300k","Build $180k + knowledge base cleanup $80k + training $40k. One-time, kept out of TCO."],
+      ["ROI year 1","44%","($432k - $300k) / $300k = 44%"],
+      ["ROI 3 years","332%","($432k x 3 - $300k) / $300k = 332%. Assumes savings hold flat. Estimate."],
+      ["Payback","8.3 mo","$300k / ($432k / 12) = 8.3 months"],
+      ["Cost / resolved ticket","$16.30 → $11.98","$1,630k / 100,000 tickets, then $1,198k / 100,000 tickets"]];
+    $("kpis").innerHTML=K.map(function(x,i){return '<button type="button" class="k" data-k="'+i+'" aria-expanded="false"><span class="lab">'+x[0]+'</span><div class="n'+(x[1].length>8?" sm":"")+'">'+x[1]+'</div><div class="f" hidden>'+x[2]+'</div></button>'}).join("");
+  }
+  function chart(){
+    var W=600,H=225,x=function(m){return 40+540*m/12},y=function(v){return 20+170*(140-v)/440},p=[];
+    for(var m=0;m<=12;m++)p.push(x(m).toFixed(1)+","+y(-300+36*m).toFixed(1));
+    var be=300/36;
+    $("chart").innerHTML='<svg width="100%" viewBox="0 0 '+W+' '+H+'" style="display:block" role="img" aria-label="Cumulative net value starts at minus $300k and crosses zero in month 8.3">'+
+      '<line x1="40" y1="190" x2="580" y2="190" stroke="#232326"/>'+
+      '<line x1="40" y1="'+y(0)+'" x2="580" y2="'+y(0)+'" stroke="#7aa5ff" stroke-dasharray="6 5" opacity=".9"/>'+
+      '<text x="40" y="'+(y(0)-7)+'" font-size="10" fill="#7aa5ff">BREAK-EVEN $0</text>'+
+      '<polyline points="'+p.join(" ")+'" fill="none" stroke="#f5f5f4" stroke-width="2"/>'+
+      '<circle cx="'+x(be)+'" cy="'+y(0)+'" r="4" fill="#0a0a0a" stroke="#f5f5f4" stroke-width="2"/>'+
+      '<circle cx="'+x(12)+'" cy="'+y(132)+'" r="4" fill="#f5f5f4"/>'+
+      '<text x="574" y="'+(y(132)-9)+'" text-anchor="end" font-size="11" fill="#f5f5f4">+$132K AT MONTH 12</text>'+
+      '<text x="46" y="'+(y(-300)-8)+'" font-size="11" fill="#ff8672">-$300K INVESTED</text>'+
+      '<text x="'+x(be)+'" y="'+(y(0)+18)+'" text-anchor="middle" font-size="10" fill="#8b8b90">MONTH 8.3</text>'+
+      '<text x="40" y="210" font-size="10" fill="#6a6a70">M0</text><text x="'+x(6)+'" y="210" text-anchor="middle" font-size="10" fill="#6a6a70">M6</text><text x="580" y="210" text-anchor="end" font-size="10" fill="#6a6a70">M12</text></svg>';
+  }
+  function acts(){
+    $("acts").innerHTML=ACTS.map(function(a,i){
+      var n=a.c==="High"?3:a.c==="Medium"?2:1,d="";for(var j=0;j<3;j++)d+='<i'+(j<n?' class="on"':'')+'></i>';
+      return '<div class="act" title="'+a.w+' Basis: '+a.b+'."><div class="i">0'+(i+1)+'</div><div><h4>'+a.s+'</h4>'+
+        '<div class="meta"><span>'+a.sy+'</span><span>'+a.o+'</span><span class="dots" aria-label="Confidence '+a.c+'">'+d+'</span></div></div>'+
+        '<div class="st"><b>'+a.st[0][0]+'</b><span>'+a.st[0][1]+'</span></div><div class="st"><b>'+a.st[1][0]+'</b><span>'+a.st[1][1]+'</span></div>'+
+        '<div><div class="amt">'+k(a.v)+'<span>/ YR</span></div><div class="bar"><i style="width:'+Math.round(a.v/96*100)+'%"></i></div></div>'+
+        '<div class="bt"><button type="button" class="btn" data-see="'+i+'">Data</button>'+(a.ap?'<button type="button" class="btn" data-ap="'+i+'">Apply</button>':'')+'</div>'+
+        '<div class="said" id="said'+i+'" hidden></div></div>';
+    }).join("");
+  }
+  var tg=function(t){return t==="hard"?'<span class="badge g">Hard savings</span>':t==="new"?'<span class="badge c">New cost</span>':'<span class="badge">No change</span>'};
+  var dl=function(v){return v===0?"0":'<span class="'+(v<0?"dn":"up")+'">'+(v<0?"-":"+")+"$"+Math.abs(v)+"k</span>"};
+  function pools(op,ol){
+    S.op=op;S.ol=ol;
+    var h='<table><thead><tr><th>Cost pool</th><th>Type</th><th>Before</th><th>After</th><th>Change</th></tr></thead><tbody>';
+    POOLS.forEach(function(p,i){
+      var o=i===op;
+      h+='<tr class="pool" data-p="'+i+'"><td><button type="button" aria-expanded="'+o+'">'+(o?"▾ ":"▸ ")+p.n+'</button></td><td>'+tg(p.t)+'</td><td>'+kk(p.b)+'</td><td>'+kk(p.a)+'</td><td>'+dl(p.a-p.b)+'</td></tr>';
+      if(o)p.l.forEach(function(l,j){
+        h+='<tr class="line"><td><button type="button" data-l="'+i+'-'+j+'">'+l.n+'</button></td><td></td><td></td><td></td><td>'+dl(l.v)+'</td></tr>';
+      });
+    });
+    $("pools").innerHTML=h+'<tr class="tot"><td>Total workflow TCO</td><td></td><td>$1,630k</td><td>$1,198k</td><td>-$432k</td></tr></tbody></table>';
+  }
+  function drill(o){
+    var h='<dl><dt>Attribution rule</dt><dd>'+o.r+'</dd><dt>Source</dt><dd>'+o.s+'</dd>'+(o.i?'<dt>Records</dt><dd>'+o.i+'</dd>':'')+'<dt>Freshness</dt><dd>'+o.f+'</dd></dl>';
+    h+='<div class="tw" style="margin-top:12px"><table><thead><tr>'+o.c.map(function(c){return '<th>'+c+'</th>'}).join("")+'</tr></thead><tbody>'+
+      o.rw.map(function(r){return '<tr>'+r.map(function(c){return '<td>'+c+'</td>'}).join("")+'</tr>'}).join("")+
+      (o.ft?'<tr class="tot">'+o.ft.map(function(c){return '<td>'+c+'</td>'}).join("")+'</tr>':'')+'</tbody></table></div>';
+    if(o.ad&&o.ad.length){h+='<div class="lab" style="margin-top:18px;color:var(--blue)">Suggested from this table</div>'+o.ad.map(function(a,i){
+      return '<div class="adv"><div><h4>'+a.t+'</h4><p class="note" style="margin:5px 0 0">'+a.w+'</p><div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px"><span class="badge">'+a.ty+'</span><button type="button" class="btn" data-send="'+i+'">Send for approval</button></div><div class="said" id="sent'+i+'" hidden></div></div>'+
+        (a.v?'<div class="amt" style="font-family:var(--mono);font-size:20px;font-weight:600;color:var(--hi);white-space:nowrap">'+k(a.v)+'<span style="display:block;font-size:10px;font-weight:400;letter-spacing:.14em;color:var(--muted)">/ YEAR</span></div>':'<div></div>')+'</div>'}).join("")}
+    else h+='<p class="note" style="margin:14px 0 0;color:var(--faint)">No change suggested from this table.</p>';
+    $("d-crumb").textContent="⋮⋮ Drill-down · "+(o.crumb||o.n);$("d-body").innerHTML=h;$("p-drill").hidden=false;
+    track("demo_drill",{drill:o.crumb||o.n});
+    $("p-drill").scrollIntoView({behavior:"smooth",block:"start"});
+  }
+  function line(pi,li){var p=POOLS[pi],l=p.l[li];pools(pi,li);drill({crumb:"Support assistant · "+p.n+" · "+l.n,r:l.r,s:l.s,i:l.i,f:l.f,c:l.c,rw:l.rw,ft:l.ft,ad:l.ad})}
+  $("d-x").addEventListener("click",function(){$("p-drill").hidden=true});
+  function streaks(){
+    var f=function(n){var s=Math.sin(n)*43758.5453;return s-Math.floor(s)},h="";
+    for(var i=0;i<72;i++){var a=i/72*Math.PI*2+f(i*7.3)*.18,r0=160+f(i*3.1)*300,r1=r0+60+f(i*5.7)*260;
+      h+='<line x1="'+(800+Math.cos(a)*r0).toFixed(1)+'" y1="'+(340+Math.sin(a)*r0).toFixed(1)+'" x2="'+(800+Math.cos(a)*r1).toFixed(1)+'" y2="'+(340+Math.sin(a)*r1).toFixed(1)+'" stroke="#f5f5f4" stroke-width="1" opacity="'+(.04+f(i*9.2)*.07).toFixed(3)+'"/>'}
+    $("streaks").innerHTML=h;
+  }
+
+  /* gate */
+  var EMAIL=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  var opener=null;
+  function unlock(){S.open=true;try{localStorage.setItem("dv_demo_access","1")}catch(e){}$("lock").hidden=true;$("pools").hidden=false}
+  function gate(fn){
+    if(S.open){fn();return}
+    opener=document.activeElement;
+    S.pend=fn;$("gate").hidden=false;$("gerr").textContent="";$("ge").classList.remove("bad");$("ge").removeAttribute("aria-invalid");
+    if($("ggo")){$("ggo").disabled=false;$("ggo").textContent="Open the drill-down"}
+    $("ge").focus();
+    track("demo_gate_view",{source:"demo",state:"dialog"});
+  }
+  function closeGate(){$("gate").hidden=true;S.pend=null;if(opener&&opener.focus)opener.focus();opener=null}
+  function contact(){return (window.deltavDemoLead&&window.deltavDemoLead.contact)||"partners@deltav.info"}
+  function saveError(){
+    var link=document.createElement("a");
+    link.href="mailto:"+contact();
+    link.textContent=contact();
+    $("gerr").replaceChildren();
+    $("gerr").append("That didn't go through. Try again, or email ",link,".");
+    $("ggo").disabled=false;$("ggo").textContent="Try again";$("ggo").focus();
+  }
+  $("gf").addEventListener("submit",function(e){
+    e.preventDefault();
+    var v=$("ge").value.trim();
+    if(v.length>254||!EMAIL.test(v)){
+      $("gerr").textContent="Enter a valid work email.";
+      $("ge").classList.add("bad");$("ge").setAttribute("aria-invalid","true");$("ge").focus();
+      track("demo_gate_error",{source:"demo",reason:"invalid_email"});
+      return;
+    }
+    $("gerr").textContent="";$("ge").classList.remove("bad");$("ge").removeAttribute("aria-invalid");
+    $("ggo").disabled=true;$("ggo").textContent="Opening…";
+    var lead=window.deltavDemoLead;
+    if(!lead){saveError();return}
+    lead.submit({email:v,source:"demo",website:($("gw")&&$("gw").value)||"",turnstile:$("gturnstile")}).then(function(result){
+      if(!result||!result.ok){
+        if(result&&result.reason==="invalid_email"){
+          $("gerr").textContent="Enter a valid work email.";
+          $("ge").classList.add("bad");$("ge").setAttribute("aria-invalid","true");
+          $("ggo").disabled=false;$("ggo").textContent="Open the drill-down";$("ge").focus();
+          return;
+        }
+        saveError();
+        return;
+      }
+      $("gate").hidden=true;unlock();var f=S.pend;S.pend=null;if(f)f();
+      $("ggo").disabled=false;$("ggo").textContent="Open the drill-down";
+    }).catch(saveError);
+  });
+  $("gx").addEventListener("click",closeGate);
+  document.addEventListener("keydown",function(e){if(e.key==="Escape"&&!$("gate").hidden)closeGate()});
+  $("unlock").addEventListener("click",function(){gate(function(){pools(0,-1);track("demo_drill",{drill:"cost pools"})})});
+
+  /* scripted chat */
+  var CHIPS=["is the support assistant paying off?","what should we change?","where did the $432k come from?","count hard savings only"];
+  var BOT=[
+    {tools:["get_portfolio_roi()"],text:"Across 3 AI investments you spend <b>$720k</b> a year. Two are measured: net savings of <b>$761k</b> on <b>$360k</b> invested, a portfolio ROI of <b>111%</b>. One is not measurable yet. The portfolio is on the canvas."},
+    {tools:["get_investment()","get_payback()"],text:"Yes. Six Tier 1 roles were not backfilled and 56 helpdesk seats were dropped, saving <b>$652k</b> against <b>$220k</b> of new AI cost. Net <b>$432k</b>, ROI <b>44%</b> in year 1, payback in <b>8.3 months</b>. Cost per resolved ticket fell from $16.30 to $11.98. Pinned to the canvas.",show:["p-kpis","p-pay","p-why"]},
+    {tools:["rank_actions()"],text:"Four changes, ranked by yearly impact times confidence. The largest is expanding to billing questions, <b>$96k</b>. The fastest is routing simple questions to a smaller model, <b>$26k</b>, already tested for two weeks. Each links to the lines behind it.",show:["p-act"]},
+    {tools:["get_cost_pools()","get_source_records()"],text:"Every dollar traces to a record. Tier 1 labor fell <b>$575k</b> across six position records, helpdesk seats fell <b>$77k</b> on two invoices, and AI added <b class=\"c\">$220k</b>. Open a pool, then a line, to get its records as a table with a suggested change.",show:["p-pools"],gate:true},
+    {tools:["get_portfolio_roi(mode=hard)"],text:"On hard savings only, portfolio ROI drops from 111% to <b class=\"c\">1%</b>. The support assistant holds at 44% because all of its savings are in the ledger. Coding tools falls to <b class=\"c\">-217%</b>: its return is freed engineering time, which finance has not agreed to count.",mode:"hard"}
+  ];
+  function say(html,cls){var d=document.createElement("div");d.className="msg "+(cls||"");d.innerHTML=html;$("chat").appendChild(d);$("chat").scrollTop=$("chat").scrollHeight;return d}
+  function bot(i,then){
+    var b=BOT[i],t=say('<p class="typing">···</p>');S.busy=true;
+    setTimeout(function(){
+      t.innerHTML='<div class="tools">'+b.tools.map(function(x){return '<span class="tool">'+x+'</span>'}).join("")+'</div><p>'+b.text+'</p>';
+      if(b.mode)setMode(b.mode);
+      (b.show||[]).forEach(function(id){$(id).hidden=false});
+      if(b.show){if(b.gate&&S.open)pools(3,-1);$(b.show[0]).scrollIntoView({behavior:"smooth",block:"start"})}
+      $("chat").scrollTop=$("chat").scrollHeight;S.busy=false;ui();if(then)then();
+    },800);
+  }
+  function ui(){var more=S.step<CHIPS.length;$("chip").hidden=!more;$("next-lab").hidden=!more;if(more)$("chip").textContent=CHIPS[S.step];$("reset").hidden=S.step===0}
+  function advance(){
+    if(S.busy||S.step>=CHIPS.length)return;
+    var n=S.step+1,go=function(){say('<div class="lab">You</div><p>'+CHIPS[S.step]+'</p>',"user");S.step=n;$("ask").value="";ui();bot(n)};
+    if(BOT[n].gate)gate(go);else go();
+  }
+  function setMode(m){S.mode=m;document.querySelectorAll("[data-mode]").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.mode===m))});portfolio()}
+  function reset(){S.step=0;$("chat").innerHTML="";["p-kpis","p-pay","p-why","p-act","p-pools","p-drill"].forEach(function(id){$(id).hidden=true});setMode("all");pools(-1,-1);kpis();acts();ui();bot(0);window.scrollTo(0,0)}
+  $("chip").addEventListener("click",advance);$("send").addEventListener("click",advance);
+  $("ask").addEventListener("keydown",function(e){if(e.key==="Enter")advance()});
+  $("reset").addEventListener("click",reset);
+
+  document.addEventListener("click",function(e){
+    var t=e.target.closest("[data-mode],[data-k],[data-see],[data-ap],[data-l],[data-inv],[data-send],tr.pool");if(!t)return;
+    if(t.dataset.mode)setMode(t.dataset.mode);
+    else if(t.dataset.k){var f=t.querySelector(".f");f.hidden=!f.hidden;t.setAttribute("aria-expanded",String(!f.hidden))}
+    else if(t.dataset.see){var a=ACTS[+t.dataset.see];gate(function(){$("p-pools").hidden=false;line(a.p,a.l)})}
+    else if(t.dataset.inv){var iv=INV[+t.dataset.inv];gate(function(){if(iv.d)drill(iv.d);else{$("p-pools").hidden=false;pools(0,-1);track("demo_drill",{drill:iv.name});$("p-pools").scrollIntoView({behavior:"smooth",block:"start"})}})}
+    else if(t.dataset.send){var z=$("sent"+t.dataset.send);z.textContent="→ In the product this goes to an admin for approval and is logged. Nothing changed in this demo.";z.hidden=false;var box=t.closest(".adv");track("demo_action_send",{action:box&&box.querySelector("h4")?box.querySelector("h4").textContent:""})}
+    else if(t.dataset.ap){var s=$("said"+t.dataset.ap);s.textContent="→ In the product this goes to an admin for approval and is logged. Nothing changed in this demo.";s.hidden=false}
+    else if(t.dataset.l){var p=t.dataset.l.split("-");line(+p[0],+p[1])}
+    else if(t.matches("tr.pool")){var i=+t.dataset.p;pools(S.op===i?-1:i,-1)}
+  });
+
+  streaks();portfolio();kpis();chart();acts();pools(-1,-1);if(S.open)unlock();ui();bot(0);track("demo_open");
+})();
+
+</script>
+</body>
+</html>
