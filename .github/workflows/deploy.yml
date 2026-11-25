@@ -61,6 +61,8 @@ jobs:
           # 8000002 is "a project with this name already exists".
           echo "$created" | jq -e '.success == true or (.errors[]? | .code == 8000002)' >/dev/null
 
+      # Pages upload only. Do not add a D1 migration step.
+      # utm_content and utm_term were added by hand and must not be applied again.
       - name: Deploy
         uses: cloudflare/wrangler-action@v4
         with:

@@ -1,12 +1,11 @@
 -- Demo gate stores the rest of the campaign tags from the landing URL.
 -- utm_source, utm_medium, and utm_campaign already exist (0001).
--- Apply this in the D1 console, or locally with:
+-- utm_content and utm_term are already on production. They were added by
+-- hand in the D1 console. Do not apply this file to production again.
+-- Do not run `wrangler d1 migrations apply --remote`.
+-- Deploy only publishes the site. It does not run D1 migrations.
+-- These statements are for a fresh local database:
 --   npx wrangler d1 migrations apply deltav_leads --local
--- Do not run `wrangler d1 migrations apply --remote` from an agent.
--- Apply it before the demo gate is deployed. Until these columns exist,
--- demo inserts fail and the form asks the visitor to try again.
--- The /talk insert does not use these columns, so that form keeps working
--- before this migration is applied.
 
 ALTER TABLE leads ADD COLUMN utm_content TEXT;
 ALTER TABLE leads ADD COLUMN utm_term TEXT;
