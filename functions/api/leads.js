@@ -1,5 +1,5 @@
-// POST /api/leads: stores one intake from /talk or /law-firms/talk/ in D1.
-// The option lists below must match those two forms.
+// POST /api/leads: stores one intake from /talk, /law-firms/talk/, or the demo gate.
+// The option lists below must match those forms.
 // Never log personal data.
 
 const ROLES = [
@@ -51,6 +51,11 @@ const GOALS = [
   "Something else",
 ];
 const SOURCES = ["talk-to-us", "book-20-minutes", "free-audit"];
+// Demo gate (/ and /demo-access/). One email field. /demo/ does not post.
+// team_size is NOT NULL, so these rows store "unknown" rather than a blank.
+const DEMO_SOURCES = ["demo", "demo_ad"];
+const DEMO_GOAL = "demo_access";
+const DEMO_TEAM_SIZE = "unknown";
 const OUTREACH = /^[A-Za-z0-9]{1,40}$/;
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -72,6 +77,11 @@ function asString(value) {
 
 function oneOf(value, allowed) {
   return allowed.includes(value) ? value : null;
+}
+
+function isUnique(err) {
+  const message = err && err.message ? String(err.message) : "";
+  return /UNIQUE constraint failed/i.test(message);
 }
 
 async function passesTurnstile(token, secret, ip) {
@@ -122,15 +132,21 @@ export async function onRequest({ request, env }) {
   const aiTools = AI_TOOLS.filter((tool) => tools.includes(tool)).join(", ") || null;
   const monthlySpend = oneOf(asString(body.monthly_spend), MONTHLY_SPEND);
 
+  const sourceRaw = asString(body.source);
+  const isDemo = DEMO_SOURCES.includes(sourceRaw);
+
   const errors = {};
   if (!email || email.length > EMAIL_MAX || !EMAIL.test(email)) {
     errors.email = "Enter a valid email address.";
   }
-  if (!name) errors.name = "Required.";
-  if (!company) errors.company = "Required.";
-  if (!role) errors.role = "Choose an option.";
-  if (goalRaw && !goal) errors.goal = "Choose an option.";
-  if (question.length > QUESTION_MAX) errors.question = "500 characters maximum.";
+  // The demo gate collects an email only. /talk still requires name, company, and role.
+  if (!isDemo) {
+    if (!name) errors.name = "Required.";
+    if (!company) errors.company = "Required.";
+    if (!role) errors.role = "Choose an option.";
+    if (goalRaw && !goal) errors.goal = "Choose an option.";
+    if (question.length > QUESTION_MAX) errors.question = "500 characters maximum.";
+  }
   if (Object.keys(errors).length > 0) return json(400, { ok: false, errors });
 
   if (!env.TURNSTILE_SECRET) {
@@ -142,38 +158,74 @@ export async function onRequest({ request, env }) {
     return json(400, { ok: false, errors: { turnstile: "Verification failed. Try again." } });
   }
 
-  const source = oneOf(asString(body.source), SOURCES);
+  const source = isDemo ? sourceRaw : oneOf(sourceRaw, SOURCES);
   const referrerPath = asString(body.referrer_path).slice(0, SHORT_MAX) || null;
   const utmSource = asString(body.utm_source).slice(0, SHORT_MAX) || null;
   const utmMedium = asString(body.utm_medium).slice(0, SHORT_MAX) || null;
   const utmCampaign = asString(body.utm_campaign).slice(0, SHORT_MAX) || null;
+  const utmContent = asString(body.utm_content).slice(0, SHORT_MAX) || null;
+  const utmTerm = asString(body.utm_term).slice(0, SHORT_MAX) || null;
 
   try {
-    await env.DB.prepare(
-      `INSERT INTO leads
-         (email, name, company, role, team_size, goal, ai_tools, monthly_spend, question,
-          outreach_code, source, referrer_path, utm_source, utm_medium, utm_campaign)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
-    )
-      .bind(
-        email,
-        name,
-        company,
-        role,
-        teamSize,
-        goal,
-        aiTools,
-        monthlySpend,
-        question || null,
-        outreachCode,
-        source,
-        referrerPath,
-        utmSource,
-        utmMedium,
-        utmCampaign
+    if (isDemo) {
+      // utm_content and utm_term come from migration 0003. Apply that before
+      // deploying this path. The /talk insert below does not use those columns.
+      await env.DB.prepare(
+        `INSERT INTO leads
+           (email, name, company, role, team_size, goal, ai_tools, monthly_spend, question,
+            outreach_code, source, referrer_path, utm_source, utm_medium, utm_campaign,
+            utm_content, utm_term)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
       )
-      .run();
+        .bind(
+          email,
+          "",
+          "",
+          "",
+          DEMO_TEAM_SIZE,
+          DEMO_GOAL,
+          null,
+          null,
+          null,
+          outreachCode,
+          source,
+          referrerPath,
+          utmSource,
+          utmMedium,
+          utmCampaign,
+          utmContent,
+          utmTerm
+        )
+        .run();
+    } else {
+      await env.DB.prepare(
+        `INSERT INTO leads
+           (email, name, company, role, team_size, goal, ai_tools, monthly_spend, question,
+            outreach_code, source, referrer_path, utm_source, utm_medium, utm_campaign)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+      )
+        .bind(
+          email,
+          name,
+          company,
+          role,
+          teamSize,
+          goal,
+          aiTools,
+          monthlySpend,
+          question || null,
+          outreachCode,
+          source,
+          referrerPath,
+          utmSource,
+          utmMedium,
+          utmCampaign
+        )
+        .run();
+    }
   } catch (err) {
+    // A repeated demo email is still a successful unlock. /talk is unchanged.
+    if (isDemo && isUnique(err)) return json(200, { ok: true });
     console.error("leads: insert failed:", err && err.message);
     return json(500, { ok: false, errors: { form: "Something went wrong. Try again in a minute." } });
   }

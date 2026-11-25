@@ -13,8 +13,14 @@
 <meta property="og:description" content="See what every AI dollar returns. Then move your spend to where it pays off.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/ibm-plex-mono-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/home.css">
+<link rel="stylesheet" href="/demo-gate.css">
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
 <script src="/analytics.js" defer></script>
+<script src="/demo-gate.js" defer></script>
 </head>
 <body id="top" data-page="home">
 
@@ -35,6 +41,7 @@
           <a href="/white-paper/">AI ROI Whitepaper</a>
         </div>
       </details>
+      <a href="#demo">See the demo</a>
       <a class="btn" href="/talk?from=talk-to-us">Talk to us</a>
     </nav>
   </div>
@@ -46,7 +53,71 @@
     <div class="wrap wrap--1040 hero-inner">
       <h1 id="hero-heading" class="h1">Is your AI spend paying off?</h1>
       <p class="lede">See what every AI dollar returns. Then move your spend to where it pays off.</p>
-      <a class="btn" href="/talk?from=book-20-minutes">Talk to us</a>
+      <div class="hero-actions">
+        <a class="btn" href="/talk?from=book-20-minutes">Talk to us</a>
+        <a class="demo-cta demo-cta--line" href="#demo" data-demo-cta="hero">See the demo</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="demo demo-gate" id="demo" aria-labelledby="demo-h">
+    <div>
+      <span class="tag">Product demo · 3 minutes</span>
+      <h1 id="demo-h">See what your AI spend returned, and what to change next</h1>
+      <p class="sub">A walkthrough on sample data. You get the ROI of each AI investment, the specific changes that would raise it with a dollar value on each, and the records behind every number.</p>
+
+      <form class="form" id="demo-gate-form" data-demo-gate data-demo-source="demo" novalidate>
+        <label class="lab" for="em">Work email</label>
+        <div class="frow">
+          <input id="em" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@company.com" required maxlength="254" aria-describedby="er fn">
+          <button type="submit" class="go" id="go">Open the demo</button>
+        </div>
+        <div class="err" id="er" role="alert"></div>
+        <div data-turnstile></div>
+        <div class="honeypot" aria-hidden="true">
+          <label for="demo-website">Website</label>
+          <input id="demo-website" name="website" type="text" tabindex="-1" autocomplete="off">
+        </div>
+        <p class="fine" id="fn">No call needed.</p>
+      </form>
+
+      <div class="ok" data-demo-success hidden>
+        <b>You're in. Opening the demo…</b>
+        <a href="/demo/">Open it now ›</a>
+      </div>
+
+      <div class="ok" data-demo-returning hidden>
+        <b>Welcome back.</b>
+        <p class="fine">You already have access on this device.</p>
+        <a href="/demo/">Open the demo ›</a>
+      </div>
+    </div>
+
+    <div class="pv" aria-hidden="true">
+      <div class="pvbar"><i></i><i></i><i></i><span>deltav.info/demo</span></div>
+      <div class="pvin">
+        <div class="pvchat">
+          <span class="lab">Copilot</span>
+          <p>Across 3 AI investments you spend <b>$720k</b> a year. Two are measured: portfolio ROI of <b>111%</b>.</p>
+          <p class="blur">Six Tier 1 roles were not backfilled, saving $652k against $220k of new AI cost.</p>
+          <span class="pvchip">is the support assistant paying off?</span>
+        </div>
+        <div class="pvcan">
+          <div class="pvcard"><div class="pvk">
+            <span><span class="lab">AI spend / yr</span><div>$720k</div></span>
+            <span><span class="lab">Net savings</span><div>$761k</div></span>
+            <span><span class="lab">Portfolio ROI</span><div>111%</div></span>
+          </div></div>
+          <div class="pvcard">
+            <span class="lab">What to do next</span>
+            <div style="margin-top:8px">
+              <div class="pvrow"><span>Expand to billing questions</span><span>$96k</span></div>
+              <div class="pvrow blur"><span>Route simple questions to a smaller model</span><span>$26k</span></div>
+              <div class="pvrow blur"><span>Reclaim 14 helpdesk seats</span><span>$19k</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -193,6 +264,10 @@
         </table>
       </div>
       <p class="note">Support costs 3x more per PR than the other teams</p>
+      <div class="demo-strip">
+        <p>See this on sample data.</p>
+        <a class="demo-cta demo-cta--line" href="#demo" data-demo-cta="return">Open the demo</a>
+      </div>
     </div>
   </section>
 
@@ -224,6 +299,11 @@
       </ul>
       <p class="note">You approve every move</p>
     </div>
+  </section>
+
+  <section class="demo-close" aria-labelledby="demo-close-h">
+    <h2 id="demo-close-h">See what your AI spend returned, and what to change next</h2>
+    <a class="demo-cta demo-cta--solid" href="#demo" data-demo-cta="closing">Open the demo</a>
   </section>
 
   <section id="guides" class="band band--cards" aria-labelledby="white-papers">

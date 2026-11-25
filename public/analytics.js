@@ -61,6 +61,32 @@
 
   if (outreachCode) saveOutreach(outreachCode);
 
+  // Campaign tags from the landing URL, kept for the session. The demo gate
+  // reads these on submit, including after the visitor moves to another page.
+  const UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"];
+  const params = new URLSearchParams(window.location.search);
+  let storedUtm = {};
+  try {
+    storedUtm = JSON.parse(sessionStorage.getItem("dv_utm") || "{}") || {};
+  } catch {
+    storedUtm = {};
+  }
+  if (!storedUtm || typeof storedUtm !== "object") storedUtm = {};
+  let utmChanged = false;
+  UTM_KEYS.forEach((key) => {
+    const value = params.get(key);
+    if (!value) return;
+    storedUtm[key] = value.slice(0, 200);
+    utmChanged = true;
+  });
+  if (utmChanged) {
+    try {
+      sessionStorage.setItem("dv_utm", JSON.stringify(storedUtm));
+    } catch {
+      /* sessionStorage may be blocked */
+    }
+  }
+
   if (pathCode) {
     window.deltavAnalytics.track("outreach_link_opened", {
       outreach_code: outreachCode,
