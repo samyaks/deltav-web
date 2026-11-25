@@ -168,8 +168,8 @@ export async function onRequest({ request, env }) {
 
   try {
     if (isDemo) {
-      // utm_content and utm_term come from migration 0003. Apply that before
-      // deploying this path. The /talk insert below does not use those columns.
+      // utm_content and utm_term are already on production. They were added
+      // by hand. Do not apply migration 0003 to production again.
       await env.DB.prepare(
         `INSERT INTO leads
            (email, name, company, role, team_size, goal, ai_tools, monthly_spend, question,
