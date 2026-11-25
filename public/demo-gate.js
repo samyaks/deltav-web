@@ -1,5 +1,6 @@
-// Demo access gate on the home page, /demo-access/, and the dialog in /demo/.
+// Demo access gate on the home page and /demo-access/.
 // Posts to the same /api/leads handler as /talk. No second table.
+// /demo/ does not collect an email. It only checks dv_demo_access.
 //
 // The access email is not sent yet. There is no mail provider in this repo.
 // The "we'll email you a link" line stays out until that is chosen.
@@ -246,7 +247,7 @@
         if (back) back.hidden = true;
         if (ok) ok.hidden = false;
         window.setTimeout(() => {
-          window.location.href = "/demo/";
+          window.location.href = "/demo/" + window.location.search;
         }, 1000);
         return;
       }
@@ -267,6 +268,16 @@
   }
 
   document.querySelectorAll("[data-demo-gate]").forEach(initForm);
+
+  const open = hasAccess();
+  document.querySelectorAll("[data-demo-cta]").forEach((link) => {
+    if (open) link.href = "/demo/" + window.location.search;
+    link.addEventListener("click", () => {
+      analytics().track("demo_cta_click", {
+        position: link.getAttribute("data-demo-cta") || "",
+      });
+    });
+  });
 
   window.deltavDemoLead = {
     hasAccess,

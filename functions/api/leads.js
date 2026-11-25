@@ -51,7 +51,7 @@ const GOALS = [
   "Something else",
 ];
 const SOURCES = ["talk-to-us", "book-20-minutes", "free-audit"];
-// Demo gate (/ and /demo-access/, plus the dialog on /demo/). One email field.
+// Demo gate (/ and /demo-access/). One email field. /demo/ does not post.
 // team_size is NOT NULL, so these rows store "unknown" rather than a blank.
 const DEMO_SOURCES = ["demo", "demo_ad"];
 const DEMO_GOAL = "demo_access";

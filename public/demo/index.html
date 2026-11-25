@@ -2,15 +2,20 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<script>
+(function () {
+  var open = false;
+  try { open = localStorage.getItem("dv_demo_access") === "1"; } catch (e) {}
+  if (!open) location.replace("/" + location.search + "#demo");
+})();
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Delta-V AI ROI demo</title>
 <meta name="color-scheme" content="dark">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
 <script src="/analytics.js" defer></script>
-<script src="/demo-gate.js" defer></script>
 <style>
 :root{
   --bg:#0a0a0a; --card:rgba(17,17,19,.85); --line:#232326; --hair:#1c1c1f;
@@ -202,7 +207,7 @@ svg text{font-family:'IBM Plex Mono',monospace}
       </section>
       <section class="card s12 pin" id="p-pools" hidden>
         <div class="head"><span class="lab">⋮⋮ Pinned · cost pools · get_cost_pools()</span><span class="lab" style="color:var(--faint)">Pool → line → records table</span></div>
-        <div class="lock" id="lock">
+        <div class="lock" id="lock" hidden>
           <p class="note" style="margin:0">Enter a work email to open cost pools, line items and source records.</p>
           <button type="button" class="btn p" id="unlock">Open the drill-down</button>
         </div>
@@ -223,15 +228,10 @@ svg text{font-family:'IBM Plex Mono',monospace}
     <p class="note" style="margin:0">Enter your work email to open the cost pools, line items and source records.</p>
     <form id="gf" novalidate>
       <label class="lab" for="ge" style="display:block;margin-top:18px">Work email</label>
-      <input id="ge" type="email" autocomplete="email" inputmode="email" placeholder="you@company.com" required maxlength="254" aria-describedby="gerr">
+      <input id="ge" type="email" autocomplete="email" placeholder="you@company.com" required>
       <div class="err" id="gerr" role="alert"></div>
-      <div data-turnstile id="gturnstile"></div>
-      <div class="honeypot" aria-hidden="true">
-        <label for="gw">Website</label>
-        <input id="gw" name="website" type="text" tabindex="-1" autocomplete="off">
-      </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <button type="submit" class="btn p" id="ggo" style="padding:9px 14px">Open the drill-down</button>
+        <button type="submit" class="btn p" style="padding:9px 14px">Open the drill-down</button>
         <button type="button" class="btn" id="gx" style="padding:9px 14px">Not now</button>
       </div>
     </form>
@@ -285,8 +285,7 @@ svg text{font-family:'IBM Plex Mono',monospace}
     {t:"Reclaim 14 helpdesk seats with no login in 30 days",w:"14 of 75 remaining seats had no activity. Each costs $1,373 a year.",v:19,ty:"Hard savings",o:"IT",c:"High",b:"Seat activity, Oct 1 to 31",p:2,l:0,s:"Reclaim 14 idle helpdesk seats",st:[["14 / 75","seats idle 30 days"],["$1,373","per seat a year"]],sy:"Hard savings",ap:true},
     {t:"Set a budget for agent summaries",w:"Spend on summaries tripled since June with no change in handle time.",v:12,ty:"Cost cut",o:"Head of Support",c:"Medium",b:"Usage records and handle time, June 1 to Oct 31",p:3,l:1,s:"Set a budget for agent summaries",st:[["3x","spend since June"],["0","change in handle time"]],sy:"Cost cut",ap:true}
   ];
-  var S={mode:"all",step:0,open:false,busy:false,pend:null,op:-1,ol:-1};
-  try{S.open=localStorage.getItem("dv_demo_access")==="1"}catch(e){}
+  var S={mode:"all",step:0,open:true,busy:false,pend:null,op:-1,ol:-1};
 
   /* canvas */
   function portfolio(){
@@ -380,56 +379,13 @@ svg text{font-family:'IBM Plex Mono',monospace}
     $("streaks").innerHTML=h;
   }
 
-  /* gate */
-  var EMAIL=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-  var opener=null;
-  function unlock(){S.open=true;try{localStorage.setItem("dv_demo_access","1")}catch(e){}$("lock").hidden=true;$("pools").hidden=false}
-  function gate(fn){
-    if(S.open){fn();return}
-    opener=document.activeElement;
-    S.pend=fn;$("gate").hidden=false;$("gerr").textContent="";$("ge").classList.remove("bad");$("ge").removeAttribute("aria-invalid");
-    if($("ggo")){$("ggo").disabled=false;$("ggo").textContent="Open the drill-down"}
-    $("ge").focus();
-    track("demo_gate_view",{source:"demo",state:"dialog"});
-  }
-  function closeGate(){$("gate").hidden=true;S.pend=null;if(opener&&opener.focus)opener.focus();opener=null}
-  function contact(){return (window.deltavDemoLead&&window.deltavDemoLead.contact)||"partners@deltav.info"}
-  function saveError(){
-    var link=document.createElement("a");
-    link.href="mailto:"+contact();
-    link.textContent=contact();
-    $("gerr").replaceChildren();
-    $("gerr").append("That didn't go through. Try again, or email ",link,".");
-    $("ggo").disabled=false;$("ggo").textContent="Try again";$("ggo").focus();
-  }
-  $("gf").addEventListener("submit",function(e){
-    e.preventDefault();
-    var v=$("ge").value.trim();
-    if(v.length>254||!EMAIL.test(v)){
-      $("gerr").textContent="Enter a valid work email.";
-      $("ge").classList.add("bad");$("ge").setAttribute("aria-invalid","true");$("ge").focus();
-      track("demo_gate_error",{source:"demo",reason:"invalid_email"});
-      return;
-    }
-    $("gerr").textContent="";$("ge").classList.remove("bad");$("ge").removeAttribute("aria-invalid");
-    $("ggo").disabled=true;$("ggo").textContent="Opening…";
-    var lead=window.deltavDemoLead;
-    if(!lead){saveError();return}
-    lead.submit({email:v,source:"demo",website:($("gw")&&$("gw").value)||"",turnstile:$("gturnstile")}).then(function(result){
-      if(!result||!result.ok){
-        if(result&&result.reason==="invalid_email"){
-          $("gerr").textContent="Enter a valid work email.";
-          $("ge").classList.add("bad");$("ge").setAttribute("aria-invalid","true");
-          $("ggo").disabled=false;$("ggo").textContent="Open the drill-down";$("ge").focus();
-          return;
-        }
-        saveError();
-        return;
-      }
-      $("gate").hidden=true;unlock();var f=S.pend;S.pend=null;if(f)f();
-      $("ggo").disabled=false;$("ggo").textContent="Open the drill-down";
-    }).catch(saveError);
-  });
+  /* gate: unused once access is granted. The page redirects before paint otherwise. */
+  function unlock(){S.open=true;$("lock").hidden=true;$("pools").hidden=false}
+  function gate(fn){if(S.open){fn();return}S.pend=fn;$("gate").hidden=false;$("gerr").textContent="";$("ge").focus()}
+  function closeGate(){$("gate").hidden=true;S.pend=null}
+  $("gf").addEventListener("submit",function(e){e.preventDefault();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test($("ge").value.trim())){$("gerr").textContent="Enter a valid work email.";return}
+    $("gate").hidden=true;unlock();var f=S.pend;S.pend=null;if(f)f()});
   $("gx").addEventListener("click",closeGate);
   document.addEventListener("keydown",function(e){if(e.key==="Escape"&&!$("gate").hidden)closeGate()});
   $("unlock").addEventListener("click",function(){gate(function(){pools(0,-1);track("demo_drill",{drill:"cost pools"})})});
